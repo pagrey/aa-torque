@@ -6,7 +6,7 @@ import android.service.notification.StatusBarNotification
 import android.graphics.Bitmap
 import android.os.Build
 import android.service.notification.NotificationListenerService
-import android.support.v4.content.LocalBroadcastManager
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import android.text.SpannableString
 
 

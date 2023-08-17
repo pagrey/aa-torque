@@ -12,12 +12,12 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 
 import android.widget.Toast;
@@ -128,18 +128,12 @@ public class SettingsActivity extends AppCompatActivity {
         super.onResume();
 
         List<String> permissionsToRequest = new ArrayList<>();
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            permissionsToRequest.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
         if (ContextCompat.checkSelfPermission(this, PERMISSION_CAR_VENDOR_EXTENSION)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionsToRequest.add(PERMISSION_CAR_VENDOR_EXTENSION);
         }
         if (!permissionsToRequest.isEmpty()) {
-            ActivityCompat.requestPermissions(this,
-                    permissionsToRequest.toArray(new String[0]),
-                    REQUEST_PERMISSIONS);
+            requestPermissions(permissionsToRequest.toArray(new String[0]), REQUEST_PERMISSIONS);
             return;
         }
 
@@ -195,6 +189,7 @@ public class SettingsActivity extends AppCompatActivity {
                 break;
         }
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

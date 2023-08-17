@@ -177,7 +177,6 @@
     <string name="element_tyreTemperatureRR">Temperatuur band rechtsachter</string>
     <string name="label_fuel">Brandstof</string>
     <string name="location_permission_denied_toast">Locatierechten zijn nodig om Google geocoding te kunnen gebruiken.</string>
-    <string name="pref_DataSource">Data bron</string>
     <string name="pref_accurate">Accurate klokweergave</string>
     <string name="pref_accurate_off">Vloeiende animaties (minder accuuraat)</string>
     <string name="pref_accurate_on">Accurate klokweergave (minder vloeiende animatie)</string>

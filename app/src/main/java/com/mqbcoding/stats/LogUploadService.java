@@ -78,7 +78,7 @@ public class LogUploadService extends JobService {
         PersistableBundle extras = new PersistableBundle();
         extras.putString(EXTRA_FILENAME, logFile.getAbsolutePath());
         ComponentName jobService =
-                new ComponentName(BuildConfig.APPLICATION_ID, LogUploadService.class.getName());
+                new ComponentName("BuildConfig.PACKAGE_NAME", LogUploadService.class.getName());
         int jobId = logFile.hashCode();
         JobInfo jobInfo = new JobInfo.Builder(jobId, jobService)
                 .setExtras(extras)

@@ -38,6 +38,7 @@
         <item name="sv_markColor">@android:color/transparent</item>
 
         <item name="sv_speedTextColor">@color/car_primary</item>
+
         <item name="sv_speedTextPadding">50dp</item>
         <item name="sv_speedTextPosition">CENTER</item>
         <item name="sv_speedTextSize">32sp</item>

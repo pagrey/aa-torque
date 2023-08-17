@@ -8,9 +8,4 @@
     <attr name="themedBlankDialBackground" format="reference" />
     <attr name="themedStopWatchBackground" format="reference" />
     <attr name="themedNeedleColor" format="reference" />
-
-
-
-
-
 </resources>
