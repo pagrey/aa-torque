@@ -13,6 +13,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <queries>
+        <package android:name="org.prowl.torque" />
+    </queries>
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -44,6 +48,10 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
                 <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="org.prowl.torque.remote.TorqueService" />
+                <category android:name="com.google.android.gms.car.category.DEFAULT" />
             </intent-filter>
         </service>
         <service
@@ -89,8 +97,5 @@
         <meta-data
             android:name="com.google.android.gms.car.application"
             android:resource="@xml/automotive_app_desc" />
-
-
     </application>
-
 </manifest>

@@ -3,6 +3,7 @@ package com.mqbcoding.stats;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -18,6 +19,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -1042,16 +1044,11 @@ public class DashboardFragment extends CarFragment {
     private void startTorque() {
         Intent intent = new Intent();
         intent.setClassName("org.prowl.torque", "org.prowl.torque.remote.TorqueService");
-        getContext().startService(intent);
-        Log.d(TAG, "Torque start");
-
-        boolean successfulBind = getContext().bindService(intent, torqueConnection, 0);
-        if (successfulBind) {
-            torqueBind = true;
-            Log.d("HU", "Connected to torque service!");
+        boolean torqueBind = getContext().bindService(intent, torqueConnection, Activity.BIND_AUTO_CREATE);
+        if (torqueBind) {
+            Log.d(TAG, "Connected to torque service!");
         } else {
-            torqueBind = false;
-            Log.e("HU", "Unable to connect to Torque plugin service");
+            Log.e(TAG, "Unable to connect to Torque plugin service");
         }
     }
 
