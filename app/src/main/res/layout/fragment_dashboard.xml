@@ -178,31 +178,33 @@
         app:layout_constraintLeft_toRightOf="@id/textTitleNavDistance"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/imageButton2"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginStart="80dp"
-        android:background="@drawable/actions_go_previous_view_icon"
+        android:src="@drawable/actions_go_previous_view_icon"
         android:scaleType="centerCrop"
         android:textAlignment="center"
+        android:contentDescription="@string/item_details_go_back"
         app:layout_constraintBottom_toBottomOf="@+id/textTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textTitle"
-        app:srcCompat="@drawable/actions_go_previous_view_icon" />
+        android:background="@android:color/transparent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/imageButton3"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginEnd="80dp"
-        android:background="@drawable/actions_go_next_view_icon"
+        android:src="@drawable/actions_go_next_view_icon"
         android:scaleType="centerCrop"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/textTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textTitle"
-        app:srcCompat="@drawable/actions_go_next_view_icon" />
+        android:contentDescription="@string/item_details_go_back"
+        android:background="@android:color/transparent"  />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

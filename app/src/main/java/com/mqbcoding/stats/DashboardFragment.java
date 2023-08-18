@@ -33,7 +33,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -125,7 +125,7 @@ public class DashboardFragment extends CarFragment {
     private String googleMapsLocationStr = null;
     private GeocodeLocationService mGeocodingService;
 
-    private Button mBtnNext, mBtnPrev;
+    private ImageButton mBtnNext, mBtnPrev;
     private String mLabelClockL, mLabelClockC, mLabelClockR;
     private HashMap<String, FieldSchema> mSchema;
 
@@ -1045,11 +1045,7 @@ public class DashboardFragment extends CarFragment {
         Intent intent = new Intent();
         intent.setClassName("org.prowl.torque", "org.prowl.torque.remote.TorqueService");
         boolean torqueBind = getContext().bindService(intent, torqueConnection, Activity.BIND_AUTO_CREATE);
-        if (torqueBind) {
-            Log.d(TAG, "Connected to torque service!");
-        } else {
-            Log.e(TAG, "Unable to connect to Torque plugin service");
-        }
+        Log.d(TAG, torqueBind ? "Connected to torque service!" : "Unable to connect to Torque plugin service");
     }
 
 
@@ -1093,7 +1089,6 @@ public class DashboardFragment extends CarFragment {
         if (torqueBind)
             try {
                 getContext().unbindService(torqueConnection);
-                stopTorque();
             } catch (Exception E) {
                 throw E;
             }
