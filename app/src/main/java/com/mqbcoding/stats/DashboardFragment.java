@@ -129,6 +129,8 @@ public class DashboardFragment extends CarFragment {
     private String mLabelClockL, mLabelClockC, mLabelClockR;
     private HashMap<String, FieldSchema> mSchema;
 
+    private boolean statsBound = false;
+
 
     // notation formats
     private static final String FORMAT_DECIMALS = "%.1f";
@@ -257,6 +259,7 @@ public class DashboardFragment extends CarFragment {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             CarStatsService.CarStatsBinder carStatsBinder = (CarStatsService.CarStatsBinder) iBinder;
+            statsBound = true;
             Log.i(TAG, "ServiceConnected");
             mStatsClient = carStatsBinder.getStatsClient();
             mLastMeasurements = mStatsClient.getMergedMeasurements();
@@ -266,6 +269,7 @@ public class DashboardFragment extends CarFragment {
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
+            statsBound = false;
             mStatsClient.unregisterListener(mCarStatsListener);
             Log.i(TAG, "ServiceDisconnected");
         }
@@ -697,10 +701,8 @@ public class DashboardFragment extends CarFragment {
         }
 
         boolean readedTempUnit = sharedPreferences.getBoolean("selectTemperatureUnit", true);  //true = celcius, false = fahrenheit
-        if (readedTempUnit != celsiusTempUnit) {
-            celsiusTempUnit = readedTempUnit;
-            temperatureUnit = getString(celsiusTempUnit ? R.string.unit_c : R.string.unit_f);
-        }
+        celsiusTempUnit = readedTempUnit;
+        temperatureUnit = getString(celsiusTempUnit ? R.string.unit_c : R.string.unit_f);
 
         boolean readedPowerUnits = sharedPreferences.getBoolean("selectPowerUnit", true);  //true = kw, false = ps
         if (powerUnits == null || readedPowerUnits != powerUnits) {
@@ -1081,7 +1083,9 @@ public class DashboardFragment extends CarFragment {
         updateTimer.cancel();
 
         mStatsClient.unregisterListener(mCarStatsListener);
-        getContext().unbindService(mVexServiceConnection);
+        if (statsBound) {
+            getContext().unbindService(mVexServiceConnection);
+        }
         if (useGoogleGeocoding) {
             getContext().unbindService(mGeocodingServiceConnection);
         }
@@ -2458,7 +2462,7 @@ public class DashboardFragment extends CarFragment {
                 mTitleElementLeft.setText(leftTitle);
             }
 
-            if (leftTitle == "") {
+            if (Objects.equals(leftTitle, "")) {
                     mTitleIcon2.setVisibility(View.INVISIBLE);
                 } else {
                     mTitleIcon2.setVisibility(View.VISIBLE);
@@ -2649,13 +2653,14 @@ public class DashboardFragment extends CarFragment {
                     try {
                         if (torqueService != null) {
                             torqueData3 = torqueService.getValueForPid(queryPid, true);
-
-
                             String unitText = torqueService.getUnitForPid(queryPid);
                             // workaround for Torque displaying the unit for turbo pressure
                             if (unitText.equals("psi") && pressureUnit.equals("bar")) {
                                 torqueData3 = torqueData3 / 14.5037738f;
                                 unitText = "bar";
+                            } else if (unitText.equals("bar") && pressureUnit.equals("psi")) {
+                                torqueData3 = torqueData3 * 14.5037738f;
+                                unitText = "psi";
                             }
                             value.setText(String.format(Locale.US, FORMAT_DECIMALS_WITH_UNIT, torqueData3,unitText));
                         }
