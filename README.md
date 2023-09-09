@@ -1,13 +1,14 @@
 # Android Auto Plugin for Torque
 
-[![ci][1]][2]
-
 This was a performance monitor, based on [Chillout's Performance Monitor](https://github.com/jilleb/mqb-pm) which was based on Martoreto's aa-stats.
 The app has been modified with a focus on making it more customizable with the ability
 to obtain any PID from Torque. Torque pro is required to use this app.
 
+The original app focused on VAG (Volkswagen Auto Group) cars. This version focuses on exposing
+all data from Troque in a way that is as customizable as possible.
+
 # Main features:
-- Display data from Torque
+- Display data from Torque including custom PIDs
 - Many themes and backgrounds to choose from
 - Up to 10 dashboards
 - Rotary dial support
