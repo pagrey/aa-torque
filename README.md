@@ -39,3 +39,5 @@ Download the latest release here: https://github.com/agronick/performance-monito
 - Hook your phone to your car's USB, start Android Auto on your unit.
 - You can find the AA Torque in the menu on the lower right in Android Auto, the one with the dashboard clock on it.
 
+## Custom Expressions
+AA Torque uses [EvalEx](https://ezylang.github.io/EvalEx) for custom expressions. You can find documentation [here](https://ezylang.github.io/EvalEx/references/functions.html).
