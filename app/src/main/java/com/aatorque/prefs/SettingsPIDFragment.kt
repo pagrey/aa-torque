@@ -4,9 +4,7 @@ import android.content.ComponentName
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.text.InputType
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.CheckBoxPreference
 import androidx.preference.EditTextPreference
@@ -23,6 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+
 
 class SettingsPIDFragment:  PreferenceFragmentCompat() {
     val TAG = "SettingsPIDFragment"
@@ -99,6 +98,12 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
         minValuePref.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
         maxValuePref.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
         unitPref.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
+
+        val editListen = EditTextPreference.OnBindEditTextListener {
+            it.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED
+        }
+        minValuePref.setOnBindEditTextListener(editListen)
+        maxValuePref.setOnBindEditTextListener(editListen)
 
         pidPref.setOnPreferenceChangeListener { preference, newValue ->
             val entryVal = pidPref.entryValues.indexOf(newValue)
