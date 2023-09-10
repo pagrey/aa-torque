@@ -48,15 +48,12 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
             torqueService = (service as TorqueServiceWrapper.LocalBinder).getService()
             torqueService!!.loadPidInformation(false) {
-                pids, detailsQuery ->
+                pids ->
                 requireActivity().runOnUiThread {
-                    val valuesQuery = pids.map { "torque_${it}" }.toTypedArray()
-                    val names = detailsQuery.map { it[0] }.toTypedArray()
-                    val sortedItems = valuesQuery.zip(names).sortedBy {
-                        it.second
-                    }.unzip()
-                    pidPref.entryValues = sortedItems.first.toTypedArray()
-                    pidPref.entries = sortedItems.second.toTypedArray()
+                    val valuesQuery = pids.map { "torque_${it.first}" }.toTypedArray()
+                    val names = pids.map { it.second[0] }.toTypedArray()
+                    pidPref.entryValues = arrayOf("") + valuesQuery
+                    pidPref.entries = arrayOf(getString(R.string.element_none)) + names
                     prefCat!!.isEnabled = true
                     prefCat!!.summary = null
                 }
@@ -109,13 +106,18 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
         minValuePref.setOnBindEditTextListener(editListen)
         maxValuePref.setOnBindEditTextListener(editListen)
 
-        pidPref.setOnPreferenceChangeListener { preference, newValue ->
-            val entryVal = pidPref.entryValues.indexOf(newValue)
-            torqueService?.pidInfo?.get(entryVal)?.also {
-                labelPref.text = it.get(1)
-                minValuePref.text = it.get(4)
-                maxValuePref.text = it.get(3)
-                unitPref.text = it.get(2)
+        pidPref.setOnPreferenceChangeListener { _, newValue ->
+            if (newValue == "") {
+                enableItems(false)
+            } else {
+                val pidOnly = (newValue as String).substring("torque_".length)
+                val entryVal = torqueService!!.pids!!.first {
+                    it.first == pidOnly
+                }
+                labelPref.text = entryVal.second[1]
+                minValuePref.text = entryVal.second[4]
+                maxValuePref.text = entryVal.second[3]
+                unitPref.text = entryVal.second[2]
                 enableItems(true)
             }
             return@setOnPreferenceChangeListener true

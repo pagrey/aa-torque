@@ -14,7 +14,7 @@ import java.io.StringWriter
 import java.util.Arrays
 import java.util.logging.Level
 import java.util.logging.Logger
-import com.aatorque.stats.BuildConfig;
+import com.aatorque.stats.BuildConfig
 import org.acra.config.mailSender
 
 @HiltAndroidApp
@@ -46,7 +46,7 @@ class App : Application() {
             Arrays.asList(BigqueryScopes.BIGQUERY, BigqueryScopes.BIGQUERY_INSERTDATA)
         )
         val settings = PreferenceManager.getDefaultSharedPreferences(this)
-        gc.setSelectedAccountName(settings.getString(PREF_ACCOUNT_NAME, null))
+        gc.selectedAccountName = settings.getString(PREF_ACCOUNT_NAME, null)
         googleCredential = gc
         // Save original exception handler before we change it
 

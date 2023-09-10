@@ -84,7 +84,6 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
                 screens.displaysList.forEachIndexed { index, display ->
                     if (torqueRefresher.hasChanged(index + DISPLAY_OFFSET, display)) {
                         val td = torqueRefresher.populateQuery(index + DISPLAY_OFFSET, display)
-                        torqueRefresher.makeExecutors(torqueService)
                         lifecycleScope.launch {
                             lifecycle.withStateAtLeast(Lifecycle.State.RESUMED) {
                                 displays[index]!!.setupElement(td)
@@ -92,6 +91,7 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
                         }
                     }
                 }
+                torqueRefresher.makeExecutors(torqueService)
             }
         }
     }
@@ -129,7 +129,7 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
         if (screensAnimating || torqueRefresher.lastConnectStatus == false) return
         screensAnimating = true
         val duration = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
-        mTitleElement!!.animate().alpha(0f).setDuration(duration)
+        mTitleElement!!.animate().alpha(0f).duration = duration
         mWrapper.animate()!!.translationX((rootView!!.width * -direction).toFloat()).setDuration(
             duration
         ).alpha(0f).setListener(object : AnimatorListenerAdapter() {
@@ -150,8 +150,8 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
                         override fun onAnimationEnd(animation: Animator) {
                             screensAnimating = false
                         }
-                    }).translationX(0f).setDuration(duration)
-                    mTitleElement!!.animate().alpha(1f).setDuration(duration)
+                    }).translationX(0f).duration = duration
+                    mTitleElement!!.animate().alpha(1f).duration = duration
                 }
             }
         })

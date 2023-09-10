@@ -10,7 +10,6 @@ import java.util.concurrent.ScheduledFuture
 
 class TorqueData(val display: Display) {
 
-    var lastData: Double = 0.0
     var pid: String? = null
     var pidInt: Long? = null
     var minValue: Double = 0.0
@@ -21,11 +20,31 @@ class TorqueData(val display: Display) {
     var parseError = false
 
     var notifyUpdate: ((TorqueData) -> Unit)? = null
+
+    var lastData: Double = 0.0
+        set(value) {
+            lastDataStr = convertIfNeeded(value)
+            field = if (lastDataStr != null) {
+                try {
+                    lastDataStr!!.toDouble()
+                } catch (e: NumberFormatException) {
+                    lastData
+                }
+            } else {
+                value
+            }
+            if (field > maxValue) {
+                maxValue = field
+            }
+            if (field < minValue) {
+                minValue = field
+            }
+        }
     companion object {
         const val TAG = "TorqueData"
         const val PREFIX = "torque_"
         val drawableRegex = Regex("res/drawable/(?<name>.+)\\.[a-z]+")
-        val evalConfig = ExpressionConfiguration.builder()
+        val evalConfig: ExpressionConfiguration = ExpressionConfiguration.builder()
             .decimalPlacesRounding(2)
             .build()
     }
@@ -36,25 +55,6 @@ class TorqueData(val display: Display) {
             pid = value.substring(PREFIX.length)
             val splitParts = value.split("_")
             pidInt = BigInteger(splitParts[splitParts.size - 1].split(",")[0], 16).toLong()
-        }
-    }
-
-    fun setLastData(value: Double) {
-        lastDataStr = convertIfNeeded(value)
-        lastData = if (lastDataStr != null) {
-             try {
-                lastDataStr!!.toDouble()
-            } catch (e: NumberFormatException) {
-                lastData
-            }
-        } else {
-            value
-        }
-        if (value > maxValue) {
-            maxValue = value
-        }
-        if (value < minValue) {
-            minValue = value
         }
     }
 
@@ -83,6 +83,12 @@ class TorqueData(val display: Display) {
 
     fun sendNotifyUpdate() {
         notifyUpdate?.let { it(this) }
+    }
+
+    fun stopRefreshing() {
+        refreshTimer?.cancel(true)
+        refreshTimer = null
+        notifyUpdate = null
     }
 
 }

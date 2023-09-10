@@ -13,6 +13,7 @@ import org.prowl.torque.remote.ITorqueService
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
+typealias PidInfo = List<Pair<String, List<String>>>
 class TorqueServiceWrapper: Service() {
     // Binder given to clients.
     val TAG = "TorqueServiceWrapper"
@@ -21,8 +22,7 @@ class TorqueServiceWrapper: Service() {
     var wasStartSuccessful = false
     var torqueService: ITorqueService? = null
     val onConnect = ArrayList<(ITorqueService) -> Unit>()
-    var pids: Array<String>? = null
-    var pidInfo: List<List<String>>? = null
+    var pids: PidInfo? = null
     var connectCount = 0
     val conLock = ReentrantLock()
 
@@ -42,26 +42,28 @@ class TorqueServiceWrapper: Service() {
         }
     }
 
-    class ListPids(val ts: ITorqueService, val onComplete: (Array<String>, List<List<String>>) -> Unit): java.lang.Runnable {
+    class ListPids(val ts: ITorqueService, val onComplete: (PidInfo) -> Unit): Runnable {
         override fun run() {
             val pids = ts.listAllPIDs()
-            val detailsQuery = ts.getPIDInformation(pids).map { it.split(",") }
-            onComplete(pids, detailsQuery)
+            val pidAttributes = ts.getPIDInformation(pids).map { it.split(",") }
+
+            onComplete(
+                pids.zip(pidAttributes).sortedBy { it.second[0] }
+            )
         }
 
     }
 
-    fun loadPidInformation(force: Boolean = false, onComplete: ((Array<String>, List<List<String>>) -> Unit)? = null) {
-        if (pids != null && pidInfo != null && !force) {
-            onComplete?.invoke(pids!!, pidInfo!!)
+    fun loadPidInformation(force: Boolean = false, onComplete: ((PidInfo) -> Unit)? = null) {
+        if (pids != null && !force) {
+            onComplete?.invoke(pids!!)
             return
         }
         addConnectCallback {
             val bg = ListPids(it) {
-                pids, details ->
-                this.pids = pids
-                this.pidInfo = details
-                onComplete?.invoke(pids, details)
+                newPids ->
+                this.pids = newPids
+                onComplete?.invoke(newPids)
             }
             Thread(bg).start()
         }

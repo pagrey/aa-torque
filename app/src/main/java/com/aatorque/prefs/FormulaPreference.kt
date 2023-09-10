@@ -59,9 +59,9 @@ class FormulaPreference(context: Context, attributeSet: AttributeSet) : Preferen
 
         // Set the adapter and the listener for the spinner
         val selected = scripts.indexOf(getValue())
-        mSpinner.setAdapter(adapter)
+        mSpinner.adapter = adapter
         mSpinner.setSelection(if (selected == -1) 0 else selected)
-        mSpinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+        mSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View,
@@ -77,7 +77,7 @@ class FormulaPreference(context: Context, attributeSet: AttributeSet) : Preferen
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 // Do nothing
             }
-        })
+        }
         return view
     }
 

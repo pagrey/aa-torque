@@ -45,9 +45,8 @@ class SettingsDashboard: PreferenceFragmentCompat() {
     var torqueConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
             val torqueService = (service as TorqueServiceWrapper.LocalBinder).getService()
-            torqueService!!.loadPidInformation(false) {
-                    pids, detailsQuery ->
-                val valuesQuery = pids.map { "torque_${it}" }.toTypedArray()
+            torqueService.loadPidInformation(false) {
+                    pids ->
                 requireActivity().runOnUiThread {
                     mainCat.title = resources.getText(R.string.pref_dataelementsettings_1).replace("1".toRegex(), (dashboardIndex() + 1).toString())
                     val dbIndex = dashboardIndex()
@@ -65,9 +64,9 @@ class SettingsDashboard: PreferenceFragmentCompat() {
                                     mainCat.addPreference(
                                         Preference(requireContext()).also {
                                             it.key = "${type}_${dbIndex}_${j}"
-                                            if (valuesQuery.contains(screen.pid)) {
-                                                it.summary = detailsQuery.get(valuesQuery.indexOf(screen.pid))[0]
-                                            }
+                                            it.summary = pids.firstOrNull { pid ->
+                                                "torque_${pid.first}" == screen.pid
+                                            }?.second?.get(0) ?: ""
                                             it.title = requireContext().getString(texts[i][j])
                                             it.icon = AppCompatResources.getDrawable(requireContext(), icons[i][j])
                                             it.fragment = "com.aatorque.prefs.SettingsPIDFragment"

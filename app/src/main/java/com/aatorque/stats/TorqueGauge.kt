@@ -272,7 +272,7 @@ class TorqueGauge : Fragment(){
 
     fun onUpdate(data: TorqueData) {
         if (!isVisible || isRemoving) return
-        val fVal = data.lastData!!.toFloat()
+        val fVal = data.lastData.toFloat()
         mClock?.speedTo(fVal, 250)
         mRayClock?.speedTo(fVal, 250)
         if (maxMarksOn == true) {

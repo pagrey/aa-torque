@@ -15,7 +15,7 @@ class TorqueRefresher {
     var conWatcher: ((Boolean) -> Unit)? = null
 
     fun populateQuery(pos: Int, query: Display): TorqueData {
-        data[pos]?.notifyUpdate = null
+        data[pos]?.stopRefreshing()
         val td = TorqueData(query)
         data[pos] = td
         Log.d(TAG, "Setting query: $query for pos $pos")
@@ -29,7 +29,7 @@ class TorqueRefresher {
                 torqueData.refreshTimer = executor.scheduleAtFixedRate({
                     service.runIfConnected { ts ->
                         val value = ts.getValueForPid(torqueData.pidInt!!, true)
-                        torqueData.setLastData(value.toDouble())
+                        torqueData.lastData = value.toDouble()
                         handler.post {
                             torqueData.sendNotifyUpdate()
                             if (value != 0f && lastConnectStatus != true) {
@@ -45,8 +45,7 @@ class TorqueRefresher {
 
     fun stopExecutors() {
         for (td in data.values) {
-            td.refreshTimer?.cancel(true)
-            td.refreshTimer = null
+            td.stopRefreshing()
         }
     }
 
