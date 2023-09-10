@@ -15,7 +15,7 @@ all data from Troque in a way that is as customizable as possible.
 
 # Installation instructions:
 
-Download the latest release here: https://github.com/agronick/performance-monitor/releases
+Download the latest [release](https://github.com/agronick/aa-torque/releases).
 
 - Install [Torque Pro](https://play.google.com/store/apps/details?id=org.prowl.torque&hl=en_US&gl=US)
 - Make sure Android Auto is in developer mode: Open Android Auto (while not connected to the car), go to About. Tap the "About Android Auto" header 10 times until you see a toast message saying you're a developer. From the right top corner select developer options, scroll down and make sure you check "Unknown sources". This will allow programs from non-Playstore apps to be run on Android Auto. See a picture guide how to enable Developer mode here: https://www.howtogeek.com/271132/how-to-enable-developer-settings-on-android-auto/
