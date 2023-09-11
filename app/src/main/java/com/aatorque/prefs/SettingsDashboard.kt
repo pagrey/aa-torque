@@ -18,6 +18,7 @@ class SettingsDashboard: PreferenceFragmentCompat() {
 
     lateinit var performanceTitle: EditTextPreference
     lateinit var mainCat: PreferenceCategory
+    lateinit var optionsCat: PreferenceCategory
 
     val clockText = arrayOf(
         R.string.pref_leftclock,
@@ -54,14 +55,13 @@ class SettingsDashboard: PreferenceFragmentCompat() {
                         requireContext().dataStore.data.collect { userPreference ->
                             val screen = userPreference.getScreens(dbIndex)
                             performanceTitle.text = screen.title
-                            mainCat.removeAll()
-                            mainCat.addPreference(performanceTitle)
+                            optionsCat.removeAll()
                             val sources = arrayOf(screen.gaugesList, screen.displaysList)
                             val texts = arrayOf(clockText, displayText)
                             val icons = arrayOf(clockIcon, displayIcon)
                             arrayOf("clock", "display").forEachIndexed { i, type ->
                                 sources[i].forEachIndexed { j, screen ->
-                                    mainCat.addPreference(
+                                    optionsCat.addPreference(
                                         Preference(requireContext()).also {
                                             it.key = "${type}_${dbIndex}_${j}"
                                             it.summary = pids.firstOrNull { pid ->
@@ -97,10 +97,11 @@ class SettingsDashboard: PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.display_setting)
         mainCat = findPreference("displayCat")!!
+        optionsCat = findPreference("displayOptions")!!
         performanceTitle = findPreference("performanceTitle")!!
         performanceTitle.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
         performanceTitle.setOnPreferenceChangeListener {
-                preference, newValue ->
+                _, newValue ->
             lifecycleScope.launch {
                 requireContext().dataStore.updateData {
                     val screen = it.getScreens(dashboardIndex()).toBuilder().setTitle(newValue as String)

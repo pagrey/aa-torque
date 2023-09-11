@@ -13,7 +13,8 @@
         android:summary="%s"
         android:title="@string/pid"
         app:dialogTitle="@string/pid"
-        android:persistent="false" />
+        android:persistent="false"
+        />
     </PreferenceCategory>
     <CheckBoxPreference
         android:key="showLabel"
@@ -23,7 +24,8 @@
         android:title="@string/pidShowLabel"
         android:dependency="pidList"
         android:enabled="false"
-        android:persistent="false" />
+        android:persistent="false"
+        />
     <EditTextPreference
         android:key="label"
         android:layout_width="wrap_content"
@@ -33,7 +35,8 @@
         android:singleLine="true"
         android:summary="%s"
         android:title="@string/pidLabel"
-        android:persistent="false" />
+        android:persistent="false"
+        />
     <com.aatorque.prefs.ImageListPreference
         android:key="image"
         android:title="@string/icon"

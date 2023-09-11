@@ -25,7 +25,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         numScreensPref = findPreference("dashboardCount")!!
         numScreensPref.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
         numScreensPref.setOnPreferenceChangeListener {
-                preference, newValue ->
+                _, newValue ->
             val intVal = (newValue as String).toInt()
             if (intVal in 1..10) {
                 lifecycleScope.launch {
@@ -62,7 +62,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                             R.string.pref_dataelementsettings_1
                         ).replace("1", (i + 1).toString())
                         it.key = "dashboard_$i"
-                        it.fragment = SettingsDashboard::class.java.simpleName
+                        it.fragment = SettingsDashboard::class.java.canonicalName
                         it.summary = screen.title
                     })
                 }
