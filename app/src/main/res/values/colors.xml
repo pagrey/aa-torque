@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#212121
-    </color>
-    <color name="primary_dark">#000000
-    </color>
+    <color name="primary">#212121</color>
+    <color name="primary_dark">#000000</color>
     <color name="accent">#484848</color>
-    <color name="red">#ffc50101</color>
+    <color name="red">#eec50101</color>
     <color name="highspeed">#FF0000</color>
     <color name="aqua">#7700aeef</color>
 

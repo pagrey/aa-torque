@@ -57,6 +57,8 @@ class TorqueGauge : Fragment(){
         mTextTitle = view.findViewById(R.id.textTitle)
         mIcon = view.findViewById(R.id.textIcon)
         mMax = view.findViewById(R.id.dial_Max)
+        mMax?.setIndicator(Indicator.Indicators.TriangleIndicator)
+        mMax?.indicatorColor = resources.getColor(R.color.red, null)
         rootView = view
         return rootView
     }
