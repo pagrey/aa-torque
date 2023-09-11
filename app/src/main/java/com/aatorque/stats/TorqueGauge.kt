@@ -157,7 +157,6 @@ class TorqueGauge : Fragment(){
 
         typedArray2.recycle()
         // get min/max values and unit from torque
-        val iconName = data.getDrawableName()
 
         if (data.pid == null) {
             setupClock(
@@ -175,7 +174,7 @@ class TorqueGauge : Fragment(){
         } else {
             setupClock(
                 mIcon,
-                if (!data.display.showLabel && iconName != null) iconName else "ic_none",
+                data.getDrawableName() ?: "ic_none",
                 if (data.display.showLabel) data.display.label else "",
                 mClock,
                 false,
