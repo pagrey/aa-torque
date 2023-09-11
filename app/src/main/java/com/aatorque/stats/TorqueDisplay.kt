@@ -48,7 +48,7 @@ class TorqueDisplay : Fragment() {
 
         data.notifyUpdate = this::onUpdate
 
-        var icon = data.getDrawableName()
+        var icon = data.getDrawableName() ?: "ic_none"
         label.setBackgroundResource(0)
         value.visibility = View.VISIBLE
 
