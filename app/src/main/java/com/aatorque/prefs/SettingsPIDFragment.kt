@@ -43,6 +43,7 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
     lateinit var unitPref: EditTextPreference
     lateinit var runcustomScriptPref: CheckBoxPreference
     lateinit var jsPref: FormulaPreference
+    lateinit var wholeNumberPref: CheckBoxPreference
     var torqueService: TorqueServiceWrapper? = null
 
     var torqueConnection = object : ServiceConnection {
@@ -94,6 +95,7 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
         unitPref = findPreference("unit")!!
         runcustomScriptPref = findPreference("runcustomScript")!!
         jsPref = findPreference("customScript")!!
+        wholeNumberPref = findPreference("wholeNumbers")!!
 
         imagePref.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
         labelPref.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
@@ -127,8 +129,10 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
 
         TorqueServiceWrapper.runStartIntent(requireContext(), torqueConnection)
         showLabelPref.setOnPreferenceChangeListener { _, newValue ->
-            labelPref.isEnabled = !(newValue as Boolean)
-            imagePref.isEnabled = newValue
+            if (!isClock) {
+                labelPref.isEnabled = (newValue as Boolean)
+                imagePref.isEnabled = !newValue
+            }
             return@setOnPreferenceChangeListener true
         }
     }
@@ -147,6 +151,7 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
             maxValuePref.text = display.maxValue.toString()
             unitPref.text = display.unit
             runcustomScriptPref.isChecked = display.enableScript
+            wholeNumberPref.isChecked = display.wholeNumbers
             jsPref.setValue(display.customScript)
             if (pidPref.value.startsWith("torque")) {
                 enableItems(true)
@@ -155,14 +160,18 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
     }
 
     fun enableItems(enabled: Boolean) {
-        showLabelPref.isEnabled = enabled
-        imagePref.isEnabled = if (enabled) !showLabelPref.isChecked else false
-        labelPref.isEnabled = if (enabled) showLabelPref.isChecked else false
         unitPref.isEnabled = enabled
         runcustomScriptPref.isEnabled = enabled
+        showLabelPref.isEnabled = enabled
         if (isClock) {
             minValuePref.isEnabled = enabled
             maxValuePref.isEnabled = enabled
+            wholeNumberPref.isEnabled = enabled
+            imagePref.isEnabled = enabled
+            labelPref.isEnabled = enabled
+        } else {
+            imagePref.isEnabled = if (enabled) !showLabelPref.isChecked else false
+            labelPref.isEnabled = if (enabled) showLabelPref.isChecked else false
         }
     }
 
@@ -191,6 +200,8 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
             runcustomScriptPref.isChecked
         ).setCustomScript(
             jsPref.getValue()
+        ).setWholeNumbers(
+            wholeNumberPref.isChecked
         )
         if (imagePref.value != null) {
             display = display.setIcon(imagePref.value)

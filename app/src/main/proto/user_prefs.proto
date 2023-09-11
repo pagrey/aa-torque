@@ -12,6 +12,7 @@ message Display {
   string unit = 12;
   bool enableScript = 13;
   string customScript = 14;
+  bool wholeNumbers = 15;
 }
 
 message Screen {

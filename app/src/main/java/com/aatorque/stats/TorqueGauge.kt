@@ -36,7 +36,6 @@ class TorqueGauge : Fragment(){
     private var raysOn: Boolean? = null
     private var maxMarksOn: Boolean? = null
     private var maxOn: Boolean? = null
-    private var selectedTheme: String? = null
     private var torqueMin = 0
     private var torqueMax = 100
 
@@ -183,8 +182,8 @@ class TorqueGauge : Fragment(){
                 data.display.unit,
                 data.display.minValue,
                 data.display.maxValue,
-                if (data.display.minValue > 100) "integer" else "float",
-                "integer"
+                if (data.display.wholeNumbers) "integer" else "float",
+                if (data.display.maxValue <= 1) "float" else "integer",
             )
         }
 
@@ -234,7 +233,7 @@ class TorqueGauge : Fragment(){
 
         // set icon. Clocks that don't need an icon have ic_none as icon
         icon!!.background = iconDrawable
-        icon.text = iconText
+        mTextTitle?.text = iconText
         clock!!.setUnit(unit!!)
         if (minspeed >= maxspeed) {
             Log.e(TAG, "Maxspeed is not greater than minspeed min:${minspeed} max:${maxspeed}")

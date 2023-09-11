@@ -70,6 +70,13 @@
         android:enabled="false"
         android:persistent="false"
     />
+    <CheckBoxPreference
+        android:key="wholeNumbers"
+        android:title="@string/whole_numbers"
+        android:summary="@string/whole_numbers_desc"
+        android:persistent="false"
+        android:enabled="false"
+        />
      <CheckBoxPreference
         android:key="runcustomScript"
         android:title="@string/enable_script"

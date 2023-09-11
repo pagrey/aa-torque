@@ -17,7 +17,6 @@ class TorqueData(val display: Display) {
     var expression: Expression? = null
     var lastDataStr: String? = null
     var refreshTimer: ScheduledFuture<*>? = null
-    var parseError = false
 
     var notifyUpdate: ((TorqueData) -> Unit)? = null
         set(value) {
@@ -63,14 +62,13 @@ class TorqueData(val display: Display) {
     }
 
     private fun convertIfNeeded(value: Double): String? {
-        if (!display.enableScript || display.customScript == "" || parseError) return null
+        if (!display.enableScript || display.customScript == "") return null
         if (expression == null) {
-            expression = Expression(display.customScript, evalConfig)
+            expression = Expression(display.customScript.replace("x", "*"), evalConfig)
         }
         return try {
             expression!!.with("a", value).evaluate().stringValue
         } catch (e: BaseException) {
-            parseError = true
             Log.e(TAG, "Unable to parse")
             e.printStackTrace()
             "Error"

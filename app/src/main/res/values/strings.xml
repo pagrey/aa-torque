@@ -366,4 +366,6 @@
     <string name="file_exported_successfully">File exported successfully</string>
     <string name="export_failed">Export failed</string>
     <string name="file_not_available">Export file is not available</string>
+    <string name="whole_numbers">Whole numbers</string>
+    <string name="whole_numbers_desc">Display gauge without decimal places</string>
 </resources>
