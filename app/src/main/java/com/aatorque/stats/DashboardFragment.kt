@@ -201,6 +201,8 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
 
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+        if (context == null) return
+
         ambientOn = sharedPreferences.getBoolean(
             "ambientActive",
             false
