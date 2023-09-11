@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:summary="%s"
         android:title="@string/pid"
-        app:dialogTitle="@string/pid" />
+        app:dialogTitle="@string/pid"
+        android:persistent="false" />
     </PreferenceCategory>
     <CheckBoxPreference
         android:key="showLabel"
@@ -21,7 +22,8 @@
         android:defaultValue="false"
         android:title="@string/pidShowLabel"
         android:dependency="pidList"
-        android:enabled="false"/>
+        android:enabled="false"
+        android:persistent="false" />
     <EditTextPreference
         android:key="label"
         android:layout_width="wrap_content"
@@ -30,7 +32,8 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:summary="%s"
-        android:title="@string/pidLabel" />
+        android:title="@string/pidLabel"
+        android:persistent="false" />
     <com.aatorque.prefs.ImageListPreference
         android:key="image"
         android:title="@string/icon"
@@ -39,6 +42,7 @@
         android:entryValues="@array/icons"
         android:dependency="pidList"
         android:enabled="false"
+        android:persistent="false"
         />
     <EditTextPreference
         android:key="minValue"
@@ -46,6 +50,7 @@
         android:title="@string/min_value"
         android:dependency="pidList"
         android:enabled="false"
+        android:persistent="false"
         />
     <EditTextPreference
         android:key="maxValue"
@@ -53,22 +58,26 @@
         android:title="@string/max_value"
         android:dependency="pidList"
         android:enabled="false"
+        android:persistent="false"
         />
     <EditTextPreference
         android:key="unit"
         android:title="@string/unit"
         android:dependency="pidList"
         android:enabled="false"
+        android:persistent="false"
     />
      <CheckBoxPreference
         android:key="runcustomScript"
         android:title="@string/enable_script"
         android:summary="@string/enable_script_desc"
+         android:persistent="false"
      />
     <com.aatorque.prefs.FormulaPreference
         android:key="customScript"
         android:title="@string/custom_script"
         android:summary="@string/custom_script_desc"
         android:dependency="runcustomScript"
+        android:persistent="false"
         />
 </PreferenceScreen>

@@ -12,7 +12,8 @@
             android:title="@string/pref_title_performance_1"
             android:defaultValue="Performance monitor 1"
             android:icon="@drawable/ic_settings_title"
-            android:inputType="text" />
+            android:inputType="text"
+            android:persistent="false" />
 
     </PreferenceCategory>
 </PreferenceScreen>

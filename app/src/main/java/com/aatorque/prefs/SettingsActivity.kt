@@ -2,25 +2,34 @@ package com.aatorque.prefs
 
 import android.Manifest
 import android.accounts.AccountManager
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
-import androidx.preference.PreferenceManager
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.setFragmentResultListener
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.google.android.gms.common.GoogleApiAvailability
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import androidx.preference.PreferenceManager
 import com.aatorque.stats.App
 import com.aatorque.stats.R
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import java.io.File
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.lifecycle.lifecycleScope
+import com.aatorque.datastore.UserPreference
+import kotlinx.coroutines.launch
 
-class SettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+
+class SettingsActivity<MenuItem> : AppCompatActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
     private var mCredential: GoogleAccountCredential? = null
     private var mCurrentAuthorizationIntent: Intent? = null
 
@@ -38,6 +47,118 @@ class SettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.OnPrefere
                 .beginTransaction()
                 .replace(R.id.settings_fragment, SettingsFragment())
                 .commit()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.settings_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            R.id.action_export_dashboards -> {
+                // Export the file to a user provided location
+                exportFile()
+                true
+            }
+            R.id.action_import_dashboards -> {
+                openFile()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun openFile() {
+        importFileLauncher.launch("application/x-protobuf")
+    }
+
+    private fun exportFile() {
+        val file = File(filesDir, "datastore/user_prefs.pb")
+
+        if (file.exists() && file.canRead()) {
+            // Launch the activity result with the contract input
+            exportFileLauncher.launch(file.name)
+        } else {
+            // Show a toast message that the file is not available
+            Toast.makeText(this, R.string.file_not_available, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private val exportFileLauncher = registerForActivityResult(ExportFileContract()) { uri: Uri? ->
+        // This lambda will be executed when the activity result returns
+        var msg = if (uri != null) {
+            // Get the content resolver and open an output stream to the URI
+            val resolver = contentResolver
+            resolver.openOutputStream(uri)?.use { outputStream ->
+                // Get the file to be exported and open an input stream from it
+                val file = File(filesDir, "datastore/user_prefs.pb")
+                file.inputStream().use { inputStream ->
+                    // Copy the bytes from the input stream to the output stream
+                    inputStream.copyTo(outputStream)
+                }
+            }
+            // Show a toast message that the file was exported successfully
+            R.string.file_exported_successfully
+        } else {
+            // Show a toast message that the export failed
+            R.string.export_failed
+        }
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
+
+    private val importFileLauncher = registerForActivityResult(ImportFileContract()) { uri: Uri? ->
+        if (uri != null) {
+            val inStream = contentResolver.openInputStream(uri)
+            this@SettingsActivity.lifecycleScope.launch {
+                this@SettingsActivity.applicationContext.dataStore.updateData {
+                    return@updateData UserPreference.parseFrom(inStream)
+                }
+            }
+        }
+    }
+
+    class ExportFileContract() : ActivityResultContract<String, Uri?>() {
+
+        override fun createIntent(context: Context, input: String): Intent {
+            return Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                // Filter only documents of type "application/octet-stream"
+                type = "application/octet-stream"
+                // Suggest a file name based on the original file name
+                putExtra(Intent.EXTRA_TITLE, "dashboards.pb")
+            }
+        }
+
+        // This function parses the activity result and returns the URI of the user selected location
+        override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
+            return if (resultCode == Activity.RESULT_OK) {
+                intent?.data
+            } else {
+                null
+            }
+        }
+    }
+
+    class ImportFileContract() : ActivityResultContract<String, Uri?>() {
+
+        override fun createIntent(context: Context, input: String): Intent {
+            return Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = input
+            }
+        }
+
+        // This function parses the activity result and returns the URI of the user selected location
+        override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
+            return if (resultCode == Activity.RESULT_OK) {
+                intent?.data
+            } else {
+                null
+            }
         }
     }
 
@@ -201,6 +322,7 @@ class SettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.OnPrefere
         private const val PERMISSION_CAR_VENDOR_EXTENSION =
             "com.google.android.gms.permission.CAR_VENDOR_EXTENSION"
         const val PREF_LOCATION = "useGoogleGeocoding"
+        const val REQUEST_CODE_EXPORT_FILE = 51
     }
 }
 

@@ -5,6 +5,7 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import android.text.InputType
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.CheckBoxPreference
 import androidx.preference.EditTextPreference
@@ -111,13 +112,14 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
                 enableItems(false)
             } else {
                 val pidOnly = (newValue as String).substring("torque_".length)
-                val entryVal = torqueService!!.pids!!.first {
+                torqueService!!.pids!!.firstOrNull {
                     it.first == pidOnly
+                }?.let {entryVal ->
+                    labelPref.text = entryVal.second[1]
+                    minValuePref.text = entryVal.second[4]
+                    maxValuePref.text = entryVal.second[3]
+                    unitPref.text = entryVal.second[2]
                 }
-                labelPref.text = entryVal.second[1]
-                minValuePref.text = entryVal.second[4]
-                maxValuePref.text = entryVal.second[3]
-                unitPref.text = entryVal.second[2]
                 enableItems(true)
             }
             return@setOnPreferenceChangeListener true

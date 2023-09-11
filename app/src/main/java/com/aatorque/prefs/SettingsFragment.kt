@@ -62,7 +62,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                             R.string.pref_dataelementsettings_1
                         ).replace("1", (i + 1).toString())
                         it.key = "dashboard_$i"
-                        it.fragment = "com.aatorque.prefs.SettingsDashboard"
+                        it.fragment = SettingsDashboard::class.java.simpleName
                         it.summary = screen.title
                     })
                 }

@@ -33,7 +33,6 @@ class ImageListPreference(
         private val layoutResource: Int,
         private val items: List<CustomListItem>,
     ) : ArrayAdapter<CustomListItem>(context, layoutResource, items) {
-
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val view = convertView ?: LayoutInflater.from(context).inflate(layoutResource, parent, false)
             val item = items[position]

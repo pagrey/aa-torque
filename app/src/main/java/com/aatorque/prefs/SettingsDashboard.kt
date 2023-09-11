@@ -69,7 +69,7 @@ class SettingsDashboard: PreferenceFragmentCompat() {
                                             }?.second?.get(0) ?: ""
                                             it.title = requireContext().getString(texts[i][j])
                                             it.icon = AppCompatResources.getDrawable(requireContext(), icons[i][j])
-                                            it.fragment = "com.aatorque.prefs.SettingsPIDFragment"
+                                            it.fragment = SettingsPIDFragment::class.java.canonicalName
                                         }
                                     )
                                 }

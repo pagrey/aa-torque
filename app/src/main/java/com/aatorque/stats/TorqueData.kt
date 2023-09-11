@@ -20,6 +20,10 @@ class TorqueData(val display: Display) {
     var parseError = false
 
     var notifyUpdate: ((TorqueData) -> Unit)? = null
+        set(value) {
+            field = value
+            value?.let { it(this) }
+        }
 
     var lastData: Double = 0.0
         set(value) {
