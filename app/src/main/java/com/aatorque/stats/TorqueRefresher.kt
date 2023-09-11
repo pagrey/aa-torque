@@ -15,7 +15,7 @@ class TorqueRefresher {
     var conWatcher: ((Boolean) -> Unit)? = null
 
     fun populateQuery(pos: Int, query: Display): TorqueData {
-        data[pos]?.stopRefreshing()
+        data[pos]?.stopRefreshing(true)
         val td = TorqueData(query)
         data[pos] = td
         Log.d(TAG, "Setting query: $query for pos $pos")

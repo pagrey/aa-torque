@@ -169,6 +169,7 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
     }
 
     override fun onResume() {
+        Log.d(TAG, "onResume")
         super.onResume()
         torqueRefresher.makeExecutors(torqueService)
         torqueRefresher.watchConnection(torqueService) {
@@ -184,6 +185,7 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
     }
 
     override fun onPause() {
+        Log.d(TAG, "onPause")
         super.onPause()
         torqueRefresher.stopExecutors()
     }

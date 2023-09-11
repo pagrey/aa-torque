@@ -89,10 +89,12 @@ class TorqueData(val display: Display) {
         notifyUpdate?.let { it(this) }
     }
 
-    fun stopRefreshing() {
+    fun stopRefreshing(isDestroying: Boolean = false) {
         refreshTimer?.cancel(true)
         refreshTimer = null
-        notifyUpdate = null
+        if (isDestroying) {
+            notifyUpdate = null
+        }
     }
 
 }
