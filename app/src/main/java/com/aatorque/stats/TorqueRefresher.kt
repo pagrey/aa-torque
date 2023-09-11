@@ -28,11 +28,11 @@ class TorqueRefresher {
             if (torqueData.pid != null && torqueData.refreshTimer == null) {
                 torqueData.refreshTimer = executor.scheduleAtFixedRate({
                     service.runIfConnected { ts ->
-                        val value = ts.getValueForPid(torqueData.pidInt!!, true)
-                        torqueData.lastData = value.toDouble()
+                        val value = ts.getPIDValuesAsDouble(arrayOf( torqueData.pid!!))[0]
+                        torqueData.lastData = value
                         handler.post {
                             torqueData.sendNotifyUpdate()
-                            if (value != 0f && lastConnectStatus != true) {
+                            if (value != 0.0 && lastConnectStatus != true) {
                                 lastConnectStatus = true
                                 conWatcher?.let { it(true) }
                             }

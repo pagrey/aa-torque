@@ -84,6 +84,7 @@
             android:key="dashboardCount"
             android:title="@string/num_screens"
             android:defaultValue="1"
+            android:persistent="false"
         />
 
     </PreferenceCategory>

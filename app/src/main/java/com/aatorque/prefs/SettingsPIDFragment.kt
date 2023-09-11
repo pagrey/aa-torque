@@ -126,7 +126,7 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
         }
 
         TorqueServiceWrapper.runStartIntent(requireContext(), torqueConnection)
-        showLabelPref.setOnPreferenceChangeListener { preference, newValue ->
+        showLabelPref.setOnPreferenceChangeListener { _, newValue ->
             labelPref.isEnabled = !(newValue as Boolean)
             imagePref.isEnabled = newValue
             return@setOnPreferenceChangeListener true

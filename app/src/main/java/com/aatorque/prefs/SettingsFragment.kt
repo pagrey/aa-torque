@@ -1,6 +1,7 @@
 package com.aatorque.prefs
 
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -50,17 +51,23 @@ class SettingsFragment : PreferenceFragmentCompat() {
             return@setOnPreferenceChangeListener false
         }
 
+        numScreensPref.setOnBindEditTextListener {
+            it.inputType = InputType.TYPE_CLASS_NUMBER
+        }
+
+        val baseTitle = requireContext().getString(
+            R.string.pref_dataelementsettings_1
+        )
         lifecycleScope.launch {
             requireContext().dataStore.data.distinctUntilChangedBy{
                 it.screensCount
             }.collect { userPreference ->
+                numScreensPref.text = userPreference.screensCount.toString()
                 dashboardsCat.removeAll()
                 userPreference.screensList.forEachIndexed {
                         i, screen ->
                     dashboardsCat.addPreference(Preference(requireContext()).also {
-                        it.title = requireContext().getString(
-                            R.string.pref_dataelementsettings_1
-                        ).replace("1", (i + 1).toString())
+                        it.title = baseTitle.replace("1", (i + 1).toString())
                         it.key = "dashboard_$i"
                         it.fragment = SettingsDashboard::class.java.canonicalName
                         it.summary = screen.title

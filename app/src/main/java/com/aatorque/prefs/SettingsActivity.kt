@@ -1,7 +1,5 @@
 package com.aatorque.prefs
 
-import android.Manifest
-import android.accounts.AccountManager
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -18,7 +16,6 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.aatorque.stats.App
 import com.aatorque.stats.R
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import java.io.File
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.lifecycle.lifecycleScope
@@ -27,8 +24,6 @@ import kotlinx.coroutines.launch
 
 
 class SettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
-    private var mCredential: GoogleAccountCredential? = null
-    private var mCurrentAuthorizationIntent: Intent? = null
 
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,8 +31,6 @@ class SettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.OnPrefere
         setContentView(R.layout.activity_settings)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        val app = application as App
-        mCredential = app.googleCredential
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()

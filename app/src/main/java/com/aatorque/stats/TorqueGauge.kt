@@ -153,7 +153,7 @@ class TorqueGauge : Fragment(){
 
         val typedArray2 =
             requireContext().theme.obtainStyledAttributes(intArrayOf(R.attr.themedStopWatchBackground))
-        val swBackgroundResource = typedArray2.getResourceId(0, 0)
+
         typedArray2.recycle()
         // get min/max values and unit from torque
         val iconName = data.getDrawableName()

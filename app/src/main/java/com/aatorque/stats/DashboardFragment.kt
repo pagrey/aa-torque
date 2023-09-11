@@ -303,7 +303,7 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
         if (enabled) {
             mBtnPrev?.visibility = View.INVISIBLE
             mBtnNext?.visibility = View.INVISIBLE
-            rootView!!.setOnGenericMotionListener { v, ev ->
+            rootView!!.setOnGenericMotionListener { _, ev ->
                 if (ev.action == MotionEvent.ACTION_SCROLL &&
                     ev.isFromSource(InputDeviceCompat.SOURCE_MOUSE)
                 ) {
