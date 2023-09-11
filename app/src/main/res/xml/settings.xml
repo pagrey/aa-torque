@@ -8,27 +8,25 @@
         android:layout="@layout/prefcat">
 
 
-        <ListPreference
+        <com.aatorque.prefs.ImageListPreference
             android:entries="@array/Themes"
             android:entryValues="@array/Themes"
             android:key="selectedTheme"
             android:summary="%s"
             android:title="@string/pref_theme"
-            app:ilp_backgroundTint="@android:color/transparent"
-            app:ilp_entryImages="@array/ThemesThumbs"
-            app:ilp_tint="#00FFFFFF" />
-        <ListPreference
+            app:entryImages="@array/ThemesThumbs" />
+        <com.aatorque.prefs.ImageListPreference
             android:entries="@array/fontEntries"
             android:entryValues="@array/fontValues"
             android:key="selectedFont"
             android:summary="%s"
             android:title="@string/pref_font"
-            app:ilp_backgroundTint="@color/white"
-            app:ilp_entryImages="@array/FontThumbs"
-            app:ilp_tint="#00FFFFFF" />
-        <ListPreference
+            app:entryImages="@array/FontThumbs"
+            app:imageBackground="@color/white" />
+        <com.aatorque.prefs.ImageListPreference
             android:entries="@array/backgroundstrings"
             android:entryValues="@array/backgrounds"
+            app:entryImages="@array/backgrounds"
             android:key="selectedBackground"
             android:summary="%s"
             android:title="@string/pref_background" />

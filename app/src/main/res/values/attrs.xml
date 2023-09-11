@@ -11,6 +11,7 @@
 
     <declare-styleable name="ImageListPreference">
         <attr name="entryImages" format="reference" />
+        <attr name="imageBackground" format="color" />
     </declare-styleable>
 
 </resources>

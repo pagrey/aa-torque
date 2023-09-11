@@ -19,11 +19,13 @@ import java.util.Collections
 class SettingsFragment : PreferenceFragmentCompat() {
     lateinit var numScreensPref: EditTextPreference
     lateinit var dashboardsCat: PreferenceCategory
+    lateinit var backgroundPref: ImageListPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dashboardsCat = findPreference("dashboardsCat")!!
         numScreensPref = findPreference("dashboardCount")!!
+        backgroundPref = findPreference("selectedBackground")!!
         numScreensPref.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
         numScreensPref.setOnPreferenceChangeListener {
                 _, newValue ->
@@ -50,6 +52,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
             return@setOnPreferenceChangeListener false
         }
+
+        backgroundPref.iconResArray = resources.getStringArray(R.array.backgrounds).map {
+            resources.getIdentifier(it, "drawable", requireContext().packageName)
+        }.toIntArray()
 
         numScreensPref.setOnBindEditTextListener {
             it.inputType = InputType.TYPE_CLASS_NUMBER
