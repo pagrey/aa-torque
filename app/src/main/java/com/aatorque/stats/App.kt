@@ -2,12 +2,10 @@ package com.aatorque.stats
 
 import android.app.Application
 import android.content.Context
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import org.acra.config.toast
 import org.acra.data.StringFormat
 import org.acra.ktx.initAcra
-import java.io.PrintWriter
-import java.io.StringWriter
 import java.util.logging.Level
 import org.acra.config.mailSender
 
