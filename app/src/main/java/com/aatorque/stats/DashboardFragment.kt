@@ -110,7 +110,7 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
         mBtnPrev!!.setOnClickListener  { setScreen(-1) }
         mTitleElement = view.findViewById(R.id.textTitle)
         mWrapper = view.findViewById(R.id.include_wrap)
-        mConStatus = view.findViewById<TextView>(R.id.con_status)
+        mConStatus = view.findViewById(R.id.con_status)
 
         guages[0] = childFragmentManager.findFragmentById(R.id.gaugeLeft)!! as TorqueGauge
         guages[1] = childFragmentManager.findFragmentById(R.id.gaugeCenter)!! as TorqueGauge
@@ -205,6 +205,7 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         if (context == null) return
 
+        // todo: reimplement or remove
         ambientOn = sharedPreferences.getBoolean(
             "ambientActive",
             false

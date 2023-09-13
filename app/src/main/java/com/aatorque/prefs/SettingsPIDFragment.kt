@@ -22,6 +22,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlin.math.ceil
+import kotlin.math.floor
 
 
 class SettingsPIDFragment:  PreferenceFragmentCompat() {
@@ -118,8 +120,8 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
                     it.first == pidOnly
                 }?.let {entryVal ->
                     labelPref.text = entryVal.second[1]
-                    minValuePref.text = entryVal.second[4]
-                    maxValuePref.text = entryVal.second[3]
+                    maxValuePref.text = ceil(entryVal.second[3].toDouble()).toInt().toString()
+                    minValuePref.text = floor(entryVal.second[4].toDouble()).toInt().toString()
                     unitPref.text = entryVal.second[2]
                 }
                 enableItems(true)
@@ -177,7 +179,7 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
 
     override fun onPause() {
         super.onPause()
-        if (pidPref.value != null) {
+        if (pidPref.value != null && mBound) {
             saveState()
         }
     }
@@ -230,7 +232,9 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
 
     override fun onDestroy() {
         super.onDestroy()
-        requireContext().unbindService(torqueConnection)
+        if (mBound) {
+            requireContext().unbindService(torqueConnection)
+        }
     }
 
 }

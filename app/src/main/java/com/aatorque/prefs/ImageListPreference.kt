@@ -49,7 +49,7 @@ class ImageListPreference(
 
     }
 
-    var iconResArray: IntArray? = null
+    var iconResArray: Array<Int>? = null
     var bgColor: Int? = null
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ImageListPreference)
@@ -58,8 +58,8 @@ class ImageListPreference(
                 bgColor = context.getColor(it)
             }
         }
-        iconResArray = typedArray.getResourceId(R.styleable.ImageListPreference_entryImages, 0).let {
-            if (it == 0) null else context.resources.obtainTypedArray(it).run {
+        val iconArray = typedArray.getResourceId(R.styleable.ImageListPreference_entryImages, 0).let {
+            context.resources.obtainTypedArray(it).run {
                 val array = IntArray(length())
                 for (i in 0 until length()) {
                     array[i] = getResourceId(i, 0)
@@ -69,6 +69,13 @@ class ImageListPreference(
             }
         }
         typedArray.recycle()
+
+        val sorted = entryValues.zip(entries).zip(iconArray.toList()).sortedBy {
+            it.first.second.toString()
+        }
+        entryValues = sorted.map { it.first.first }.toTypedArray()
+        entries = sorted.map { it.first.second }.toTypedArray()
+        iconResArray = sorted.map { it.second }.toTypedArray()
     }
 
     override fun onClick() {

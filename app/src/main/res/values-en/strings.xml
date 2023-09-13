@@ -74,7 +74,7 @@
     <string name="element_batteryVoltage">Battery voltage</string>
     <string name="element_coolantTemperature">Coolant temperature</string>
     <string name="element_oilTemperature">Oil temperature</string>
-    <string name="element_gearboxOilTemperature">Gearbox temperature</string>
+    <string name="element_gearboxOilTemperature">Gearbox</string>
     <string name="element_outsideTemperature">Outside temperature</string>
     <string name="element_vehicleSpeed">Speed</string>
     <string name="element_currentGear">Current gear</string>

@@ -32,7 +32,7 @@
     <string name="element_cycleConsumptionPrimary">Cycle consumption, primary fuel</string>
     <string name="element_cycleConsumptionSecondary">Cycle consumption, secondary fuel</string>
     <string name="element_engineSpeed">RPM</string>
-    <string name="element_gearboxOilTemperature">Gearbox temperature</string>
+    <string name="element_gearboxOilTemperature">Gearbox</string>
     <string name="element_lateralAcceleration">Lateral G\'s</string>
     <string name="element_longitudinalAcceleration">Longitudinal G\'s</string>
     <string name="element_navAltitude">Altitude</string>
@@ -66,6 +66,20 @@
     <string name="element_yawRate">Yaw rate</string>
     <string name="element_shortTermConsumptionPrimary">Short Term Consumption (primary fuel)</string>
     <string name="element_shortTermConsumptionSecondary">Short Term Consumption (secondary fuel)</string>
+    <string name="element_cac">Charger Air cooler</string>
+    <string name="element_distance">Distance</string>
+    <string name="element_ecoaverage">Eco Average</string>
+    <string name="element_eco">Eco</string>
+    <string name="exhaust">Exhaust</string>
+    <string name="element_fuel_primary">Fuel Primary</string>
+    <string name="element_fuel_secondary">Fuel Secondary</string>
+    <string name="element_measurement">Measurement</string>
+    <string name="element_motherboard">Motherboard</string>
+    <string name="element_obd2">OBD2</string>
+    <string name="element_pedal">Pedal</string>
+    <string name="element_radio">Radio</string>
+    <string name="element_wrench">Wrench</string>
+    <string name="element_tire">Tire</string>
 
     <string name="font_audi" translatable="false">Audi Virtual Cockpit</string>
     <string name="font_frutiger" translatable="false">Frutiger</string>
@@ -232,13 +246,13 @@
     <string name="element_torque_transmissiontemp">Transmission temperature</string>
     <string name="element_torque_pressurecontrol">Turbo pressure control</string>
     <string name="element_torque_absolutethrottlepostion">Throttle position(Absolute)</string>
-    <string name="element_torque_intakemanifoldpressure">Intake manifold pressure</string>
+    <string name="element_torque_intakemanifoldpressure">Intake manifold</string>
     <string name="element_torque_commandedequivalenceratiolambda">Commanded equivalence ratio (Lambda)</string>
     <string name="element_torque_chargeaircoolertemperature">Charge air cooler temperature (CACT)</string>
     <string name="element_torque_enginecoolanttemp">Engine coolant temperature</string>
     <string name="element_torque_engineloadabsolute">Engine load (Absolute)</string>
     <string name="element_torque_ambientairtemp">Ambient air temperature</string>
-    <string name="element_torque_catalysttemperature">Catalyst temperature</string>
+    <string name="element_torque_catalysttemperature">Catalyst</string>
     <string name="element_torque_fuellevel">Fuel level</string>
     <string name="element_torque_o2sensor1equivalenceratio">O2 sensor 1 equivalence ratio</string>
     <string name="element_torque_fuelrailpressure">Fuel rail pressure</string>
@@ -248,6 +262,7 @@
     <string name="element_torque_exhaustgastempbank1sensor4">Exhaust Gas temperature bank 1 sensor 4</string>
     <string name="element_torque_oiltemperature">Oil temperature</string>
     <string name="element_torque_transmissiontemp2">Transmission temperature (method 2)</string>
+    <string name="element_barometer">Barometer</string>
 
     <string name="pref_unitprefs">Unit preferences</string>
     <string name="pref_graphOff">Clocks are displayed in regular mode</string>

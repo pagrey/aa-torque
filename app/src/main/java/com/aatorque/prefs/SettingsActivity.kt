@@ -14,7 +14,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.aatorque.stats.App
 import com.aatorque.stats.R
 import java.io.File
 import androidx.activity.result.contract.ActivityResultContract

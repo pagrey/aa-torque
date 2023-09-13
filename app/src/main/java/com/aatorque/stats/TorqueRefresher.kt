@@ -24,8 +24,9 @@ class TorqueRefresher {
 
     fun makeExecutors(service: TorqueService) {
         data.values.forEachIndexed { index, torqueData ->
-            val refreshOffset = (300L / data.size) * index
+            val refreshOffset = (400L / data.size) * index
             if (torqueData.pid != null && torqueData.refreshTimer == null) {
+                Log.d(TAG, "Scheduled item in position $index with $refreshOffset delay")
                 torqueData.refreshTimer = executor.scheduleAtFixedRate({
                     service.runIfConnected { ts ->
                         val value = ts.getPIDValuesAsDouble(arrayOf( torqueData.pid!!))[0]
@@ -39,6 +40,8 @@ class TorqueRefresher {
                         }
                     }
                 }, refreshOffset, 400L, TimeUnit.MILLISECONDS)
+            } else {
+                Log.d(TAG, "No reason to schedule item in position $index")
             }
         }
     }

@@ -11,10 +11,9 @@ import java.util.concurrent.ScheduledFuture
 class TorqueData(val display: Display) {
 
     var pid: String? = null
-    var pidInt: Long? = null
     var minValue: Double = 0.0
     var maxValue: Double = 0.0
-    var expression: Expression? = null
+    private var expression: Expression? = null
     var lastDataStr: String? = null
     var refreshTimer: ScheduledFuture<*>? = null
 
@@ -56,8 +55,6 @@ class TorqueData(val display: Display) {
         val value = display.pid
         if (value.startsWith(PREFIX)) {
             pid = value.substring(PREFIX.length)
-            val splitParts = value.split("_")
-            pidInt = BigInteger(splitParts[splitParts.size - 1].split(",")[0], 16).toLong()
         }
     }
 

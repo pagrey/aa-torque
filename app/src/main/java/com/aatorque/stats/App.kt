@@ -3,11 +3,11 @@ package com.aatorque.stats
 import android.app.Application
 import android.content.Context
 import androidx.preference.PreferenceManager
+import org.acra.config.mailSender
 import org.acra.config.toast
 import org.acra.data.StringFormat
 import org.acra.ktx.initAcra
 import java.util.logging.Level
-import org.acra.config.mailSender
 
 class App : Application() {
 

@@ -42,36 +42,44 @@ class SettingsDashboard: PreferenceFragmentCompat() {
         R.string.pref_view3,
         R.string.pref_view4,
     )
+    var mBound = false
 
     var torqueConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
+            mBound = true
             val torqueService = (service as TorqueServiceWrapper.LocalBinder).getService()
             torqueService.loadPidInformation(false) {
                     pids ->
-                requireActivity().runOnUiThread {
-                    mainCat.title = resources.getText(R.string.pref_dataelementsettings_1).replace("1".toRegex(), (dashboardIndex() + 1).toString())
-                    val dbIndex = dashboardIndex()
-                    lifecycleScope.launch {
-                        requireContext().dataStore.data.collect { userPreference ->
-                            val screen = userPreference.getScreens(dbIndex)
-                            performanceTitle.text = screen.title
-                            optionsCat.removeAll()
-                            val sources = arrayOf(screen.gaugesList, screen.displaysList)
-                            val texts = arrayOf(clockText, displayText)
-                            val icons = arrayOf(clockIcon, displayIcon)
-                            arrayOf("clock", "display").forEachIndexed { i, type ->
-                                sources[i].forEachIndexed { j, screen ->
-                                    optionsCat.addPreference(
-                                        Preference(requireContext()).also {
-                                            it.key = "${type}_${dbIndex}_${j}"
-                                            it.summary = pids.firstOrNull { pid ->
-                                                "torque_${pid.first}" == screen.pid
-                                            }?.second?.get(0) ?: ""
-                                            it.title = requireContext().getString(texts[i][j])
-                                            it.icon = AppCompatResources.getDrawable(requireContext(), icons[i][j])
-                                            it.fragment = SettingsPIDFragment::class.java.canonicalName
-                                        }
-                                    )
+                activity?.let{
+                        it.runOnUiThread {
+                        mainCat.title = resources.getText(R.string.pref_dataelementsettings_1).replace("1".toRegex(), (dashboardIndex() + 1).toString())
+                        val dbIndex = dashboardIndex()
+                        lifecycleScope.launch {
+                            requireContext().dataStore.data.collect { userPreference ->
+                                val screen = userPreference.getScreens(dbIndex)
+                                performanceTitle.text = screen.title
+                                optionsCat.removeAll()
+                                val sources = arrayOf(screen.gaugesList, screen.displaysList)
+                                val texts = arrayOf(clockText, displayText)
+                                val icons = arrayOf(clockIcon, displayIcon)
+                                arrayOf("clock", "display").forEachIndexed { i, type ->
+                                    sources[i].forEachIndexed { j, screen ->
+                                        optionsCat.addPreference(
+                                            Preference(requireContext()).also {
+                                                it.key = "${type}_${dbIndex}_${j}"
+                                                it.summary = pids.firstOrNull { pid ->
+                                                    "torque_${pid.first}" == screen.pid
+                                                }?.second?.get(0) ?: ""
+                                                it.title = requireContext().getString(texts[i][j])
+                                                it.icon = AppCompatResources.getDrawable(
+                                                    requireContext(),
+                                                    icons[i][j]
+                                                )
+                                                it.fragment =
+                                                    SettingsPIDFragment::class.java.canonicalName
+                                            }
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -82,7 +90,7 @@ class SettingsDashboard: PreferenceFragmentCompat() {
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
-            TODO("Not yet implemented")
+            mBound = false
         }
     }
 
@@ -114,7 +122,9 @@ class SettingsDashboard: PreferenceFragmentCompat() {
 
     override fun onDestroy() {
         super.onDestroy()
-        requireActivity().unbindService(torqueConnection)
+        if (mBound) {
+            requireActivity().unbindService(torqueConnection)
+        }
     }
 
 }
