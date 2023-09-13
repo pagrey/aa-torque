@@ -142,9 +142,9 @@ class TorqueServiceWrapper: Service() {
     }
 
     companion object {
-        fun runStartIntent(context: Context, conn: ServiceConnection): Intent {
-            return Intent(context, TorqueServiceWrapper::class.java).also { intent ->
-                context.bindService(intent, conn, Context.BIND_AUTO_CREATE)
+        fun runStartIntent(context: Context, conn: ServiceConnection): Boolean {
+            Intent(context, TorqueServiceWrapper::class.java).also { intent ->
+                return context.bindService(intent, conn, Context.BIND_AUTO_CREATE)
             }
         }
     }

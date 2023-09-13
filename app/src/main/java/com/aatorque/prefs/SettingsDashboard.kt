@@ -89,9 +89,7 @@ class SettingsDashboard: PreferenceFragmentCompat() {
             }
         }
 
-        override fun onServiceDisconnected(name: ComponentName?) {
-            mBound = false
-        }
+        override fun onServiceDisconnected(name: ComponentName?) {}
     }
 
     fun dashboardIndex(): Int {
@@ -99,7 +97,7 @@ class SettingsDashboard: PreferenceFragmentCompat() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        TorqueServiceWrapper.runStartIntent(requireContext(), torqueConnection)
+        mBound = TorqueServiceWrapper.runStartIntent(requireContext(), torqueConnection)
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -124,6 +122,7 @@ class SettingsDashboard: PreferenceFragmentCompat() {
         super.onDestroy()
         if (mBound) {
             requireActivity().unbindService(torqueConnection)
+            mBound = false
         }
     }
 

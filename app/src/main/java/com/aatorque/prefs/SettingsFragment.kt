@@ -61,10 +61,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
             return@setOnPreferenceChangeListener false
         }
 
-        backgroundPref.iconResArray = resources.getStringArray(R.array.backgrounds).map {
-            resources.getIdentifier(it, "drawable", requireContext().packageName)
-        }.toTypedArray()
-
         numScreensPref.setOnBindEditTextListener {
             it.inputType = InputType.TYPE_CLASS_NUMBER
         }

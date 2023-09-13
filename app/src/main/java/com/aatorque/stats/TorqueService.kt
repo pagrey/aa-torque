@@ -16,6 +16,7 @@ class TorqueService {
     var torqueService: ITorqueService? = null
     val onConnect = ArrayList<(ITorqueService) -> Unit>()
     val conLock = ReentrantLock()
+    var hasBound = false
 
     fun addConnectCallback(func: (ITorqueService) -> Unit): TorqueService {
         if (torqueService == null) {
@@ -63,8 +64,9 @@ class TorqueService {
     }
 
     fun onDestroy(context: Context) {
-        if (torqueService != null) {
+        if (hasBound) {
             context.unbindService(torqueConnection)
+            hasBound = false
         }
     }
 
@@ -75,12 +77,12 @@ class TorqueService {
     fun startTorque(context: Context): Boolean {
         val intent = Intent()
         intent.setClassName("org.prowl.torque", "org.prowl.torque.remote.TorqueService")
-        val torqueBind = context.bindService(intent, torqueConnection, Activity.BIND_AUTO_CREATE)
+        hasBound = context.bindService(intent, torqueConnection, Activity.BIND_AUTO_CREATE)
         Log.d(
             TAG,
-            if (torqueBind) "Connected to torque service!" else "Unable to connect to Torque plugin service"
+            if (hasBound) "Connected to torque service!" else "Unable to connect to Torque plugin service"
         )
-        return torqueBind
+        return hasBound
     }
 
 }

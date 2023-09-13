@@ -5,7 +5,6 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import android.text.InputType
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.CheckBoxPreference
 import androidx.preference.EditTextPreference
@@ -62,11 +61,10 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
                     prefCat!!.summary = null
                 }
             }
-            mBound = true
         }
 
         override fun onServiceDisconnected(arg0: ComponentName) {
-            mBound = false
+            torqueService = null
         }
     }
 
@@ -130,7 +128,7 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
             return@setOnPreferenceChangeListener true
         }
 
-        TorqueServiceWrapper.runStartIntent(requireContext(), torqueConnection)
+        mBound = TorqueServiceWrapper.runStartIntent(requireContext(), torqueConnection)
         showLabelPref.setOnPreferenceChangeListener { _, newValue ->
             if (!isClock) {
                 labelPref.isEnabled = (newValue as Boolean)
@@ -235,6 +233,7 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
         super.onDestroy()
         if (mBound) {
             requireContext().unbindService(torqueConnection)
+            mBound = false
         }
     }
 

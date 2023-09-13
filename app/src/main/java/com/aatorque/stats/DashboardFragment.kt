@@ -32,7 +32,6 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
     private var rootView: View? = null
     private val torqueRefresher = TorqueRefresher()
     private val torqueService = TorqueService()
-    private var updateTimer: Timer? = null
 
     private var mBtnNext: ImageButton? = null
     private var mBtnPrev: ImageButton? = null
