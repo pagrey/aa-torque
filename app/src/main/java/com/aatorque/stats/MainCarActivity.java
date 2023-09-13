@@ -175,11 +175,10 @@ public class MainCarActivity extends CarActivity{
         }
         switchToFragment(initialFragmentTag);
 
-        /* todo: get rebinding working
         MenuController menuController = getCarUiController().getMenuController();
         if (!preferences.getBoolean("rotaryInput", false)) {
             menuController.showMenuButton();
-        } */
+        }
         StatusBarController statusBarController = getCarUiController().getStatusBarController();
         carfragment.setupStatusBar(statusBarController);
 

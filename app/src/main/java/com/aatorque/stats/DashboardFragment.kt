@@ -55,44 +55,11 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
     private var selectedBackground: String? = null
     private val DISPLAY_OFFSET = 3
     private var screensAnimating = false
+    private var mStarted = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         torqueService.startTorque(requireContext())
-
-        lifecycleScope.launch {
-            requireContext().dataStore.data.map {
-                it.screensList[abs(it.currentScreen) % it.screensCount]
-            }.collect {
-                screens ->
-                lifecycleScope.launch {
-                    lifecycle.withStateAtLeast(Lifecycle.State.RESUMED) {
-                        mTitleElement!!.text = screens.title
-                    }
-                }
-                screens.gaugesList.forEachIndexed { index, display ->
-                    if (torqueRefresher.hasChanged(index, display)) {
-                        val clock = torqueRefresher.populateQuery(index, display)
-                        lifecycleScope.launch {
-                            lifecycle.withStateAtLeast(Lifecycle.State.RESUMED) {
-                                guages[index]!!.setupClock(clock)
-                            }
-                        }
-                    }
-                }
-                screens.displaysList.forEachIndexed { index, display ->
-                    if (torqueRefresher.hasChanged(index + DISPLAY_OFFSET, display)) {
-                        val td = torqueRefresher.populateQuery(index + DISPLAY_OFFSET, display)
-                        lifecycleScope.launch {
-                            lifecycle.withStateAtLeast(Lifecycle.State.RESUMED) {
-                                displays[index]!!.setupElement(td)
-                            }
-                        }
-                    }
-                }
-                torqueRefresher.makeExecutors(torqueService)
-            }
-        }
     }
 
     override fun onCreateView(
@@ -120,8 +87,39 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
         displays[3] = childFragmentManager.findFragmentById(R.id.display4)!! as TorqueDisplay
         displays[2]!!.isBottomDisplay = true
         displays[3]!!.isBottomDisplay = true
-        onSharedPreferenceChanged(getSharedPreferences(), "")
         return rootView
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val initialRun = !mStarted
+        mStarted = true
+        lifecycleScope.launch {
+            requireContext().dataStore.data.map {
+                it.screensList[abs(it.currentScreen) % it.screensCount]
+            }.collect { screens ->
+                if (mStarted) {
+                    mTitleElement?.text = screens.title
+                }
+                screens.gaugesList.forEachIndexed { index, display ->
+                    if (initialRun || torqueRefresher.hasChanged(index, display)) {
+                        val clock = torqueRefresher.populateQuery(index, display)
+                        if (mStarted) {
+                            guages[index]?.setupClock(clock)
+                        }
+                    }
+                }
+                screens.displaysList.forEachIndexed { index, display ->
+                    if (initialRun || torqueRefresher.hasChanged(index + DISPLAY_OFFSET, display)) {
+                        val td = torqueRefresher.populateQuery(index + DISPLAY_OFFSET, display)
+                        if (mStarted) {
+                            displays[index]?.setupElement(td)
+                        }
+                    }
+                }
+            }
+        }
+        onSharedPreferenceChanged(getSharedPreferences(), "")
     }
 
     fun setScreen(direction: Int) {
@@ -165,6 +163,11 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
 
     override fun setupStatusBar(sc: StatusBarController) {
         sc.hideTitle()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mStarted = false
     }
 
     override fun onResume() {
