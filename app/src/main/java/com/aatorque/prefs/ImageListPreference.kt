@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.preference.ListPreference
 import com.aatorque.stats.R
 
@@ -26,7 +27,8 @@ class ImageListPreference(
         val title: String,
         val value: String,
         val iconRes: Int,
-        var checked: Boolean
+        var checked: Boolean,
+        val origIndex: Int,
     )
     class CustomListAdapter(
         context: Context,
@@ -49,7 +51,7 @@ class ImageListPreference(
 
     }
 
-    var iconResArray: Array<Int>? = null
+    var iconResArray: IntArray
     var bgColor: Int? = null
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ImageListPreference)
@@ -58,7 +60,7 @@ class ImageListPreference(
                 bgColor = context.getColor(it)
             }
         }
-        val iconArray = typedArray.getResourceId(R.styleable.ImageListPreference_entryImages, 0).let {
+        iconResArray = typedArray.getResourceId(R.styleable.ImageListPreference_entryImages, 0).let {
             context.resources.obtainTypedArray(it).run {
                 val array = IntArray(length())
                 for (i in 0 until length()) {
@@ -69,13 +71,6 @@ class ImageListPreference(
             }
         }
         typedArray.recycle()
-
-        val sorted = entryValues.zip(entries).zip(iconArray.toList()).sortedBy {
-            it.first.second.toString()
-        }
-        entryValues = sorted.map { it.first.first }.toTypedArray()
-        entries = sorted.map { it.first.second }.toTypedArray()
-        iconResArray = sorted.map { it.second }.toTypedArray()
     }
 
     override fun onClick() {
@@ -92,9 +87,10 @@ class ImageListPreference(
                 title.toString(),
                 entryValues[index].toString(),
                 iconResArray[index],
-                value == entryValues[index]
+                value == entryValues[index],
+                index
             )
-        }
+        }.sortedBy { it.title }
 
         val lv = ListView(context)
         val adapter = CustomListAdapter(context, R.layout.icon_list_row, items, bgColor)
@@ -103,7 +99,7 @@ class ImageListPreference(
             .setTitle(dialogTitle)
             .setView(lv)
             .setAdapter(adapter) { dialog, which ->
-                setValueIndex(which)
+                setValueIndex(items[which].origIndex)
                 dialog.dismiss()
             }
             .setNegativeButton(android.R.string.cancel) { dialog, _ ->
@@ -111,5 +107,18 @@ class ImageListPreference(
             }
             .create()
             .show()
+    }
+
+    private var settingIcon = false
+    override fun notifyChanged() {
+        if (settingIcon) return
+        super.notifyChanged()
+        val valIndex = entryValues.indexOf(value)
+        settingIcon = true
+        icon = if (valIndex == -1) null else AppCompatResources.getDrawable(
+            context,
+            iconResArray[valIndex]
+        )
+        settingIcon = false
     }
 }
