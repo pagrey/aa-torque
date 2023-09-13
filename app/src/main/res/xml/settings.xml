@@ -12,14 +12,12 @@
             android:entries="@array/Themes"
             android:entryValues="@array/Themes"
             android:key="selectedTheme"
-            android:summary="%s"
             android:title="@string/pref_theme"
             app:entryImages="@array/ThemesThumbs" />
         <com.aatorque.prefs.ImageListPreference
             android:entries="@array/fontEntries"
             android:entryValues="@array/fontValues"
             android:key="selectedFont"
-            android:summary="%s"
             android:title="@string/pref_font"
             app:entryImages="@array/FontThumbs"
             app:imageBackground="@color/white" />
@@ -28,7 +26,6 @@
             android:entryValues="@array/backgrounds"
             app:entryImages="@array/backgrounds"
             android:key="selectedBackground"
-            android:summary="%s"
             android:title="@string/pref_background" />
         <CheckBoxPreference
             android:defaultValue="false"

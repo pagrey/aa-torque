@@ -10,7 +10,6 @@
         android:key="pidList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:summary="%s"
         android:title="@string/pid"
         app:dialogTitle="@string/pid"
         android:persistent="false"

@@ -99,6 +99,7 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
         jsPref = findPreference("customScript")!!
         wholeNumberPref = findPreference("wholeNumbers")!!
 
+        pidPref.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
         imagePref.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
         labelPref.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
         minValuePref.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()

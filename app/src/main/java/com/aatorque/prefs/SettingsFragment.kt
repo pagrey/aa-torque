@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.EditTextPreference
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
@@ -20,12 +21,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
     lateinit var numScreensPref: EditTextPreference
     lateinit var dashboardsCat: PreferenceCategory
     lateinit var backgroundPref: ImageListPreference
+    lateinit var themePref: ImageListPreference
+    lateinit var fontPref: ImageListPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dashboardsCat = findPreference("dashboardsCat")!!
         numScreensPref = findPreference("dashboardCount")!!
         backgroundPref = findPreference("selectedBackground")!!
+        themePref = findPreference("selectedTheme")!!
+        fontPref = findPreference("selectedFont")!!
+        themePref.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
+        fontPref.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
+        backgroundPref.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
         numScreensPref.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
         numScreensPref.setOnPreferenceChangeListener {
                 _, newValue ->
