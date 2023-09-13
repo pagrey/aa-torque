@@ -187,7 +187,7 @@
     </integer-array>
 
     <array name="iconDesc">
-        <item>None</item>
+        <item>@string/element_none</item>
         <item>@string/element_navAltitude</item>
         <item>@string/element_barometer</item>
         <item>@string/element_batteryVoltage</item>
