@@ -117,6 +117,7 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
                         }
                     }
                 }
+                torqueRefresher.makeExecutors(torqueService)
             }
         }
         onSharedPreferenceChanged(getSharedPreferences(), "")

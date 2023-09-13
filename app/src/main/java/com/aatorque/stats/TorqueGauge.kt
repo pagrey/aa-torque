@@ -260,6 +260,7 @@ class TorqueGauge : Fragment(){
         }
         clock.setSpeedAt(0f)
         mMax?.setSpeedAt(0f)
+        mRayClock?.setSpeedAt(0f)
         mTextMax?.text = minspeed.toString()
     }
 
