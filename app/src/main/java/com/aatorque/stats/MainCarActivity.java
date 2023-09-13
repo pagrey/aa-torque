@@ -174,11 +174,11 @@ public class MainCarActivity extends CarActivity{
             initialFragmentTag = bundle.getString(CURRENT_FRAGMENT_KEY);
         }
         switchToFragment(initialFragmentTag);
-
+        /* todo: maybe restore this
         MenuController menuController = getCarUiController().getMenuController();
         if (!preferences.getBoolean("rotaryInput", false)) {
             menuController.showMenuButton();
-        }
+        } */
         StatusBarController statusBarController = getCarUiController().getStatusBarController();
         carfragment.setupStatusBar(statusBarController);
 
