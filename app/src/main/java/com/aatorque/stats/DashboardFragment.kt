@@ -118,8 +118,8 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
         displays[1] = childFragmentManager.findFragmentById(R.id.display2)!! as TorqueDisplay
         displays[2] = childFragmentManager.findFragmentById(R.id.display3)!! as TorqueDisplay
         displays[3] = childFragmentManager.findFragmentById(R.id.display4)!! as TorqueDisplay
-        displays[2]!!.bottomDisplay()
-        displays[3]!!.bottomDisplay()
+        displays[2]!!.isBottomDisplay = true
+        displays[3]!!.isBottomDisplay = true
         onSharedPreferenceChanged(getSharedPreferences(), "")
         return rootView
     }

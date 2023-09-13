@@ -19,7 +19,7 @@ class TorqueDisplay : Fragment() {
     private var iconElement: TextView? = null
     private var unit = ""
     private var numberFormatter = NumberFormat.getInstance()
-
+    var isBottomDisplay = false
 
     init {
         numberFormatter.maximumFractionDigits = 2
@@ -36,6 +36,9 @@ class TorqueDisplay : Fragment() {
         rootView = view
         valueElement = view.findViewById(R.id.valueElement)
         iconElement = view.findViewById(R.id.iconElement)
+        if (isBottomDisplay) {
+            bottomDisplay()
+        }
         return rootView
     }
     // this sets all the labels/values in an initial state, depending on the chosen options

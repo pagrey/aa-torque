@@ -105,7 +105,7 @@
         android:id="@+id/ray"
         android:layout_width="275dp"
         android:layout_height="275dp"
-        android:padding="40dp"
+        android:padding="45dp"
         app:layout_constraintBottom_toBottomOf="@+id/dial"
         app:layout_constraintRight_toRightOf="@+id/dial"
         app:layout_constraintStart_toStartOf="@+id/dial"
@@ -127,6 +127,7 @@
         app:sv_unitTextColor="@android:color/transparent"
         app:sv_withEffects="false"
         app:sv_withTremble="false"
+        app:sv_tickNumber="0"
         />
 
 

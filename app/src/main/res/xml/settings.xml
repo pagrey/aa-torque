@@ -24,7 +24,7 @@
         <com.aatorque.prefs.ImageListPreference
             android:entries="@array/backgroundstrings"
             android:entryValues="@array/backgrounds"
-            app:entryImages="@array/backgrounds"
+            app:entryImages="@array/thumbs_backgrounds"
             android:key="selectedBackground"
             android:title="@string/pref_background" />
         <CheckBoxPreference

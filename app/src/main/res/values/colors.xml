@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#212121</color>
+    <color name="primary">#243659</color>
     <color name="primary_dark">#000000</color>
-    <color name="accent">#484848</color>
+    <color name="accent">#ACABAB</color>
     <color name="red">#eec50101</color>
     <color name="highspeed">#FF0000</color>
     <color name="aqua">#7700aeef</color>
 
     <color name="yellow">#77fecc00</color>
-    <color name="blue">#770000FF</color>
+    <color name="blue">#141451</color>
     <color name="fordblue">#0066ff</color>
     <color name="green">#7700FF00</color>
-    <color name="white">#77ffffff</color>
+    <color name="white">#E2DBDB</color>
+    <color name="prefbg">#E3DDDD</color>
     <color name="pink">#77FF69B4</color>
     <color name="orange">#77FF8888</color>
     <color name="themed">?attr/themedNeedleColor</color>

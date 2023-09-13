@@ -90,55 +90,6 @@
 
     </string-array>
 
-    <array name="backgroundstrings">
-        <item>@string/bg_vw</item>
-        <item>@string/bg_vw2</item>
-        <item>@string/bg_vw3</item>
-        <item>@string/bg_vwplaid</item>
-        <item>@string/bg_vwgtd</item>
-        <item>@string/bg_gte</item>
-        <item>@string/bg_black</item>
-        <item>@string/bg_blackboard</item>
-        <item>@string/bg_cloth</item>
-        <item>@string/bg_rock</item>
-        <item>@string/bg_outrun</item>
-        <item>@string/bg_plain</item>
-        <item>@string/bg_seat</item>
-        <item>@string/bg_seat2</item>
-        <item>@string/bg_skoda</item>
-        <item>@string/bg_skoda2</item>
-        <item>@string/bg_skodaone</item>
-        <item>@string/bg_test</item>
-        <item>@string/bg_beetle</item>
-        <item>@string/bg_dots</item>
-        <item>@string/bg_aa</item>
-
-    </array>
-
-    <array name="backgrounds">
-        <item>background_incar_vw</item>
-        <item>background_incar_vw2</item>
-        <item>background_incar_vw3</item>
-        <item>background_incar_vw_plaid</item>
-        <item>background_incar_vw_gtd</item>
-        <item>background_incar_gte</item>
-        <item>background_incar_black</item>
-        <item>background_incar_blackboard</item>
-        <item>background_incar_cloth</item>
-        <item>background_incar_cupra</item>
-        <item>background_incar_outrun</item>
-        <item>background_incar_plain</item>
-        <item>background_incar_seat</item>
-        <item>background_incar_seat2</item>
-        <item>background_incar_skoda</item>
-        <item>background_incar_skoda2</item>
-        <item>background_incar_skodaone</item>
-        <item>background_incar_test</item>
-        <item>background_incar_beetle</item>
-        <item>background_incar_dots</item>
-        <item>background_incar_aa</item>
-    </array>
-
     <integer-array name="icons">
         <item>@drawable/ic_none</item>
         <item>@drawable/ic_altitude</item>
@@ -255,9 +206,55 @@
         <item>@drawable/thumb_background_incar_beetle</item>
         <item>@drawable/thumb_background_incar_dots</item>
         <item>@drawable/thumb_background_incar_aa</item>
-
     </array>
 
+    <string-array name="backgroundstrings">
+        <item>@string/bg_vw</item>
+        <item>@string/bg_vw2</item>
+        <item>@string/bg_vw3</item>
+        <item>@string/bg_vwplaid</item>
+        <item>@string/bg_vwgtd</item>
+        <item>@string/bg_gte</item>
+        <item>@string/bg_black</item>
+        <item>@string/bg_blackboard</item>
+        <item>@string/bg_cloth</item>
+        <item>@string/bg_rock</item>
+        <item>@string/bg_outrun</item>
+        <item>@string/bg_plain</item>
+        <item>@string/bg_seat</item>
+        <item>@string/bg_seat2</item>
+        <item>@string/bg_skoda</item>
+        <item>@string/bg_skoda2</item>
+        <item>@string/bg_skodaone</item>
+        <item>@string/bg_test</item>
+        <item>@string/bg_beetle</item>
+        <item>@string/bg_dots</item>
+        <item>@string/bg_aa</item>
+    </string-array>
+
+    <array name="backgrounds">
+        <item>background_incar_vw</item>
+        <item>background_incar_vw2</item>
+        <item>background_incar_vw3</item>
+        <item>background_incar_vw_plaid</item>
+        <item>background_incar_vw_gtd</item>
+        <item>background_incar_gte</item>
+        <item>background_incar_black</item>
+        <item>background_incar_blackboard</item>
+        <item>background_incar_cloth</item>
+        <item>background_incar_cupra</item>
+        <item>background_incar_outrun</item>
+        <item>background_incar_plain</item>
+        <item>background_incar_seat</item>
+        <item>background_incar_seat2</item>
+        <item>background_incar_skoda</item>
+        <item>background_incar_skoda2</item>
+        <item>background_incar_skodaone</item>
+        <item>background_incar_test</item>
+        <item>background_incar_beetle</item>
+        <item>background_incar_dots</item>
+        <item>background_incar_aa</item>
+    </array>
 
     <!--
 

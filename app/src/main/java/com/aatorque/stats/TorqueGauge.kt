@@ -38,11 +38,6 @@ class TorqueGauge : Fragment(){
     private var maxOn: Boolean? = null
     private var torqueMin = 0
     private var torqueMax = 100
-
-    private var pressureUnit = "bar"
-    private var pressureMin = 0
-    private var pressureMax = 0
-    private var temperatureUnit = "f"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -140,9 +135,7 @@ class TorqueGauge : Fragment(){
         ticksOn = enabled
         val tickNum = if (enabled) 9 else 0
         mClock!!.tickNumber = tickNum
-        mRayClock!!.tickNumber = tickNum
         mClock!!.textColor = Color.WHITE
-        mRayClock!!.textColor = Color.WHITE
     }
 
 

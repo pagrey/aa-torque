@@ -9,7 +9,7 @@ abstract class CarFragment : Fragment() {
 
     var title: String? = null
     fun setTitle(@StringRes resId: Int) {
-        title = context!!.getString(resId)
+        title = requireContext().getString(resId)
     }
 
     abstract fun setupStatusBar(sc: StatusBarController)

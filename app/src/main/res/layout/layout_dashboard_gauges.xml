@@ -13,7 +13,7 @@
     app:layout_constraintEnd_toEndOf="parent"
     tools:showIn="@layout/fragment_dashboard">
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/gaugeLeft"
         android:layout_width="275dp"
         android:layout_height="310dp"
@@ -25,7 +25,7 @@
         />
 
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/gaugeCenter"
         android:layout_width="275dp"
         android:layout_height="310dp"
@@ -37,7 +37,7 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/gaugeRight"
         android:layout_width="275dp"
         android:layout_height="310dp"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/display1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
         app:layout_constraintEnd_toEndOf="@+id/gaugeCenter"
         />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/display2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
         app:layout_constraintEnd_toEndOf="@+id/gaugeRight"
         />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/display3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
         app:layout_constraintEnd_toEndOf="@+id/gaugeCenter"
         />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/display4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
