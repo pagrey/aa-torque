@@ -63,6 +63,8 @@
     <string name="element_tyreTemperatureRR">Tyre temperature rear right</string>
     <string name="element_vehicleSpeed">Speed</string>
     <string name="element_wheelAngle">Wheel angle</string>
+    <string name="element_wheel">Wheel</string>
+    <string name="element_world">World</string>
     <string name="element_yawRate">Yaw rate</string>
     <string name="element_shortTermConsumptionPrimary">Short Term Consumption (primary fuel)</string>
     <string name="element_shortTermConsumptionSecondary">Short Term Consumption (secondary fuel)</string>

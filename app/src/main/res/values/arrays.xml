@@ -228,8 +228,8 @@
         <item>@string/element_soundVolume</item>
         <item>@string/element_coolantTemperature</item>
         <item>@string/element_wheelAngle</item>
-        <item>Wheel</item>
-        <item>World</item>
+        <item>@string/element_wheel</item>
+        <item>@string/element_world</item>
         <item>@string/element_yawRate</item>
     </array>
 
