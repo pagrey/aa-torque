@@ -5,7 +5,7 @@ The app has been modified with a focus on making it more customizable with the a
 to obtain any PID from Torque. Torque pro is required to use this app.
 
 The original app focused on VAG (Volkswagen Auto Group) cars. This version focuses on exposing
-all data from Troque in a way that is as customizable as possible.
+all data from Torque in a way that is as customizable as possible.
 
 # Main features:
 - Display data from Torque including custom PIDs
