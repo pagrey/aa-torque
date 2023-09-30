@@ -8,6 +8,7 @@ jobs:
       - name: Bump version
         id: bump_version
         uses: oflynned/android-version-bump@master
+        if: github.ref == 'refs/heads/master'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/setup-java@v3
@@ -27,6 +28,7 @@ jobs:
         run: ./gradlew lintRelease
 
       - name: Build Release apk
+        if: success() && github.ref == 'refs/heads/master'
         run: ./gradlew assembleRelease
 
       - name: Rename release
