@@ -5,5 +5,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: gradle/wrapper-validation-action@v1
-      - run: ./gradlew build
+      - name: Bump version
+        id: bump_version
+        uses: oflynned/android-version-bump@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu' # See 'Supported distributions' for available options
+          java-version: '18'
+
+      - name: Cache Gradle and wrapper
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+
+      - name: Build Release apk
+        run: ./gradlew assembleRelease
+
+      - name: Create Github Release
+        uses: softprops/action-gh-release@v1
+        if: success() && github.ref == 'refs/heads/master'
+        with:
+          tag_name: ${{ steps.bump_version.outputs.new_tag }}
+          name: ${{ steps.bump_version.outputs.new_tag }}
+          generate_release_notes: true
+          prerelease: true
+          files: |
+            app/build/outputs/apk/release/app-release.apk
+
