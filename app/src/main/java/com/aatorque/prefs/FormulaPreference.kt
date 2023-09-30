@@ -2,14 +2,18 @@ package com.aatorque.prefs
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.text.Editable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import androidx.core.content.ContextCompat.startActivity
 import androidx.preference.Preference
 import com.aatorque.stats.R
 
@@ -50,6 +54,14 @@ class FormulaPreference(context: Context, attributeSet: AttributeSet) : Preferen
         // Get the spinner and the textbox from the view
         mSpinner = view.findViewById(R.id.spinner)
         mTextField = view.findViewById(R.id.text_field)
+        view.findViewById<Button>(R.id.openDocumentation).setOnClickListener {
+            context.startActivity(
+                    Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://ezylang.github.io/EvalEx/references/functions.html"),
+                )
+            )
+        }
         mTextField.text = Editable.Factory.getInstance().newEditable(getValue())
 
 

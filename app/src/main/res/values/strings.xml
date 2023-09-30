@@ -395,4 +395,5 @@
     <string name="new_version">A new version is available</string>
     <string name="download">Download</string>
     <string name="download_instructions">Update downloading. Install with Kingstaller.</string>
+    <string name="expressionDocumentation">View Documentation</string>
 </resources>
