@@ -33,7 +33,7 @@ jobs:
           java-version: '18'
 
       - name: Restore keystore
-        run: echo ${{ secrets.DEBUG_KEYSTORE }} | base64 -d > ~/.android/debug.keystore
+        run: echo ${{ secrets.DEBUG_KEYSTORE }} | base64 -d > app/debug.keystore
 
       - name: Cache Gradle and wrapper
         uses: actions/cache@v2
