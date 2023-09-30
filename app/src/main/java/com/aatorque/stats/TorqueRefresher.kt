@@ -7,12 +7,16 @@ import java.util.concurrent.ScheduledThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 
 class TorqueRefresher {
-    val TAG = "TorqueRefresher"
     val data = HashMap<Int, TorqueData>()
     private val executor = ScheduledThreadPoolExecutor(7)
     val handler = Handler(Looper.getMainLooper())
     var lastConnectStatus: Boolean? = null
     var conWatcher: ((Boolean) -> Unit)? = null
+
+    companion object {
+        const val TAG = "TorqueRefresher"
+        const val REFRESH_INTERVAL = 300L
+    }
 
     fun populateQuery(pos: Int, query: Display): TorqueData {
         data[pos]?.stopRefreshing(true)
@@ -24,15 +28,19 @@ class TorqueRefresher {
 
     fun makeExecutors(service: TorqueService) {
         data.values.forEachIndexed { index, torqueData ->
-            val refreshOffset = (400L / data.size) * index
+            val refreshOffset = (REFRESH_INTERVAL / data.size) * index
             if (torqueData.pid != null && torqueData.refreshTimer == null) {
                 Log.d(TAG, "Scheduled item in position $index with $refreshOffset delay")
                 doRefresh(service, torqueData)
-                torqueData.refreshTimer = executor.scheduleAtFixedRate({
-                    doRefresh(service, torqueData)
-                }, refreshOffset, 400L, TimeUnit.MILLISECONDS)
+                torqueData.refreshTimer = executor.scheduleWithFixedDelay({
+                    try {
+                        doRefresh(service, torqueData)
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Refresh failed in pos $index", e)
+                    }
+                }, refreshOffset, REFRESH_INTERVAL, TimeUnit.MILLISECONDS)
             } else {
-                Log.d(TAG, "No reason to schedule item in position $index")
+                Log.i(TAG, "No reason to schedule item in position $index")
             }
         }
     }
@@ -41,6 +49,7 @@ class TorqueRefresher {
         service.runIfConnected { ts ->
             val value = ts.getPIDValuesAsDouble(arrayOf( torqueData.pid!!))[0]
             torqueData.lastData = value
+            Log.d(TAG, "Got valid $value from torque for ${torqueData.display.label}")
             if (value != 0.0 || torqueData.hasReceivedNonZero) {
                 torqueData.hasReceivedNonZero = true
                 handler.post {
@@ -55,6 +64,7 @@ class TorqueRefresher {
     }
 
     fun stopExecutors() {
+        Log.i(TAG, "Telling Torque refreshers to stop")
         for (td in data.values) {
             td.stopRefreshing()
         }
