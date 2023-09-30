@@ -45,7 +45,7 @@ jobs:
         id: bump_version
         uses: oflynned/android-version-bump@master
         env:
-          token: ${{secrets.PAT}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Build Release apk
         run: ./gradlew assembleRelease
