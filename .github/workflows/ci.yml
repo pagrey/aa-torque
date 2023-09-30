@@ -23,8 +23,15 @@ jobs:
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
 
+      - name: Lint release
+        run: ./gradlew lintRelease
+
       - name: Build Release apk
         run: ./gradlew assembleRelease
+
+      - name: Rename release
+        if: success() && github.ref == 'refs/heads/master'
+        run: mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/aa-torque.apk
 
       - name: Create Github Release
         uses: softprops/action-gh-release@v1
@@ -35,5 +42,5 @@ jobs:
           generate_release_notes: true
           prerelease: true
           files: |
-            app/build/outputs/apk/release/app-release.apk
+            app/build/outputs/apk/release/aa-torque.apk
 
