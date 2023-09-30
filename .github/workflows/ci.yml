@@ -44,7 +44,7 @@ jobs:
       - name: Bump version
         id: bump_version
         uses: oflynned/android-version-bump@master
-        with:
+        env:
           token: ${{secrets.PAT}}
           
       - name: Build Release apk
