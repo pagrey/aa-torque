@@ -24,7 +24,6 @@ jobs:
 
   build_deploy:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
           
@@ -32,6 +31,9 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '18'
+
+      - name: Restore keystore
+        run: echo ${{ secrets.DEBUG_KEYSTORE }} | base64 -d > ~/.android/debug.keystore
 
       - name: Cache Gradle and wrapper
         uses: actions/cache@v2
