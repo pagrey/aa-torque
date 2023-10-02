@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
 import androidx.fragment.app.Fragment
 import com.aatorque.datastore.MaxControl
 import com.github.anastr.speedviewlib.Gauge
@@ -182,7 +184,10 @@ class TorqueGauge : Fragment(){
         val iconBackground = mIcon!!.background
         if (iconBackground != null) {
             val iconTint = mClock!!.unitTextColor
-            iconBackground.setColorFilter(iconTint, PorterDuff.Mode.SRC_ATOP)
+            iconBackground.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+                iconTint,
+                BlendModeCompat.SRC_ATOP,
+            )
             mIcon!!.background = iconBackground
             mIcon!!.setTextColor(iconTint)
         }
