@@ -35,6 +35,7 @@ import java.io.File
 import java.net.ConnectException
 import java.net.HttpURLConnection
 import java.net.URL
+import java.net.UnknownHostException
 import javax.net.ssl.HttpsURLConnection
 
 
@@ -228,6 +229,8 @@ class SettingsActivity : AppCompatActivity(),
         urlConnection.setRequestProperty("X-GitHub-Api-Version", "2022-11-28")
         try {
             urlConnection.connect()
+        } catch (e: UnknownHostException) {
+            return
         } catch (e: ConnectException) {
             return
         }
