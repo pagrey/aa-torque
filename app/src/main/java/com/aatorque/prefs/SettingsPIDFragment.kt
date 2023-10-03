@@ -21,6 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import kotlin.math.ceil
 import kotlin.math.floor
 
@@ -265,7 +266,11 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
     override fun onDestroy() {
         super.onDestroy()
         if (mBound) {
-            requireContext().unbindService(torqueConnection)
+            try {
+                requireContext().unbindService(torqueConnection)
+            }catch(e: IllegalArgumentException) {
+                Timber.e("Failed to unbind service", e)
+            }
             mBound = false
         }
     }
