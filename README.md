@@ -35,6 +35,8 @@ Some screenshots of the app:
 
 ![20231001-162619](https://github.com/agronick/aa-torque/assets/2042303/1b07b67b-d4bc-41e8-8235-a1418ee37bfe)
 
+![c3c3yrxj11sb1](https://github.com/agronick/aa-torque/assets/2042303/171359f3-1abe-4808-85fb-588dfe1194b6)
+
 ![rx2ohmzjsirb1](https://github.com/agronick/aa-torque/assets/2042303/52c83a91-c3b6-430e-967a-4473fc51e51e)
 
 
