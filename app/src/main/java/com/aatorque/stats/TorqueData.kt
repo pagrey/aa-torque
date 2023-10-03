@@ -16,6 +16,7 @@ class TorqueData(val display: Display) {
     var lastDataStr: String? = null
     var refreshTimer: ScheduledFuture<*>? = null
     var hasReceivedNonZero = false
+    var zeroCount = 0
 
     var notifyUpdate: ((TorqueData) -> Unit)? = null
         set(value) {

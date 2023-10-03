@@ -19,6 +19,7 @@ import com.github.anastr.speedviewlib.RaySpeedometer
 import com.github.anastr.speedviewlib.Speedometer
 import com.github.anastr.speedviewlib.components.Indicators.ImageIndicator
 import com.github.anastr.speedviewlib.components.Indicators.Indicator
+import android.content.res.Resources.NotFoundException
 import java.util.Locale
 
 
@@ -219,11 +220,16 @@ class TorqueGauge : Fragment(){
     ) {
         Timber.i("icon: $icon iconDrawableName: $iconDrawableName")
         val context = requireContext()
-        val resId = resources.getIdentifier(
-            if (iconDrawableName == "") "ic_none" else iconDrawableName,
-            "drawable",
-            context.packageName,
-        )
+
+        val resId = try {
+            resources.getIdentifier(
+                if (iconDrawableName == "") "ic_none" else iconDrawableName,
+                "drawable",
+                context.packageName,
+            )
+        }  catch (e: NotFoundException) {
+            0
+        }
         val iconDrawable = AppCompatResources.getDrawable(requireContext(), resId)
         val typedArray =
             context.theme.obtainStyledAttributes(intArrayOf(R.attr.themedEmptyDialBackground))

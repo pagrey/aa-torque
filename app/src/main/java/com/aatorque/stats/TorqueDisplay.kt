@@ -1,6 +1,7 @@
 package com.aatorque.stats
 
 import android.annotation.SuppressLint
+import android.content.res.Resources
 import android.graphics.Typeface
 import android.icu.text.NumberFormat
 import android.os.Bundle
@@ -67,11 +68,15 @@ class TorqueDisplay : Fragment() {
             } else {
                 label.text = ""
                 label.setBackgroundResource(
-                    resources.getIdentifier(
-                        icon,
-                        "drawable",
-                        requireContext().packageName,
-                    )
+                    try {
+                        resources.getIdentifier(
+                            icon,
+                            "drawable",
+                            requireContext().packageName,
+                        )
+                    } catch (e: Resources.NotFoundException) {
+                        0
+                    }
                 )
             }
             value.text = "-"
