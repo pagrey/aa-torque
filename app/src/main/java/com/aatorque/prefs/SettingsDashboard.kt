@@ -89,7 +89,9 @@ class SettingsDashboard: PreferenceFragmentCompat() {
             }
         }
 
-        override fun onServiceDisconnected(name: ComponentName?) {}
+        override fun onServiceDisconnected(name: ComponentName?) {
+            mBound = false
+        }
     }
 
     fun dashboardIndex(): Int {
@@ -122,7 +124,6 @@ class SettingsDashboard: PreferenceFragmentCompat() {
         super.onDestroy()
         if (mBound) {
             requireActivity().unbindService(torqueConnection)
-            mBound = false
         }
     }
 

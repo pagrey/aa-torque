@@ -15,7 +15,6 @@ import com.aatorque.datastore.Display
 import com.aatorque.datastore.MaxControl
 import com.aatorque.datastore.Screen
 import com.aatorque.stats.R
-import com.aatorque.stats.TorqueService
 import com.aatorque.stats.TorqueServiceWrapper
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
