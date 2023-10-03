@@ -103,7 +103,7 @@ class TorqueDisplay : Fragment() {
         }
     }
 
-    fun bottomDisplay() {
+    private fun bottomDisplay() {
         val params = iconElement!!.layoutParams as ConstraintLayout.LayoutParams
         params.bottomToTop = params.topToBottom
         params.topToBottom = ConstraintLayout.LayoutParams.UNSET
