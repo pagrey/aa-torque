@@ -48,3 +48,5 @@
 -keepclassmembers class * extends com.google.protobuf.GeneratedMessageLite* {
    <fields>;
 }
+
+-keep,allowoptimization class com.aatorque.** { *; }
