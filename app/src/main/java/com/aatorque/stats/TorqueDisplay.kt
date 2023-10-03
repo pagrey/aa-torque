@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import kotlin.math.roundToInt
 
 class TorqueDisplay : Fragment() {
     private var rootView: View? = null
@@ -95,6 +96,8 @@ class TorqueDisplay : Fragment() {
     fun onUpdate(data: TorqueData) {
         valueElement?.text = if (data.lastDataStr != null) {
             data.lastDataStr + unit
+        } else if (data.display.wholeNumbers) {
+             "${data.lastData.roundToInt()}$unit"
         } else {
             "${numberFormatter.format(data.lastData)}${unit}"
         }

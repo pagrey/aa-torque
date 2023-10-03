@@ -60,7 +60,12 @@ class TorqueData(val display: Display) {
     private fun convertIfNeeded(value: Double): String? {
         if (!display.enableScript || display.customScript == "") return null
         if (expression == null) {
-            expression = Expression(display.customScript.replace("x", "*"), evalConfig)
+            val config = if(display.wholeNumbers) {
+                ExpressionConfiguration.builder().decimalPlacesRounding(0).build()
+            } else {
+                evalConfig
+            }
+            expression = Expression(display.customScript.replace("x", "*"), config)
         }
         return try {
             expression!!.with("a", value).evaluate().stringValue

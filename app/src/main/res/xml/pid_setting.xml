@@ -53,6 +53,12 @@
         android:enabled="false"
         android:persistent="false"
     />
+    <CheckBoxPreference
+        android:key="wholeNumbers"
+        android:title="@string/whole_numbers"
+        android:summary="@string/whole_numbers_desc"
+        android:persistent="false"
+        />
     <PreferenceCategory
         android:title="@string/custom_script"
         android:layout="@layout/prefcat">
@@ -81,12 +87,6 @@
             android:summaryOff="@string/pref_highvis_off"
             android:summaryOn="@string/pref_highvis_on"
             android:title="@string/pref_highvis" />
-        <CheckBoxPreference
-            android:key="wholeNumbers"
-            android:title="@string/whole_numbers"
-            android:summary="@string/whole_numbers_desc"
-            android:persistent="false"
-            />
         <EditTextPreference
             android:key="minValue"
             android:inputType="numberSigned"
