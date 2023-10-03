@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.EditTextPreference
@@ -13,6 +14,7 @@ import androidx.preference.PreferenceFragmentCompat
 import com.aatorque.stats.R
 import com.aatorque.stats.TorqueServiceWrapper
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class SettingsDashboard: PreferenceFragmentCompat() {
 
@@ -123,7 +125,12 @@ class SettingsDashboard: PreferenceFragmentCompat() {
     override fun onDestroy() {
         super.onDestroy()
         if (mBound) {
-            requireActivity().unbindService(torqueConnection)
+            try {
+                requireActivity().unbindService(torqueConnection)
+            } catch (e: IllegalArgumentException) {
+                Timber.e("Failed to unbind service", e)
+            }
+            mBound = false
         }
     }
 
