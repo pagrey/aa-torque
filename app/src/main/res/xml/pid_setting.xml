@@ -41,7 +41,7 @@
         android:title="@string/icon"
         app:entryImages="@array/icons"
         android:entries="@array/iconDesc"
-        android:entryValues="@array/icons"
+        android:entryValues="@array/icon_values"
         android:dependency="pidList"
         android:enabled="false"
         android:persistent="false"

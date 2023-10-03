@@ -137,6 +137,53 @@
         <item>@drawable/ic_yaw</item>
     </integer-array>
 
+    <string-array name="icon_values" translatable="false">
+        <item>ic_none</item>
+        <item>ic_altitude</item>
+        <item>ic_barometer</item>
+        <item>ic_battery</item>
+        <item>ic_brakepedalposition</item>
+        <item>ic_cact</item>
+        <item>ic_catalyst</item>
+        <item>ic_distance</item>
+        <item>ic_ecoavg</item>
+        <item>ic_eco</item>
+        <item>ic_exhaust</item>
+        <item>ic_fuel</item>
+        <item>ic_fuelpressure</item>
+        <item>ic_fuelprimary</item>
+        <item>ic_fuelsecondary</item>
+        <item>ic_gearbox</item>
+        <item>ic_heading</item>
+        <item>ic_lateral</item>
+        <item>ic_longitudinal</item>
+        <item>ic_manifold</item>
+        <item>ic_measurement</item>
+        <item>ic_motherboard</item>
+        <item>ic_obd2</item>
+        <item>ic_odometer</item>
+        <item>ic_oil</item>
+        <item>ic_outsidetemperature</item>
+        <item>ic_pedalposition</item>
+        <item>ic_phonebattery</item>
+        <item>ic_phone</item>
+        <item>ic_powermeter</item>
+        <item>ic_radio</item>
+        <item>ic_spanner</item>
+        <item>ic_throttle</item>
+        <item>ic_timing</item>
+        <item>ic_turbo</item>
+        <item>ic_tyre</item>
+        <item>ic_vin</item>
+        <item>ic_voltage</item>
+        <item>ic_volume</item>
+        <item>ic_water</item>
+        <item>ic_wheelangle</item>
+        <item>ic_wheel</item>
+        <item>ic_world</item>
+        <item>ic_yaw</item>
+    </string-array>
+
     <array name="iconDesc">
         <item>@string/element_none</item>
         <item>@string/element_navAltitude</item>

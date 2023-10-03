@@ -81,7 +81,7 @@ class TorqueData(val display: Display) {
         if (match != null) {
             return match.groups["name"]!!.value
         }
-        return null
+        return display.icon
     }
 
     fun sendNotifyUpdate() {

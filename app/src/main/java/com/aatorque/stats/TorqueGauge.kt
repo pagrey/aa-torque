@@ -217,7 +217,7 @@ class TorqueGauge : Fragment(){
         speedFormat: String,
         tickFormat: String
     ) {
-        Timber.d("icon: $icon iconDrawableName: $iconDrawableName")
+        Timber.i("icon: $icon iconDrawableName: $iconDrawableName")
         val context = requireContext()
         val resId = resources.getIdentifier(
             if (iconDrawableName == "") "ic_none" else iconDrawableName,

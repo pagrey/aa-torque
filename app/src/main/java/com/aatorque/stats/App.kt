@@ -2,15 +2,12 @@ package com.aatorque.stats
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.preference.PreferenceManager
 import org.acra.config.mailSender
 import org.acra.config.toast
 import org.acra.data.StringFormat
 import org.acra.ktx.initAcra
 import timber.log.Timber
-import timber.log.Timber.*
 
 
 class App : Application() {

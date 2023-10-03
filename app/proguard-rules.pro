@@ -35,12 +35,6 @@
 -dontwarn javax.lang.model.element.Modifier
 -dontwarn lombok.Generated
 
--keepclassmembers class **.R$* {
-    public static <fields>;
-}
-
--keep class **.R$*
-
 # Strip Log.d and Log.v
 -assumenosideeffects class timber.log.Timber {
     public static *** d(...);
