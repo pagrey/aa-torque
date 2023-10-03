@@ -3,6 +3,7 @@ package com.aatorque.stats
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.preference.PreferenceManager
 import org.acra.config.mailSender
 import org.acra.config.toast
@@ -15,6 +16,7 @@ import timber.log.Timber.*
 class App : Application() {
 
     val logTree = CacheLogTree()
+
 
     override fun onCreate() {
         super.onCreate()

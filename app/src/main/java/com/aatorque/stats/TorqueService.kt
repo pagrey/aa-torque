@@ -46,13 +46,13 @@ class TorqueService {
             if (BuildConfig.SIMULATE_METRICS) {
                 svc.setDebugTestMode(true)
             }
+            torqueService = svc
             conLock.withLock {
                 for (funt in onConnect) {
                     funt(svc)
                 }
                 onConnect.clear()
             }
-            torqueService = svc
         }
 
         /**
