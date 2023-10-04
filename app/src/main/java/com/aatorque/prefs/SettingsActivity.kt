@@ -37,6 +37,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.net.UnknownHostException
 import javax.net.ssl.HttpsURLConnection
+import javax.net.ssl.SSLPeerUnverifiedException
 
 
 class SettingsActivity : AppCompatActivity(),
@@ -232,6 +233,8 @@ class SettingsActivity : AppCompatActivity(),
         } catch (e: UnknownHostException) {
             return
         } catch (e: ConnectException) {
+            return
+        } catch (e: SSLPeerUnverifiedException) {
             return
         }
         try {
