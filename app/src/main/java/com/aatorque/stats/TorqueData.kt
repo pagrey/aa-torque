@@ -27,15 +27,13 @@ class TorqueData(val display: Display) {
     var lastData: Double = 0.0
         set(value) {
             lastDataStr = convertIfNeeded(value)
-            field = if (lastDataStr != null) {
+            field = lastDataStr?.let {
                 try {
-                    lastDataStr!!.toDouble()
+                    it.toDouble()
                 } catch (e: NumberFormatException) {
-                    lastData
+                    field
                 }
-            } else {
-                value
-            }
+            } ?: field
             if (field > maxValue) {
                 maxValue = field
             }
