@@ -157,4 +157,15 @@
     <string name="download_instructions">Update downloading. Install with Kingstaller.</string>
     <string name="expressionDocumentation">View Documentation</string>
     <string name="copy_logs">Copy logs to clipboard</string>
+
+    <string name="convert_f_to_c">Fahrenheit to Celsius</string>
+    <string name="convert_c_to_f">Celsius to Fahrenheit</string>
+    <string name="convert_bar_psi">Convert BAR to PSI</string>
+    <string name="convert_psi_bar">Convert PSI to BAR</string>
+    <string name="convert_km_to_miles">Kilometers to Miles</string>
+    <string name="boolean_logic">Boolean Logic</string>
+    <string name="convert_newton_ft_lb">Newton Meters to Foot-pounds</string>
+    <string name="convert_cc_min_gal_hour">CC per minute to Gallon Hour</string>
+    <string name="convert_liter_100_km">Liter 100/km to Miles per Gallon</string>
+    <string name="convert_kpa_psi">Kilopascals (kPa) to (PSI)</string>
 </resources>
