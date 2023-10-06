@@ -33,7 +33,7 @@ class TorqueData(val display: Display) {
                 } catch (e: NumberFormatException) {
                     field
                 }
-            } ?: field
+            } ?: value
             if (field > maxValue) {
                 maxValue = field
             }
