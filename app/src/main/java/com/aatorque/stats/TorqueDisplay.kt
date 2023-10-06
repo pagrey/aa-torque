@@ -75,7 +75,7 @@ class TorqueDisplay : Fragment() {
                             requireContext().packageName,
                         )
                     } catch (e: Resources.NotFoundException) {
-                        0
+                        R.drawable.ic_none
                     }
                 )
             }

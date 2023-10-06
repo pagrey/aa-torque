@@ -228,16 +228,15 @@ class TorqueGauge : Fragment(){
                 context.packageName,
             )
         }  catch (e: NotFoundException) {
-            0
+            R.drawable.ic_none
         }
-        val iconDrawable = AppCompatResources.getDrawable(requireContext(), resId)
         val typedArray =
             context.theme.obtainStyledAttributes(intArrayOf(R.attr.themedEmptyDialBackground))
         val emptyBackgroundResource = typedArray.getResourceId(0, 0)
         typedArray.recycle()
 
         // set icon. Clocks that don't need an icon have ic_none as icon
-        icon!!.background = iconDrawable
+        icon!!.setBackgroundResource(resId)
         mTextTitle?.text = iconText
         clock!!.setUnit(unit!!)
         if (minspeed >= maxspeed) {
