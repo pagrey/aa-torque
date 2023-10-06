@@ -5,13 +5,18 @@ import timber.log.Timber
 import com.aatorque.datastore.Display
 import java.util.concurrent.ScheduledThreadPoolExecutor
 import java.util.concurrent.TimeUnit
+enum class ConnectStatus {
+    CONNECTING_TORQUE, CONNECTING_ECU, CONNECTED, SETUP_GAUGE
+}
+
+typealias ConStatusFn = ((ConnectStatus) -> Unit)
 
 class TorqueRefresher {
     val data = HashMap<Int, TorqueData>()
     private val executor = ScheduledThreadPoolExecutor(7)
     val handler = Handler(Looper.getMainLooper())
-    var lastConnectStatus: Boolean? = null
-    var conWatcher: ((Boolean) -> Unit)? = null
+    var lastConnectStatus = ConnectStatus.CONNECTING_TORQUE
+    var conWatcher: ConStatusFn? = null
 
     companion object {
         const val REFRESH_INTERVAL = 300L
@@ -26,22 +31,27 @@ class TorqueRefresher {
     }
 
     fun makeExecutors(service: TorqueService) {
+        var foundValid = false
         data.values.forEachIndexed { index, torqueData ->
             val refreshOffset = (REFRESH_INTERVAL / data.size) * index
-            if (torqueData.pid != null && torqueData.refreshTimer == null) {
-                Timber.i("Scheduled item in position $index with $refreshOffset delay")
-                doRefresh(service, torqueData)
-                torqueData.refreshTimer = executor.scheduleWithFixedDelay({
-                    try {
-                        doRefresh(service, torqueData)
-                    } catch (e: Exception) {
-                        Timber.e("Refresh failed in pos $index", e)
-                    }
-                }, refreshOffset, REFRESH_INTERVAL, TimeUnit.MILLISECONDS)
+            if (torqueData.pid != null) {
+                foundValid = true
+                if (torqueData.refreshTimer == null) {
+                    Timber.i("Scheduled item in position $index with $refreshOffset delay")
+                    doRefresh(service, torqueData)
+                    torqueData.refreshTimer = executor.scheduleWithFixedDelay({
+                        try {
+                            doRefresh(service, torqueData)
+                        } catch (e: Exception) {
+                            Timber.e("Refresh failed in pos $index", e)
+                        }
+                    }, refreshOffset, REFRESH_INTERVAL, TimeUnit.MILLISECONDS)
+                }
             } else {
                 Timber.i("No reason to schedule item in position $index")
             }
         }
+        conWatcher?.invoke(if (foundValid) lastConnectStatus else ConnectStatus.SETUP_GAUGE)
     }
 
     fun doRefresh(service: TorqueService, torqueData: TorqueData) {
@@ -53,9 +63,9 @@ class TorqueRefresher {
                 torqueData.hasReceivedNonZero = true
                 handler.post {
                     torqueData.sendNotifyUpdate()
-                    if (value != 0.0 && lastConnectStatus != true) {
-                        lastConnectStatus = true
-                        conWatcher?.let { it(true) }
+                    if (value != 0.0 && lastConnectStatus != ConnectStatus.CONNECTED) {
+                        lastConnectStatus = ConnectStatus.CONNECTED
+                        conWatcher?.let { it(ConnectStatus.CONNECTED) }
                     }
                 }
             }
@@ -74,12 +84,12 @@ class TorqueRefresher {
         return data[idx]?.display?.equals(otherScreen) != true
     }
 
-    fun watchConnection(service: TorqueService, notifyConState: (connected: Boolean?) -> Unit) {
+    fun watchConnection(service: TorqueService, notifyConState: ConStatusFn) {
         notifyConState(lastConnectStatus)
         service.addConnectCallback {
-            if (lastConnectStatus == null) {
-                lastConnectStatus = null
-                notifyConState(false)
+            if (lastConnectStatus == ConnectStatus.CONNECTING_TORQUE) {
+                lastConnectStatus = ConnectStatus.CONNECTING_ECU
+                notifyConState(lastConnectStatus)
             }
             conWatcher = notifyConState
         }

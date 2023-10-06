@@ -122,7 +122,7 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
     }
 
     fun setScreen(direction: Int) {
-        if (screensAnimating || torqueRefresher.lastConnectStatus == false) return
+        if (screensAnimating) return
         screensAnimating = true
         val duration = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
         mTitleElement!!.animate().alpha(0f).duration = duration
@@ -174,10 +174,15 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
         super.onResume()
         torqueRefresher.makeExecutors(torqueService)
         torqueRefresher.watchConnection(torqueService) {
-            if (it == null || it == false) {
+            if (it != ConnectStatus.CONNECTED) {
                 mConStatus.visibility = View.VISIBLE
                 mConStatus.text = resources.getText(
-                    if (it == null) R.string.status_connecting_torque else R.string.status_connecting_to_ecu
+                    when(it) {
+                        ConnectStatus.CONNECTING_TORQUE -> R.string.status_connecting_torque
+                        ConnectStatus.CONNECTING_ECU -> R.string.status_connecting_to_ecu
+                        ConnectStatus.SETUP_GAUGE -> R.string.status_setup_gauges
+                        else -> throw Exception("Unknown status")
+                    }
                 )
             } else {
                 mConStatus.visibility = View.INVISIBLE

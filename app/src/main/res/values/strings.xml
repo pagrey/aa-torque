@@ -157,6 +157,7 @@
     <string name="download_instructions">Update downloading. Install with Kingstaller.</string>
     <string name="expressionDocumentation">View Documentation</string>
     <string name="copy_logs">Copy logs to clipboard</string>
+    <string name="status_setup_gauges">Setup gauges in settings</string>
 
     <string name="convert_f_to_c">Fahrenheit to Celsius</string>
     <string name="convert_c_to_f">Celsius to Fahrenheit</string>
