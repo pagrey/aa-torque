@@ -16,6 +16,8 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.InputDeviceCompat
+import androidx.core.view.marginEnd
+import androidx.core.view.marginRight
 import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -247,9 +249,23 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
     private fun updateScale(largeCenter: Boolean) {
         val scaleFactor = if (largeCenter) resources.getFraction(R.fraction.scale_gauge, 1, 1) else 1f
         gaugeViews[0]!!.scaleX = scaleFactor
+        gaugeViews[0]!!.post {
+            val preWidth = gaugeViews[0]!!.width * scaleFactor
+            val postWidth = gaugeViews[0]!!.width
+            val halfDiff = ((preWidth - postWidth) * 0.25f)
+            displays[0]!!.rootView?.translationX = halfDiff
+            displays[2]!!.rootView?.translationX = halfDiff
+        }
         gaugeViews[0]!!.scaleY = scaleFactor
         gaugeViews[2]!!.scaleX = scaleFactor
         gaugeViews[2]!!.scaleY = scaleFactor
+        gaugeViews[2]!!.post {
+            val preWidth = gaugeViews[0]!!.width * scaleFactor
+            val postWidth = gaugeViews[0]!!.width
+            val halfDiff = ((preWidth - postWidth) * 0.25f)
+            displays[1]!!.rootView?.translationX = -halfDiff
+            displays[3]!!.rootView?.translationX = -halfDiff
+        }
     }
 
     private fun setupBackground(newBackground: String?) {

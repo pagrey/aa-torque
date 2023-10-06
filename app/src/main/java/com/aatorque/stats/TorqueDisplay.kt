@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment
 import kotlin.math.roundToInt
 
 class TorqueDisplay : Fragment() {
-    private var rootView: View? = null
+    var rootView: View? = null
     private var valueElement: TextView? = null
     private var iconElement: TextView? = null
     private var unit = ""
