@@ -1,3 +1,6 @@
+![CI Status](https://github.com/agronick/aa-torque/actions/workflows/ci.yml/badge.svg?branch=master)
+
+
 # Android Auto Plugin for Torque
 
 This was a performance monitor, based on [Chillout's Performance Monitor](https://github.com/jilleb/mqb-pm) which was based on Martoreto's aa-stats.
