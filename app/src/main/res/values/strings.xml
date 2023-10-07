@@ -169,4 +169,5 @@
     <string name="convert_cc_min_gal_hour">CC per minute to Gallon Hour</string>
     <string name="convert_liter_100_km">Liter 100/km to Miles per Gallon</string>
     <string name="convert_kpa_psi">Kilopascals (kPa) to (PSI)</string>
+    <string name="download_complete">Download Complete</string>
 </resources>
