@@ -1,10 +1,13 @@
 package com.aatorque.stats
 
+import androidx.core.text.isDigitsOnly
 import com.ezylang.evalex.BaseException
 import com.ezylang.evalex.Expression
 import com.ezylang.evalex.config.ExpressionConfiguration
 import com.aatorque.datastore.Display
 import timber.log.Timber
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import java.util.concurrent.ScheduledFuture
 
 class TorqueData(val display: Display) {
@@ -16,7 +19,13 @@ class TorqueData(val display: Display) {
     var lastDataStr: String? = null
     var refreshTimer: ScheduledFuture<*>? = null
     var hasReceivedNonZero = false
-    var zeroCount = 0
+    val dfDefault = DecimalFormat("#.##")
+    val dfRound = DecimalFormat("#")
+
+    init {
+        dfDefault.roundingMode = RoundingMode.HALF_UP
+        dfRound.roundingMode = RoundingMode.HALF_UP
+    }
 
     var notifyUpdate: ((TorqueData) -> Unit)? = null
         set(value) {
@@ -44,9 +53,6 @@ class TorqueData(val display: Display) {
     companion object {
         const val PREFIX = "torque_"
         val drawableRegex = Regex("res/drawable/(?<name>.+)\\.[a-z]+")
-        val evalConfig: ExpressionConfiguration = ExpressionConfiguration.builder()
-            .decimalPlacesRounding(2)
-            .build()
     }
 
     init {
@@ -59,15 +65,21 @@ class TorqueData(val display: Display) {
     private fun convertIfNeeded(value: Double): String? {
         if (!display.enableScript || display.customScript == "") return null
         if (expression == null) {
-            val config = if(display.wholeNumbers) {
-                ExpressionConfiguration.builder().decimalPlacesRounding(0).build()
-            } else {
-                evalConfig
-            }
-            expression = Expression(display.customScript.replace("x", "*"), config)
+            expression = Expression(display.customScript.replace("[x×]".toRegex(), "*"))
         }
         return try {
-            expression!!.with("a", value).evaluate().stringValue
+            val result = expression!!.with("a", value).evaluate()
+            try {
+                val df = if (display.wholeNumbers) {
+                    dfRound
+                } else {
+                    dfDefault
+                }
+                result.stringValue.toDouble()
+                df.format(result.numberValue).toString()
+            } catch (e: NumberFormatException) {
+                result.stringValue
+            }
         } catch (e: BaseException) {
             Timber.e("Unable to parse", e)
             e.printStackTrace()

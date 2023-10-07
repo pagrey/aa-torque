@@ -92,7 +92,6 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
 
     override fun onStart() {
         super.onStart()
-        val initialRun = !mStarted
         mStarted = true
         lifecycleScope.launch {
             requireContext().dataStore.data.map {
@@ -102,7 +101,7 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
                     mTitleElement?.text = screens.title
                 }
                 screens.gaugesList.forEachIndexed { index, display ->
-                    if (initialRun || torqueRefresher.hasChanged(index, display)) {
+                    if (torqueRefresher.hasChanged(index, display)) {
                         val clock = torqueRefresher.populateQuery(index, display)
                         if (mStarted) {
                             guages[index]?.setupClock(clock)
@@ -110,7 +109,7 @@ class DashboardFragment : CarFragment(), SharedPreferences.OnSharedPreferenceCha
                     }
                 }
                 screens.displaysList.forEachIndexed { index, display ->
-                    if (initialRun || torqueRefresher.hasChanged(index + DISPLAY_OFFSET, display)) {
+                    if (torqueRefresher.hasChanged(index + DISPLAY_OFFSET, display)) {
                         val td = torqueRefresher.populateQuery(index + DISPLAY_OFFSET, display)
                         if (mStarted) {
                             displays[index]?.setupElement(td)
