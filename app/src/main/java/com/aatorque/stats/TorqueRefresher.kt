@@ -56,7 +56,12 @@ class TorqueRefresher {
 
     fun doRefresh(service: TorqueService, torqueData: TorqueData) {
         service.runIfConnected { ts ->
-            val value = ts.getPIDValuesAsDouble(arrayOf( torqueData.pid!!))[0]
+            val value = try {
+                 ts.getPIDValuesAsDouble(arrayOf(torqueData.pid!!))[0]
+            } catch (e: ArrayIndexOutOfBoundsException) {
+                Timber.e("Torque returned invalid data")
+                return@runIfConnected
+            }
             torqueData.lastData = value
             Timber.d("Got valid $value from torque for ${torqueData.display.label}")
             if (value != 0.0 || torqueData.hasReceivedNonZero) {
