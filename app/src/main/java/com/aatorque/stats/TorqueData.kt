@@ -1,9 +1,7 @@
 package com.aatorque.stats
 
-import androidx.core.text.isDigitsOnly
 import com.ezylang.evalex.BaseException
 import com.ezylang.evalex.Expression
-import com.ezylang.evalex.config.ExpressionConfiguration
 import com.aatorque.datastore.Display
 import timber.log.Timber
 import java.math.RoundingMode

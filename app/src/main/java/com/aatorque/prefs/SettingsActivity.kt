@@ -2,10 +2,12 @@ package com.aatorque.prefs
 
 import android.app.Activity
 import android.app.DownloadManager
+import android.content.BroadcastReceiver
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -42,6 +44,15 @@ import javax.net.ssl.SSLPeerUnverifiedException
 
 class SettingsActivity : AppCompatActivity(),
     PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+
+    val br: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.`package` == BuildConfig.APPLICATION_ID) {
+                Toast.makeText(context, R.string.download_complete, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -279,6 +290,12 @@ class SettingsActivity : AppCompatActivity(),
                 .setDuration(10000)
                 .setActionTextColor(resources.getColor(R.color.white, null))
                 .setAction(R.string.download) {
+                    ContextCompat.registerReceiver(
+                        baseContext,
+                        br,
+                        IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE),
+                        ContextCompat.RECEIVER_EXPORTED
+                    )
                     val downloadRequest = DownloadManager.Request(Uri.parse(downloadItem))
                     downloadRequest.setDestinationInExternalPublicDir(
                         Environment.DIRECTORY_DOWNLOADS,
