@@ -30,9 +30,11 @@ import com.aatorque.stats.BuildConfig
 import com.aatorque.stats.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.ConnectException
 import java.net.HttpURLConnection
@@ -103,37 +105,25 @@ class SettingsActivity : AppCompatActivity(),
     }
 
     private fun exportFile() {
-        val file = File(filesDir, "datastore/user_prefs.pb")
-
-        if (file.exists() && file.canRead()) {
-            // Launch the activity result with the contract input
-            exportFileLauncher.launch(file.name)
-        } else {
-            // Show a toast message that the file is not available
-            Toast.makeText(this, R.string.file_not_available, Toast.LENGTH_SHORT).show()
-        }
+        exportFileLauncher.launch("")
     }
 
     private val exportFileLauncher = registerForActivityResult(ExportFileContract()) { uri: Uri? ->
         // This lambda will be executed when the activity result returns
-        var msg = if (uri != null) {
-            // Get the content resolver and open an output stream to the URI
-            val resolver = contentResolver
-            resolver.openOutputStream(uri)?.use { outputStream ->
-                // Get the file to be exported and open an input stream from it
-                val file = File(filesDir, "datastore/user_prefs.pb")
-                file.inputStream().use { inputStream ->
-                    // Copy the bytes from the input stream to the output stream
-                    inputStream.copyTo(outputStream)
+        lifecycleScope.launch(Dispatchers.IO) {
+            val data = applicationContext.dataStore.data.first()
+            val result = if (uri != null) {
+                contentResolver.openOutputStream(uri)?.use { outputStream ->
+                    UserPreferenceSerializer.writeTo(data, outputStream)
                 }
+                R.string.file_exported_successfully
+            } else {
+                R.string.export_failed
             }
-            // Show a toast message that the file was exported successfully
-            R.string.file_exported_successfully
-        } else {
-            // Show a toast message that the export failed
-            R.string.export_failed
+            runOnUiThread {
+                Toast.makeText(baseContext, result, Toast.LENGTH_SHORT).show()
+            }
         }
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
 
@@ -304,6 +294,7 @@ class SettingsActivity : AppCompatActivity(),
                     downloadRequest.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                     val dm = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
                     dm.enqueue(downloadRequest)
+
                     Toast.makeText(
                         baseContext,
                         R.string.download_instructions,
