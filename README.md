@@ -4,7 +4,7 @@
 
 # Android Auto Plugin for Torque
 
-This was a performance monitor, based on [Chillout's Performance Monitor](https://github.com/jilleb/mqb-pm) which was based on Martoreto's aa-stats.
+This is a performance monitor based on [Chillout's Performance Monitor](https://github.com/jilleb/mqb-pm) which was based on Martoreto's aa-stats.
 The app has been modified with a focus on making it more customizable with the ability
 to obtain any PID from Torque. Torque pro is required to use this app.
 
