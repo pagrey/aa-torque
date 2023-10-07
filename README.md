@@ -1,4 +1,5 @@
 ![CI Status](https://github.com/agronick/aa-torque/actions/workflows/ci.yml/badge.svg?branch=master)
+![downloads](https://img.shields.io/github/downloads/agronick/aa-torque/total.svg)
 
 
 # Android Auto Plugin for Torque
