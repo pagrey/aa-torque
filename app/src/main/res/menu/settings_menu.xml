@@ -13,4 +13,8 @@
         android:id="@+id/action_copy_logs"
         android:title="@string/copy_logs"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_credits"
+        android:title="@string/activity_credits_title"
+        app:showAsAction="never"/>
 </menu>

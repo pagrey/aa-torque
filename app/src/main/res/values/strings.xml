@@ -23,6 +23,8 @@
     <string name="element_longitudinalAcceleration">Longitudinal G\'s</string>
     <string name="element_navAltitude">Altitude</string>
     <string name="element_navHeading">Heading</string>
+    <string name="element_cylinder">Engine Cylinder</string>
+    <string name="element_horsepower">Horsepower</string>
     <string name="element_none">None</string>
     <string name="element_odometer">Odometer</string>
     <string name="element_oilTemperature">Oil temperature</string>
@@ -79,6 +81,7 @@
     <string name="element_torque_fuelpressure">Fuel pressure</string>
     <string name="element_torque_engineload">Engine load</string>
     <string name="element_torque_timing_advance">Timing advance</string>
+    <string name="element_transmission">Transmission</string>
     <string name="element_torque_throttle_position">Throttle position (Manifold)</string>
     <string name="element_torque_turboboost">Turbo boost pressure</string>
 
@@ -170,4 +173,6 @@
     <string name="convert_liter_100_km">Liter 100/km to Miles per Gallon</string>
     <string name="convert_kpa_psi">Kilopascals (kPa) to (PSI)</string>
     <string name="download_complete">Download Complete</string>
+
+    <string name="icon_credits">Icon Credits</string>
 </resources>

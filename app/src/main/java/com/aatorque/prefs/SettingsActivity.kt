@@ -27,6 +27,7 @@ import androidx.preference.PreferenceFragmentCompat
 import com.aatorque.datastore.UserPreference
 import com.aatorque.stats.App
 import com.aatorque.stats.BuildConfig
+import com.aatorque.stats.CreditsFragment
 import com.aatorque.stats.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
@@ -96,6 +97,11 @@ class SettingsActivity : AppCompatActivity(),
                 true
             }
 
+            R.id.action_credits -> {
+                showCredits()
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -106,6 +112,14 @@ class SettingsActivity : AppCompatActivity(),
 
     private fun exportFile() {
         exportFileLauncher.launch("")
+    }
+
+    private fun showCredits() {
+        supportFragmentManager.beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .replace(R.id.settings_fragment, CreditsFragment())
+            .addToBackStack(null)
+            .commit()
     }
 
     private val exportFileLauncher = registerForActivityResult(ExportFileContract()) { uri: Uri? ->
@@ -181,7 +195,6 @@ class SettingsActivity : AppCompatActivity(),
         super.onNewIntent(intent)
         setIntent(intent)
     }
-
 
     override fun onResume() {
         super.onResume()

@@ -99,6 +99,7 @@
         <item>@drawable/ic_distance</item>
         <item>@drawable/ic_ecoavg</item>
         <item>@drawable/ic_eco</item>
+        <item>@drawable/ic_cylinder</item>
         <item>@drawable/ic_exhaust</item>
         <item>@drawable/ic_fuel</item>
         <item>@drawable/ic_fuelpressure</item>
@@ -106,6 +107,7 @@
         <item>@drawable/ic_fuelsecondary</item>
         <item>@drawable/ic_gearbox</item>
         <item>@drawable/ic_heading</item>
+        <item>@drawable/ic_horse</item>
         <item>@drawable/ic_lateral</item>
         <item>@drawable/ic_longitudinal</item>
         <item>@drawable/ic_manifold</item>
@@ -123,6 +125,7 @@
         <item>@drawable/ic_spanner</item>
         <item>@drawable/ic_throttle</item>
         <item>@drawable/ic_timing</item>
+        <item>@drawable/ic_transmission</item>
         <item>@drawable/ic_turbo</item>
         <item>@drawable/ic_tyre</item>
         <item>@drawable/ic_vin</item>
@@ -146,6 +149,7 @@
         <item>ic_distance</item>
         <item>ic_ecoavg</item>
         <item>ic_eco</item>
+        <item>ic_cylinder</item>
         <item>ic_exhaust</item>
         <item>ic_fuel</item>
         <item>ic_fuelpressure</item>
@@ -153,6 +157,7 @@
         <item>ic_fuelsecondary</item>
         <item>ic_gearbox</item>
         <item>ic_heading</item>
+        <item>ic_horse</item>
         <item>ic_lateral</item>
         <item>ic_longitudinal</item>
         <item>ic_manifold</item>
@@ -170,6 +175,7 @@
         <item>ic_spanner</item>
         <item>ic_throttle</item>
         <item>ic_timing</item>
+        <item>ic_transmission</item>
         <item>ic_turbo</item>
         <item>ic_tyre</item>
         <item>ic_vin</item>
@@ -193,6 +199,7 @@
         <item>@string/element_distance</item>
         <item>@string/element_ecoaverage</item>
         <item>@string/element_eco</item>
+        <item>@string/element_cylinder</item>
         <item>@string/exhaust</item>
         <item>@string/element_torque_fuellevel</item>
         <item>@string/element_torque_fuelpressure</item>
@@ -200,6 +207,7 @@
         <item>@string/element_fuel_secondary</item>
         <item>@string/element_gearboxOilTemperature</item>
         <item>@string/element_navHeading</item>
+        <item>@string/element_horsepower</item>
         <item>@string/element_lateralAcceleration</item>
         <item>@string/element_longitudinalAcceleration</item>
         <item>@string/element_torque_intakemanifoldpressure</item>
@@ -217,6 +225,7 @@
         <item>@string/element_wrench</item>
         <item>@string/element_torque_throttle_position</item>
         <item>@string/element_torque_timing_advance</item>
+        <item>@string/element_transmission</item>
         <item>@string/element_torque_turboboost</item>
         <item>@string/element_tire</item>
         <item>@string/element_VIN</item>
@@ -311,160 +320,12 @@
         <item>@string/min_value</item>
         <item>@string/max_value</item>
     </string-array>
-    <!--
 
-    The following is a list of all other exlap data elements currently known.
-
-    *Booleans*
-    todo: Add an optional icon area to the main dash view showing these items?
-        accIsActive
-        acceleratorKickDown
-        clutch (not_clutchedIn)
-        coastingIsActive (true, false)
-        displayNightDesign
-        driverIsBraking     <- pretty distracting data, maybe not add it.
-        fuelWarningPrimaryTank
-        fuelWarningSecondaryTank
-        clampState.clamp_S
-        clampState.clamp_15
-        clampState.clamp_X
-
-    *Text*
-        blinkingState (off, left, right)
-        car_vehicleInformation
-        car_vehicleState
-        context_States
-        engineTypes
-        fuelLevelState
-        gearTransmissionMode (position_B, position_D)
-        vehicleDate
-        vehicleIdenticationNumber
-        vehicleTime_hour(8.0), vehicleTime_minute (14.0)
-
-    Todo: add one of these and test if the unit actually forwards this data over exlap
-    *media-related*
-        mediaBrowser_FollowMode
-        mediaBrowser_ListState
-        mediaBrowser_Path
-        mediaBrowser_PathCurrentTrack
-        media_AvailableSources
-        media_PlayMode
-        media_PlayerState
-        media_Track
-        *radio*
-            radio_AMPresets
-            radio_AMStations
-            radio_AvailableBands
-            radio_DABEnsembles
-            radio_DABPresets
-            radio_DABServiceComponent
-            radio_DABServices
-            radio_FMPresets
-            radio_FMStations
-            radio_FrequencyRanges
-            radio_TA
-            Radio_Text.Artist
-            Radio_Text.Title
-            Radio_Text.ImageAvailable
-            Radio_Text.Image
-            Radio_Text.Album
-            Radio_Tuner.ShortName
-        sound_BalanceFader
-        sound_BalanceFaderSetup
-        sound_VolumeSetup
-
-    Todo: Clocks or dashboard elements can be made for most of these
-    *float*
-        *consumption data*
-            consumptionLongTermGeneral
-            consumptionShortTermGeneral
-            longTermConsumptionPrimary
-            longTermConsumptionSecondary
-            shortTermConsumptionPrimary
-            shortTermConsumptionSecondary
-        *other dashboard items*
-            maxChargingAirPressure  - use this to determine min/max for charging air pressure max.
-            maxOutputPower      - use this to determine min/max for output clock? Might not be wise, since the output might be higher than the car thinks in some cases
-            modCount
-            oilLevel
-            recuperationLevel
-            totalDistance
-
-        nav_LastDestinations
-
-    *unknown data formats*
-        seatHeater_zone1
-        seatHeater_zone2
-        system_DayNight
-        system_HMISkin
-        system_Language
-        system_ProximityRecognition
-        system_RestrictionMode
-        system_UnitDistance
-        system_activeSource
-
-
-    Todo: read these during initialisation, so the app is set up in the same way as the car
-    *units*
-        unitDateFormat
-        unitPressure.pressureUnit
-        unitTemperature.temperatureUnit
-        unitTimeFormat
-        unitVolume.volumeUnit
-
-
-
-
-    *Other data elements, found om 13/2, still need to be categorized:
-    torqueDistribution
-    refillVolume
-    hevOperationMode (sustaining)
-
-
-    more data elements:
-    tyreStates.compoundState
-    oilLevel.showBargraph
-    oilLevel.refillVolume
-    oilLevel.systemAvailable
-    oilLevel.warnings
-    recuperationLevel.recupLevel
-
-    Car_vehicleInformation.Type (car derivate, e.g. 0203070200 for regular Golf 7)
-    Car_vehicleInformation.StickerBits
-
-    Nav_CurrentPosition.Street
-    Nav_CurrentPosition.Housenumber
-    Nav_CurrentPosition.Description
-    Nav_CurrentPosition.PostalCode
-    driveMode.activeProfile
-engineTypes.primaryEngine
-engineTypes.secondaryEngine
-suspensionProfile
-suspensionStates.height_frontLeft and other wheel locations (0-100 %)
-
-fuelWarningPrimaryTank true/false
-fuelWarningSecondaryTank true/false
-System_ProximityRecognition.InRange
-
-
-
-todo: add these torque PIDs
-EXTRA_TRIP_MPG      = 0xFF1205;
-EXTRA_TRIP_KPL      = 0xFF1206;
-ACCEL_X_FILTERED    = 0xFF1250;
-ACCEL_Y_FILTERED    = 0xFF1251;
-ACCEL_Z_FILTERED    = 0xFF1252;
-
-
-speed gps = ff1001
-o2 volts bank   1 sensor 2 = ff1215
-o2 volts bank   1 sensor 1 = ff1214
-o2 sensor1 equivalence ratio (alternate) = 34
-gps vs obd speed differnce = ff1237
-
-barometric pressure from vehicle = 33
-
-     -->
+    <string-array name="ic_credits_items">
+        <item>Horse by Peleg Red from <a href="https://thenounproject.com/browse/icons/term/horse/" target="_blank" title="Horse Icons">Noun Project</a> (CC BY 3.0)</item>
+        <item>engine cylinder by Thuy Nguyen from <a href="https://thenounproject.com/browse/icons/term/engine-cylinder/" target="_blank" title="engine cylinder Icons">Noun Project</a> (CC BY 3.0)</item>
+        <item>transmission by Gustyne Pissesa Ardhaneswari from <a href="https://thenounproject.com/browse/icons/term/transmission/" target="_blank" title="transmission Icons">Noun Project</a> (CC BY 3.0)</item>
+    </string-array>
 
 
 </resources>
