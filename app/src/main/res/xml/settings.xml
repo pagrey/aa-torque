@@ -44,7 +44,6 @@
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="rotaryInput"
-            android:icon="@drawable/baseline_360_24"
             android:summary="@string/rotary_desc"
             android:persistent="false"
             android:title="@string/rotary_input" />

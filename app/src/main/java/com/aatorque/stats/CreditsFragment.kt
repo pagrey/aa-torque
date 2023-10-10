@@ -25,7 +25,7 @@ class CreditsFragment : Fragment() {
             startActivity(intent)
         }
         view.findViewById<View>(R.id.donateBtn).setOnClickListener { _: View? ->
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.paypal.me/kagronick"))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/sponsors/agronick"))
             startActivity(intent)
         }
         val iconCredits = view.findViewById<LinearLayout>(R.id.ic_credits_list)
