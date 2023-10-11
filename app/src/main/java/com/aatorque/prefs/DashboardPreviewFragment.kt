@@ -33,8 +33,8 @@ class DashboardPreviewFragment: DashboardFragment() {
         val data = runBlocking {
             requireContext().dataStore.data.first()
         }
-        inflater.context.setTheme(mapTheme(data.selectedTheme))
         (requireActivity() as SettingsActivity).supportActionBar!!.hide()
+        inflater.context.setTheme(mapTheme(data.selectedTheme))
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -90,8 +90,13 @@ class DashboardPreviewFragment: DashboardFragment() {
 
     override fun onPause() {
         super.onPause()
+        val window = requireActivity().window
         (requireActivity() as SettingsActivity).supportActionBar!!.show()
         forceRotate(false)
+        WindowCompat.setDecorFitsSystemWindows(window, true);
+        WindowInsetsControllerCompat(window, window.decorView).show(
+            WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.statusBars()
+        )
     }
 
 }
