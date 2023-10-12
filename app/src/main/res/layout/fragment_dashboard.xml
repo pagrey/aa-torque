@@ -1,97 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layoutDashboard"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="0dp"
-    android:theme="@style/AppTheme.Car">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <import type="android.graphics.Typeface" />
+        <variable
+            name="background"
+            type="Integer" />
+
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="status"
+            type="Integer" />
+
+        <variable
+            name="showBtns"
+            type="Boolean" />
+
+        <variable
+            name="font"
+            type="Typeface" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/headers_wrap"
-        android:layout_height="wrap_content"
+        android:id="@+id/layoutDashboard"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    <TextView
-        android:id="@+id/textTitle"
-        android:layout_width="580dp"
-        android:layout_height="0dp"
-        android:maxLines="1"
-        android:text="@string/app_car_service_name"
-        android:textAlignment="center"
-        android:textAppearance="@style/CarBody2"
-        android:textColor="@android:color/white"
-        android:textSize="30sp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton3"
-        app:layout_constraintStart_toEndOf="@+id/imageButton2"
-        app:layout_constraintTop_toBottomOf="@+id/con_status" />
-
-        <TextView
-        android:id="@+id/con_status"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="8dp"
-        android:textAppearance="@style/CarBody2"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="80dp"
-        android:src="@drawable/actions_go_previous_view_icon"
-        android:scaleType="centerCrop"
-        android:textAlignment="center"
-        android:contentDescription="@string/item_details_go_back"
-        app:layout_constraintBottom_toBottomOf="@+id/textTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textTitle"
-        android:background="@android:color/transparent" />
-
-    <ImageButton
-        android:id="@+id/imageButton3"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginEnd="80dp"
-        android:src="@drawable/actions_go_next_view_icon"
-        android:scaleType="centerCrop"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/textTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textTitle"
-        android:contentDescription="@string/item_details_go_back"
-        android:background="@android:color/transparent"
-        android:nextFocusForward="@id/include_wrap" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/include_wrap"
         android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/headers_wrap"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_margin="0dp"
+        android:backgroundResource="@{background}">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/layout_dashboard_gauges"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
-        android:background="#00000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/headers_wrap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textTitle"
+                android:layout_width="580dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:maxLines="1"
+                android:text="@{title}"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="30sp"
+                android:typeface="@{font}"
+                app:layout_constraintEnd_toStartOf="@+id/imageButton3"
+                app:layout_constraintStart_toEndOf="@+id/imageButton2"
+                app:layout_constraintTop_toBottomOf="@+id/con_status" />
+
+            <TextView
+                android:id="@+id/con_status"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="8dp"
+                android:text='@{status == 0 ? "" : context.getString(status)}'
+                android:typeface="@{font}"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/imageButton2"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="80dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/item_details_go_back"
+                android:scaleType="centerCrop"
+                android:src="@drawable/actions_go_previous_view_icon"
+                android:textAlignment="center"
+                android:visibility="@{showBtns ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@+id/textTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textTitle" />
+
+            <ImageButton
+                android:id="@+id/imageButton3"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginEnd="80dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/item_details_go_back"
+                android:nextFocusForward="@id/include_wrap"
+                android:scaleType="centerCrop"
+                android:src="@drawable/actions_go_next_view_icon"
+                android:textAlignment="center"
+                android:visibility="@{showBtns ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@+id/textTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textTitle" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/include_wrap"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/headers_wrap">
+
+            <include
+                android:id="@+id/include"
+                layout="@layout/layout_dashboard_gauges"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="90dp"
+                android:background="#00000000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

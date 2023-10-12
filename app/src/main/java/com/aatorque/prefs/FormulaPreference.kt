@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
-import androidx.core.content.ContextCompat.startActivity
 import androidx.preference.Preference
 import com.aatorque.stats.R
 

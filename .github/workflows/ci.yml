@@ -70,4 +70,5 @@ jobs:
           draft: true
           files: |
             app/build/outputs/apk/release/aa-torque.apk
+            app/build/outputs/mapping/release/mapping.txt
 

@@ -8,8 +8,8 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Binder
 import android.os.IBinder
-import timber.log.Timber
 import org.prowl.torque.remote.ITorqueService
+import timber.log.Timber
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 

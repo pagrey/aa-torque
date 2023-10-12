@@ -2,10 +2,6 @@ package com.aatorque.prefs
 
 import android.os.Bundle
 import android.text.InputType
-import timber.log.Timber
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.CheckBoxPreference
 import androidx.preference.EditTextPreference
@@ -19,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.Collections
 
 class SettingsFragment : PreferenceFragmentCompat() {

@@ -1,10 +1,11 @@
 package com.aatorque.stats
 import android.os.Handler
 import android.os.Looper
-import timber.log.Timber
 import com.aatorque.datastore.Display
+import timber.log.Timber
 import java.util.concurrent.ScheduledThreadPoolExecutor
 import java.util.concurrent.TimeUnit
+
 enum class ConnectStatus {
     CONNECTING_TORQUE, CONNECTING_ECU, CONNECTED, SETUP_GAUGE
 }

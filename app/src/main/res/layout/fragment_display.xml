@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+<data>
+    <import type="android.graphics.Typeface" />
+    <import type="androidx.constraintlayout.widget.ConstraintLayout.LayoutParams" />
+    <import type="com.aatorque.stats.ViewAdapterKt" />
+    <variable name="value" type="String"/>
+    <variable name="iconText" type="String"/>
+    <variable name="icon" type="Integer"/>
+    <variable name="font" type="Typeface" />
+    <variable name="showBottom" type="Boolean" />
+</data>
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:viewBindingIgnore="true">
 
     <TextView
         android:id="@+id/valueElement"
@@ -15,7 +27,8 @@
         android:layout_marginEnd="8dp"
         android:ellipsize="none"
         android:gravity="center"
-        android:textAppearance="@style/CarBody2"
+        android:typeface="@{font}"
+        android:text="@{value}"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,15 +42,19 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:alpha="1.0"
-        android:background="@drawable/ic_none"
+        android:typeface="@{font}"
         android:backgroundTint="@color/car_primary"
         android:ellipsize="marquee"
         android:gravity="center"
         android:singleLine="true"
         android:textColor="@android:color/white"
         android:textSize="14sp"
+        android:text="@{iconText}"
+        app:backgroundResource="@{icon ?? 0}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/valueElement" />
+        app:layout_constraintTop_toBottomOf="@{showBottom ? LayoutParams.UNSET : @id/valueElement}"
+        app:layout_constraintBottom_toTopOf="@{showBottom ? @id/valueElement : LayoutParams.UNSET}"  />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

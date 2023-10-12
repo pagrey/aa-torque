@@ -1,12 +1,6 @@
 package com.aatorque.stats
 
-import android.provider.Settings.Global
 import android.util.Log
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import timber.log.Timber
 
 class CacheLogTree: Timber.DebugTree() {

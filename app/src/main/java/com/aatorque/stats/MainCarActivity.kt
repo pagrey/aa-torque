@@ -1,14 +1,11 @@
 @file:Suppress("MISSING_DEPENDENCY_CLASS", "MISSING_DEPENDENCY_SUPERCLASS")
 package com.aatorque.stats
 
-import android.app.Activity
 import android.os.Bundle
-import androidx.lifecycle.lifecycleScope
 import com.aatorque.prefs.dataStore
 import com.aatorque.prefs.mapTheme
 import com.aatorque.stats.ListMenuAdapter.MenuCallbacks
 import com.google.android.apps.auto.sdk.CarActivity
-import com.google.android.apps.auto.sdk.MenuItem
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.distinctUntilChanged

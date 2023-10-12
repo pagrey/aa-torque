@@ -53,7 +53,6 @@
         android:gravity="center"
         android:singleLine="true"
         android:text=""
-        android:textAppearance="@style/CarBody2"
         android:textColor="@android:color/white"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"

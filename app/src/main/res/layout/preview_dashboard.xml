@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout android:id="@+id/fragment_container"
-    android:background="?attr/themedCarBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="false"
@@ -12,7 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:angle="-90">
-        <include layout="@layout/fragment_dashboard" />
+        <androidx.fragment.app.FragmentContainerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.aatorque.stats.DashboardFragment"
+            android:id="@+id/preview_container" />
     </com.github.rongi.rotate_layout.layout.RotateLayout>
 
 </FrameLayout>

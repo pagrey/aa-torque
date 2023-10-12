@@ -4,7 +4,6 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.graphics.Typeface
 import android.os.Bundle
-import timber.log.Timber
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -12,20 +11,16 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.core.view.InputDeviceCompat
 import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.lifecycleScope
-import com.google.android.apps.auto.sdk.StatusBarController
 import com.aatorque.prefs.dataStore
-import com.aatorque.prefs.mapTheme
-import kotlinx.coroutines.flow.collect
+import com.aatorque.stats.databinding.FragmentDashboardBinding
+import com.google.android.apps.auto.sdk.StatusBarController
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.skip
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 import kotlin.math.abs
 
 
@@ -48,7 +43,7 @@ open class DashboardFragment : CarFragment() {
 
     private var screensAnimating = false
     private var mStarted = false
-    protected open val layout = R.layout.fragment_dashboard
+    lateinit var binding: FragmentDashboardBinding
 
     companion object {
         const val DISPLAY_OFFSET = 3
@@ -64,21 +59,20 @@ open class DashboardFragment : CarFragment() {
         savedInstanceState: Bundle?
     ): View? {
         Timber.i("onCreateView")
-        val view = inflater.inflate(layout, container, false)
+        binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        this.rootView = binding.root
 
-        rootView = view
-
-        mLayoutDashboard = view.findViewById(R.id.layoutDashboard)
-        mBtnNext = view.findViewById(R.id.imageButton2)
-        mBtnPrev = view.findViewById(R.id.imageButton3)
+        mLayoutDashboard = rootView.findViewById(R.id.layoutDashboard)
+        mBtnNext = rootView.findViewById(R.id.imageButton2)
+        mBtnPrev = rootView.findViewById(R.id.imageButton3)
         mBtnNext.setOnClickListener { setScreen(1) }
         mBtnPrev.setOnClickListener  { setScreen(-1) }
-        mTitleElement = view.findViewById(R.id.textTitle)
-        mWrapper = view.findViewById(R.id.include_wrap)
-        mConStatus = view.findViewById(R.id.con_status)
-        gaugeViews[0] = view.findViewById(R.id.gaugeLeft)
-        gaugeViews[1] = view.findViewById(R.id.gaugeCenter)
-        gaugeViews[2] = view.findViewById(R.id.gaugeRight)
+        mTitleElement = rootView.findViewById(R.id.textTitle)
+        mWrapper = rootView.findViewById(R.id.include_wrap)
+        mConStatus = rootView.findViewById(R.id.con_status)
+        gaugeViews[0] = rootView.findViewById(R.id.gaugeLeft)
+        gaugeViews[1] = rootView.findViewById(R.id.gaugeCenter)
+        gaugeViews[2] = rootView.findViewById(R.id.gaugeRight)
 
         guages[0] = childFragmentManager.findFragmentById(R.id.gaugeLeft)!! as TorqueGauge
         guages[1] = childFragmentManager.findFragmentById(R.id.gaugeCenter)!! as TorqueGauge
@@ -89,7 +83,7 @@ open class DashboardFragment : CarFragment() {
         displays[3] = childFragmentManager.findFragmentById(R.id.display4)!! as TorqueDisplay
         displays[2]!!.isBottomDisplay = true
         displays[3]!!.isBottomDisplay = true
-        return rootView
+        return this.rootView
     }
 
     override fun onStart() {
@@ -98,7 +92,7 @@ open class DashboardFragment : CarFragment() {
             requireContext().dataStore.data.map {
                 it.screensList[abs(it.currentScreen) % it.screensCount]
             }.distinctUntilChanged().collect { screens ->
-                mTitleElement.text = screens.title
+                binding.title = screens.title
                 screens.gaugesList.forEachIndexed { index, display ->
                     if (torqueRefresher.hasChanged(index, display)) {
                         val clock = torqueRefresher.populateQuery(index, display)
@@ -190,18 +184,11 @@ open class DashboardFragment : CarFragment() {
         super.onResume()
         torqueRefresher.makeExecutors(torqueService)
         torqueRefresher.watchConnection(torqueService) {
-            if (it != ConnectStatus.CONNECTED) {
-                mConStatus.visibility = View.VISIBLE
-                mConStatus.text = resources.getText(
-                    when(it) {
-                        ConnectStatus.CONNECTING_TORQUE -> R.string.status_connecting_torque
-                        ConnectStatus.CONNECTING_ECU -> R.string.status_connecting_to_ecu
-                        ConnectStatus.SETUP_GAUGE -> R.string.status_setup_gauges
-                        else -> throw Exception("Unknown status")
-                    }
-                )
-            } else {
-                mConStatus.visibility = View.INVISIBLE
+            binding.status = when (it) {
+                ConnectStatus.CONNECTING_TORQUE -> R.string.status_connecting_torque
+                ConnectStatus.CONNECTING_ECU -> R.string.status_connecting_to_ecu
+                ConnectStatus.SETUP_GAUGE -> R.string.status_setup_gauges
+                ConnectStatus.CONNECTED -> null
             }
         }
     }
@@ -243,15 +230,13 @@ open class DashboardFragment : CarFragment() {
     private fun setupBackground(newBackground: String?) {
         val resId = resources.getIdentifier(newBackground, "drawable", requireContext().packageName)
         if (resId != 0) {
-            val wallpaperImage = ContextCompat.getDrawable(requireContext(), resId)
-            mLayoutDashboard.background = wallpaperImage
+            binding.background = resId
         }
     }
 
     fun configureRotaryInput(enabled: Boolean) {
+        binding.showBtns = !enabled
         if (enabled) {
-            mBtnPrev.visibility = View.INVISIBLE
-            mBtnNext.visibility = View.INVISIBLE
             rootView.setOnGenericMotionListener { _, ev ->
                 if (ev.action == MotionEvent.ACTION_SCROLL &&
                     ev.isFromSource(InputDeviceCompat.SOURCE_MOUSE)
@@ -263,17 +248,13 @@ open class DashboardFragment : CarFragment() {
                     false
                 }
             }
-        } else {
-            mBtnPrev.visibility = View.VISIBLE
-            mBtnNext.visibility = View.VISIBLE
-            rootView.setOnGenericMotionListener(null)
         }
     }
 
     fun setupTypeface(selectedFont: String) {
         val assetsMgr = requireContext().assets
         Timber.d("font: $selectedFont")
-        var typeface = Typeface.createFromAsset(assetsMgr, when (selectedFont) {
+        val typeface = Typeface.createFromAsset(assetsMgr, when (selectedFont) {
             "segments" -> "digital.ttf"
             "seat" -> "SEAT_MetaStyle_MonoDigit_Regular.ttf"
             "audi" -> "AudiTypeDisplayHigh.ttf"
@@ -292,6 +273,6 @@ open class DashboardFragment : CarFragment() {
         for (display in displays) {
             display?.setupTypeface(typeface)
         }
-        mTitleElement.typeface = typeface
+        binding.font = typeface
     }
 }

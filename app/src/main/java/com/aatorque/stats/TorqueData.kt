@@ -1,8 +1,8 @@
 package com.aatorque.stats
 
+import com.aatorque.datastore.Display
 import com.ezylang.evalex.BaseException
 import com.ezylang.evalex.Expression
-import com.aatorque.datastore.Display
 import timber.log.Timber
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -17,9 +17,6 @@ class TorqueData(val display: Display) {
     var lastDataStr: String? = null
     var refreshTimer: ScheduledFuture<*>? = null
     var hasReceivedNonZero = false
-    val dfDefault = DecimalFormat("#.##")
-    val dfRound = DecimalFormat("#")
-
     init {
         dfDefault.roundingMode = RoundingMode.HALF_UP
         dfRound.roundingMode = RoundingMode.HALF_UP
@@ -51,6 +48,8 @@ class TorqueData(val display: Display) {
     companion object {
         const val PREFIX = "torque_"
         val drawableRegex = Regex("res/drawable/(?<name>.+)\\.[a-z]+")
+        val dfDefault = DecimalFormat("#.##")
+        val dfRound = DecimalFormat("#")
     }
 
     init {
@@ -63,7 +62,9 @@ class TorqueData(val display: Display) {
     private fun convertIfNeeded(value: Double): String? {
         if (!display.enableScript || display.customScript == "") return null
         if (expression == null) {
-            expression = Expression(display.customScript.replace("[x×]".toRegex(), "*"))
+            val strExp = display.customScript.replace("[x×]".toRegex(), "*")
+            Timber.i("Attempting to make expression: $strExp")
+            expression = Expression(strExp)
         }
         return try {
             val result = expression!!.with("a", value).evaluate()

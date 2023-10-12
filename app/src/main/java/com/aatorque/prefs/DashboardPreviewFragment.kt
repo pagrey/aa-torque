@@ -7,50 +7,37 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.annotation.StyleRes
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentManager.FragmentLifecycleCallbacks
 import com.aatorque.stats.DashboardFragment
 import com.aatorque.stats.R
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 
 
-class DashboardPreviewFragment: DashboardFragment() {
-    override val layout = R.layout.preview_dashboard
+class DashboardPreviewFragment: Fragment() {
     val handler = Handler(Looper.getMainLooper())
-    var firstRun = true
+    companion object {
+        val hideBars = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.navigationBars()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val view = inflater.inflate(R.layout.preview_dashboard, container, false)
         val data = runBlocking {
             requireContext().dataStore.data.first()
         }
-        (requireActivity() as SettingsActivity).supportActionBar!!.hide()
         inflater.context.setTheme(mapTheme(data.selectedTheme))
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        firstRun = savedInstanceState?.getBoolean("firstRun") ?: firstRun
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         forceRotate(true)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        configureRotaryInput(false)
+        return view
     }
 
     fun forceRotate(isOn: Boolean) {
@@ -61,42 +48,43 @@ class DashboardPreviewFragment: DashboardFragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        (requireActivity() as SettingsActivity).supportActionBar!!.hide()
-        forceRotate(true)
-        val window = requireActivity().window
-        WindowCompat.setDecorFitsSystemWindows(window, false);
-        WindowInsetsControllerCompat(window, window.decorView).hide(
-            WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.statusBars()
-        )
-        WindowCompat.getInsetsController(window, window.decorView).systemBarsBehavior =
-            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        if (firstRun) {
-            // Force needles to redraw
-            handler.postDelayed({
-                for (index in 0..<DISPLAY_OFFSET) {
-                    torqueRefresher.data[index]?.let { guages[index]?.setupClock(it) }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        childFragmentManager.registerFragmentLifecycleCallbacks(object: FragmentLifecycleCallbacks(){
+            override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
+                super.onFragmentResumed(fm, f)
+                if (f is DashboardFragment) {
+                    f.configureRotaryInput(false)
+                    // Force needles to redraw
+                    handler.postDelayed({
+                        if (f.isAdded) {
+                            for (index in 0..<DashboardFragment.DISPLAY_OFFSET) {
+                                f.torqueRefresher.data[index]?.let { f.guages[index]?.setupClock(it) }
+                            }
+                        }
+                    }, 0)
                 }
-            }, 0)
-            firstRun = false
-        }
+            }
+        }, false)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putBoolean("firstRun", firstRun)
+    override fun onResume() {
+        super.onResume()
+        forceRotate(true)
+
+        val window = requireActivity().window
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsControllerCompat(window, window.decorView).hide(hideBars)
+        WindowCompat.getInsetsController(window, window.decorView).systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
     }
 
     override fun onPause() {
         super.onPause()
         val window = requireActivity().window
-        (requireActivity() as SettingsActivity).supportActionBar!!.show()
         forceRotate(false)
-        WindowCompat.setDecorFitsSystemWindows(window, true);
-        WindowInsetsControllerCompat(window, window.decorView).show(
-            WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.statusBars()
-        )
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        WindowInsetsControllerCompat(window, window.decorView).show(hideBars)
     }
 
 }

@@ -12,15 +12,14 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import timber.log.Timber
 import android.view.Menu
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
@@ -36,6 +35,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
+import timber.log.Timber
 import java.net.ConnectException
 import java.net.HttpURLConnection
 import java.net.URL
@@ -46,8 +46,6 @@ import javax.net.ssl.SSLPeerUnverifiedException
 
 class SettingsActivity : AppCompatActivity(),
     PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
-
-    private lateinit var toolbar: Toolbar
 
     val br: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -60,8 +58,7 @@ class SettingsActivity : AppCompatActivity(),
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-        toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayUseLogoEnabled(true)
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
@@ -71,10 +68,25 @@ class SettingsActivity : AppCompatActivity(),
         lifecycleScope.launch(Dispatchers.IO) {
             checkUpdate()
         }
+        supportFragmentManager.registerFragmentLifecycleCallbacks(object: FragmentManager.FragmentLifecycleCallbacks(){
+            var attachCount = 0
+                set(value) {
+                    supportActionBar!!.setDisplayHomeAsUpEnabled(value > 1)
+                    field = value
+                }
+            override fun onFragmentAttached(fm: FragmentManager, f: Fragment, context: Context) {
+                super.onFragmentAttached(fm, f, context)
+                attachCount++
+            }
+
+            override fun onFragmentDestroyed(fm: FragmentManager, f: Fragment) {
+                super.onFragmentDestroyed(fm, f)
+                attachCount--
+            }
+        }, false)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.settings_menu, menu)
         return true
     }
@@ -108,6 +120,11 @@ class SettingsActivity : AppCompatActivity(),
                 true
             }
 
+            android.R.id.home -> {
+                onBackPressedDispatcher.onBackPressed()
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -124,11 +141,14 @@ class SettingsActivity : AppCompatActivity(),
         tag: String,
         fragment: Fragment
     ) {
+        val existing = supportFragmentManager.findFragmentByTag(tag)
+        if (existing?.isVisible == true) return
         supportFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .replace(
                 R.id.settings_fragment,
-                supportFragmentManager.findFragmentByTag(tag) ?: fragment,
+                existing ?: fragment,
+                tag
             )
             .addToBackStack(null)
             .commit()
@@ -222,6 +242,7 @@ class SettingsActivity : AppCompatActivity(),
         }
 
     }
+
 
     override fun onPreferenceStartFragment(
         caller: PreferenceFragmentCompat,
