@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:name="com.aatorque.stats.DashboardFragment"
+            android:background="@drawable/background_incar_black"
             android:id="@+id/preview_container" />
     </com.github.rongi.rotate_layout.layout.RotateLayout>
 

@@ -120,7 +120,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
         lifecycleScope.launch {
             requireContext().dataStore.data.distinctUntilChangedBy{
-                it.screensCount
+                it.screensList.map { it.title }
             }.collect { userPreference ->
                 numScreensPref.text = userPreference.screensCount.toString()
                 dashboardsCat.removeAll()
