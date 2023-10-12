@@ -68,22 +68,14 @@ class SettingsActivity : AppCompatActivity(),
         lifecycleScope.launch(Dispatchers.IO) {
             checkUpdate()
         }
-        supportFragmentManager.registerFragmentLifecycleCallbacks(object: FragmentManager.FragmentLifecycleCallbacks(){
-            var attachCount = 0
-                set(value) {
-                    supportActionBar!!.setDisplayHomeAsUpEnabled(value > 1)
-                    field = value
+        supportFragmentManager.registerFragmentLifecycleCallbacks(
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
+                    super.onFragmentResumed(fm, f)
+                    supportActionBar!!.setDisplayHomeAsUpEnabled(f !is SettingsFragment)
                 }
-            override fun onFragmentAttached(fm: FragmentManager, f: Fragment, context: Context) {
-                super.onFragmentAttached(fm, f, context)
-                attachCount++
-            }
-
-            override fun onFragmentDestroyed(fm: FragmentManager, f: Fragment) {
-                super.onFragmentDestroyed(fm, f)
-                attachCount--
-            }
-        }, false)
+            }, false
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -139,7 +139,7 @@
     <string name="custom_expression">Custom expression</string>
     <string name="status_connecting_torque">Connecting to Torque…</string>
     <string name="status_connecting_to_ecu">Connecting to ECU…</string>
-    <string name="credits_modifications">With modifications by:</string>
+    <string name="credits_modifications">Developed by:</string>
     <string name="export_dashboards">Export dashboards</string>
     <string name="import_dashboards">Import dashboards</string>
     <string name="file_exported_successfully">File exported successfully</string>

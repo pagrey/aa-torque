@@ -65,7 +65,7 @@ class TorqueGauge : Fragment(){
         mMax.indicatorColor = resources.getColor(R.color.red, null)
         rootView = view
         val state = savedInstanceState ?: Bundle()
-        state.getBoolean("ticksOn", false)
+        turnTickEnabled(state.getBoolean("ticksOn", false))
         turnMinMaxMarksEnabled(MaxControl.forNumber(state.getInt("maxMarksOn", MaxControl.OFF_VALUE)))
         turnMinMaxTextViewsEnabled(MaxControl.forNumber(state.getInt("maxOn", MaxControl.OFF_VALUE)))
         turnRaysEnabled(state.getBoolean("rayOn", false))
@@ -92,6 +92,9 @@ class TorqueGauge : Fragment(){
 
     fun turnMinMaxTextViewsEnabled(enabled: MaxControl) {
         binding.showLimitBelow = enabled
+    }
+    fun turnTickEnabled(enabled: Boolean) {
+        binding.ticksOn = enabled
     }
 
     fun turnRaysEnabled(enabled: Boolean) {
@@ -142,11 +145,6 @@ class TorqueGauge : Fragment(){
             mRayClock.indicatorLightColor = Color.parseColor("#00FFFFFF")
         }
     }
-
-    fun turnTickEnabled(enabled: Boolean) {
-        binding.ticksOn = enabled
-    }
-
 
     fun setupClock(data: TorqueData) {
 

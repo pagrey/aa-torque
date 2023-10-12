@@ -14,14 +14,16 @@ import java.io.OutputStream
 
 object UserPreferenceSerializer : Serializer<UserPreference> {
     val defaultGauge = Display.newBuilder()
+        .setShowLabel(true)
+    val defaultDisplay = Display.newBuilder()
     val defaultScreen = Screen.newBuilder()
         .addGauges(defaultGauge)
         .addGauges(defaultGauge)
         .addGauges(defaultGauge)
-        .addDisplays(defaultGauge)
-        .addDisplays(defaultGauge)
-        .addDisplays(defaultGauge)
-        .addDisplays(defaultGauge)
+        .addDisplays(defaultDisplay)
+        .addDisplays(defaultDisplay)
+        .addDisplays(defaultDisplay)
+        .addDisplays(defaultDisplay)
 
     override val defaultValue: UserPreference = UserPreference.newBuilder().addScreens(
         defaultScreen
