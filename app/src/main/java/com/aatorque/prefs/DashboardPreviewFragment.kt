@@ -31,7 +31,7 @@ class DashboardPreviewFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.preview_dashboard, container, false)
+        val view = inflater.inflate(R.layout.fragment_dashboard_preview, container, false)
         val data = runBlocking {
             requireContext().dataStore.data.first()
         }

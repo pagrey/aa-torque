@@ -2,7 +2,6 @@ package com.aatorque.stats
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -11,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.InputDeviceCompat
 import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.lifecycleScope
@@ -252,22 +252,22 @@ open class DashboardFragment : CarFragment() {
     }
 
     fun setupTypeface(selectedFont: String) {
-        val assetsMgr = requireContext().assets
         Timber.d("font: $selectedFont")
-        val typeface = Typeface.createFromAsset(assetsMgr, when (selectedFont) {
-            "segments" -> "digital.ttf"
-            "seat" -> "SEAT_MetaStyle_MonoDigit_Regular.ttf"
-            "audi" -> "AudiTypeDisplayHigh.ttf"
-            "vw" -> "VWTextCarUI-Regular.ttf"
-            "vw2" -> "VWThesis_MIB_Regular.ttf"
-            "frutiger" -> "Frutiger.otf"
-            "vw3" -> "VW_Digit_Reg.otf"
-            "skoda" -> "Skoda.ttf"
-            "larabie" -> "Larabie.ttf"
-            "ford" -> "UnitedSans.otf"
-            else -> "digital.ttf"
-        })
-        for (gauge in guages) {
+        val font = when (selectedFont) {
+            "segments" -> R.font.digital
+            "seat" -> R.font.seat_metastyle_monodigit_regular
+            "audi" -> R.font.auditypedisplayhigh
+            "vw" -> R.font.vwtextcarui_regular
+            "vw2" -> R.font.vwthesis_mib_regular
+            "frutiger" -> R.font.frutiger
+            "vw3" -> R.font.vw_digit_reg
+            "skoda" -> R.font.skoda
+            "larabie" -> R.font.larabie
+            "ford" -> R.font.unitedsans
+            else -> R.font.digital
+        }
+        val typeface = ResourcesCompat.getFont(requireContext(), font)!!
+            for (gauge in guages) {
             gauge?.setupTypeface(typeface)
         }
         for (display in displays) {
