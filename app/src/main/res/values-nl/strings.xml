@@ -17,10 +17,7 @@
     <string name="pref_leftclock">Klok links</string>
     <string name="pref_centerclock">Klok midden</string>
     <string name="pref_rightclock">Klok rechts</string>
-    <string name="pref_view1">Element 1</string>
-    <string name="pref_view2">Element 2</string>
-    <string name="pref_view3">Element 3</string>
-    <string name="pref_view4">Element 4</string>
+    <string name="pref_view">Element %1$d</string>
     <string name="pref_highvis_off">Toon een wijzer op de klok</string>
     <string name="pref_highvis_on">Toon een hoog-contrast straal in plaats van een wijzer</string>
     <string name="pref_highlowmarks">Markeer hoogste waarden op de klokken</string>
@@ -55,7 +52,7 @@
     <string name="bg_vwplaid">GTI ruitjespatroon</string>
     <string name="item_details_go_back">Terug</string>
     <string name="pref_background">Achtergrond</string>
-    <string name="pref_dataelementsettings_1">Data element instellingen (1e dashboard)</string>
-    <string name="pref_title_performance_1">Titel</string>
+    <string name="pref_data_element_settings">Data element instellingen %1$d</string>
+    <string name="pref_title_performance">Titel %1$d</string>
 
 </resources>

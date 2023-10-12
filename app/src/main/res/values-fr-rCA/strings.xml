@@ -56,10 +56,7 @@
     <string name="pref_ticks">Valeurs des coches</string>
     <string name="pref_ticks_off">Ne pas afficher la valeur des coches</string>
     <string name="pref_ticks_on">Afficher la valeur des coches</string>
-    <string name="pref_view1">Vue 1</string>
-    <string name="pref_view2">Vue 2</string>
-    <string name="pref_view3">Vue 3</string>
-    <string name="pref_view4">Vue 4</string>
+    <string name="pref_view">Vue %1$d</string>
     <string name="element_torque_fuelpressure">Pression d\'essence</string>
     <string name="element_torque_engineload">Charge moteur</string>
     <string name="element_torque_timing_advance">Avance à l\'allumage</string>
@@ -94,8 +91,8 @@
     <string name="bg_dots">Points</string>
     <string name="bg_aa">Android Auto</string>
     <string name="item_details_go_back">Retour</string>
-    <string name="pref_dataelementsettings_1">Paramètres d\'élément de données 1</string>
-    <string name="pref_title_performance_1">Titre 1</string>
+    <string name="pref_data_element_settings">Paramètres d\'élément de données %1$d</string>
+    <string name="pref_title_performance">Titre %1$d</string>
     <string name="pid">PID</string>
     <string name="pidLabel">Libellé</string>
     <string name="pidShowLabel">Afficher Libellé</string>

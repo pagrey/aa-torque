@@ -11,10 +11,7 @@
     <string name="pref_leftclock">Levý budík</string>
     <string name="pref_centerclock">Prostřední budík</string>
     <string name="pref_rightclock">Pravý budík</string>
-    <string name="pref_view1">Prvek 1</string>
-    <string name="pref_view2">Prvek 2</string>
-    <string name="pref_view3">Prvek 3</string>
-    <string name="pref_view4">Prvek 4</string>
+    <string name="pref_view">Prvek %1$d</string>
     <string name="pref_highvis_off">Zobrazit ručičku na budících</string>
     <string name="pref_highvis_on">Zobrazí reflexní číselníky</string>
     <string name="pref_highlowmarks">Značka min/max hodnoty na budících</string>
@@ -49,7 +46,7 @@
     <string name="pref_ticks">Hodnoty v budících</string>
     <string name="pref_ticks_off">Nezobrazí hodnoty v budících</string>
     <string name="pref_background">Pozadí</string>
-    <string name="pref_dataelementsettings_1">Nastavení datových prvků 1</string>
-    <string name="pref_title_performance_1">Nadpis 1</string>
+    <string name="pref_data_element_settings">Nastavení datových prvků %1$d</string>
+    <string name="pref_title_performance">Nadpis %1$d</string>
     <string name="item_details_go_back">Zpět</string>
 </resources>

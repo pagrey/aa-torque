@@ -9,7 +9,7 @@
 
         <EditTextPreference
             android:key="performanceTitle"
-            android:title="@string/pref_title_performance_1"
+            android:title=""
             android:defaultValue=""
             android:icon="@drawable/ic_settings_title"
             android:inputType="text"

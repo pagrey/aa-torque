@@ -9,10 +9,7 @@
     <string name="pref_leftclock">Левый прибор</string>
     <string name="pref_centerclock">Ценатральный прибор</string>
     <string name="pref_rightclock">Правый прибор</string>
-    <string name="pref_view1">Вид 1</string>
-    <string name="pref_view2">Вид 2</string>
-    <string name="pref_view3">Вид 3</string>
-    <string name="pref_view4">Вид 4</string>
+    <string name="pref_view">Вид %1$d</string>
     <string name="pref_highvis_off">Показывать иголку на приборах</string>
     <string name="pref_highvis_on">Использовать закрашивание прибора вместо иголки</string>
     <string name="pref_highlowmarks">Отмечать высокое/низкое знаечения на приборах</string>

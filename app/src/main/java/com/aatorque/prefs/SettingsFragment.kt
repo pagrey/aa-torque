@@ -109,9 +109,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
             it.inputType = InputType.TYPE_CLASS_NUMBER
         }
 
-        val baseTitle = requireContext().getString(
-            R.string.pref_dataelementsettings_1
-        )
         lifecycleScope.launch {
             requireContext().dataStore.data.collect {
                 themePref.value = it.selectedTheme
@@ -130,7 +127,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 userPreference.screensList.forEachIndexed {
                         i, screen ->
                     dashboardsCat.addPreference(Preference(requireContext()).also {
-                        it.title = baseTitle.replace("1", (i + 1).toString())
+                        it.title = requireContext().getString(
+                            R.string.pref_data_element_settings,
+                             i + 1
+                        )
                         it.key = "dashboard_$i"
                         it.fragment = SettingsDashboard::class.java.canonicalName
                         it.summary = screen.title

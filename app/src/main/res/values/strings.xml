@@ -72,10 +72,7 @@
     <string name="pref_ticks">Tick values</string>
     <string name="pref_ticks_off">Don\'t display value of ticks</string>
     <string name="pref_ticks_on">Display value of ticks</string>
-    <string name="pref_view1">View 1</string>
-    <string name="pref_view2">View 2</string>
-    <string name="pref_view3">View 3</string>
-    <string name="pref_view4">View 4</string>
+    <string name="pref_view">View %1$d</string>
 
     <string name="element_torque_fuelpressure">Fuel pressure</string>
     <string name="element_torque_engineload">Engine load</string>
@@ -117,8 +114,8 @@
 
 
     <string name="item_details_go_back">Go Back</string>
-    <string name="pref_dataelementsettings_1">Data element settings 1</string>
-    <string name="pref_title_performance_1">Title 1</string>
+    <string name="pref_data_element_settings">Data element settings %1$d</string>
+    <string name="pref_title_performance">Title %1$d</string>
     <string name="pid">PID</string>
     <string name="pidLabel">Label</string>
     <string name="pidShowLabel">Show Label</string>

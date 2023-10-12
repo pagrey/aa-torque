@@ -15,7 +15,7 @@ import com.aatorque.stats.TorqueServiceWrapper
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class SettingsDashboard: PreferenceFragmentCompat() {
+class SettingsDashboard : PreferenceFragmentCompat() {
 
     lateinit var performanceTitle: EditTextPreference
     lateinit var mainCat: PreferenceCategory
@@ -37,31 +37,33 @@ class SettingsDashboard: PreferenceFragmentCompat() {
         R.drawable.ic_settings_view3,
         R.drawable.ic_settings_view4,
     )
-    val displayText = arrayOf(
-        R.string.pref_view1,
-        R.string.pref_view2,
-        R.string.pref_view3,
-        R.string.pref_view4,
-    )
     var mBound = false
 
     var torqueConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
             mBound = true
             val torqueService = (service as TorqueServiceWrapper.LocalBinder).getService()
-            torqueService.loadPidInformation(false) {
-                    pids ->
-                activity?.let{
-                        it.runOnUiThread {
-                        mainCat.title = resources.getText(R.string.pref_dataelementsettings_1).replace("1".toRegex(), (dashboardIndex() + 1).toString())
+            torqueService.loadPidInformation(false) { pids ->
+                activity?.let {
+                    it.runOnUiThread {
+                        mainCat.title = resources.getString(
+                            R.string.pref_data_element_settings,
+                            dashboardIndex() + 1
+                        )
                         val dbIndex = dashboardIndex()
                         lifecycleScope.launch {
                             requireContext().dataStore.data.collect { userPreference ->
                                 val screen = userPreference.getScreens(dbIndex)
                                 performanceTitle.text = screen.title
+                                performanceTitle.title = resources.getString(R.string.pref_title_performance, dbIndex + 1)
                                 optionsCat.removeAll()
                                 val sources = arrayOf(screen.gaugesList, screen.displaysList)
-                                val texts = arrayOf(clockText, displayText)
+                                val texts = arrayOf(
+                                    clockText.map(requireContext()::getString),
+                                    (1..4).map {
+                                        resources.getString(R.string.pref_view, it)
+                                    }
+                                )
                                 val icons = arrayOf(clockIcon, displayIcon)
                                 arrayOf("clock", "display").forEachIndexed { i, type ->
                                     sources[i].forEachIndexed { j, screen ->
@@ -71,7 +73,7 @@ class SettingsDashboard: PreferenceFragmentCompat() {
                                                 it.summary = pids.firstOrNull { pid ->
                                                     "torque_${pid.first}" == screen.pid
                                                 }?.second?.get(0) ?: ""
-                                                it.title = requireContext().getString(texts[i][j])
+                                                it.title = texts[i][j]
                                                 it.icon = AppCompatResources.getDrawable(
                                                     requireContext(),
                                                     icons[i][j]
@@ -98,6 +100,7 @@ class SettingsDashboard: PreferenceFragmentCompat() {
     fun dashboardIndex(): Int {
         return requireArguments().getCharSequence("prefix")?.split("_")!!.last().toInt()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBound = TorqueServiceWrapper.runStartIntent(requireContext(), torqueConnection)
@@ -109,11 +112,11 @@ class SettingsDashboard: PreferenceFragmentCompat() {
         optionsCat = findPreference("displayOptions")!!
         performanceTitle = findPreference("performanceTitle")!!
         performanceTitle.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
-        performanceTitle.setOnPreferenceChangeListener {
-                _, newValue ->
+        performanceTitle.setOnPreferenceChangeListener { _, newValue ->
             lifecycleScope.launch {
                 requireContext().dataStore.updateData {
-                    val screen = it.getScreens(dashboardIndex()).toBuilder().setTitle(newValue as String)
+                    val screen =
+                        it.getScreens(dashboardIndex()).toBuilder().setTitle(newValue as String)
                     return@updateData it.toBuilder().setScreens(dashboardIndex(), screen).build()
                 }
             }

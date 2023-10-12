@@ -56,10 +56,7 @@
     <string name="pref_ticks">Значення галочок</string>
     <string name="pref_ticks_off">Не відображати значення галочок</string>
     <string name="pref_ticks_on">Відображати значення галочок</string>
-    <string name="pref_view1">Вигляд 1</string>
-    <string name="pref_view2">Вигляд 2</string>
-    <string name="pref_view3">Вигляд 3</string>
-    <string name="pref_view4">Вигляд 4</string>
+    <string name="pref_view">Вигляд %1$d</string>
     <string name="element_torque_fuelpressure">Тиск палива</string>
     <string name="element_torque_engineload">Навантаження двигуна</string>
     <string name="element_torque_timing_advance">Випередження часу</string>
@@ -94,8 +91,8 @@
     <string name="bg_dots">Крапки</string>
     <string name="bg_aa">Android Auto</string>
     <string name="item_details_go_back">Перейти назад</string>
-    <string name="pref_dataelementsettings_1">Властивості елемента даних 1</string>
-    <string name="pref_title_performance_1">Заголовок 1</string>
+    <string name="pref_data_element_settings">Властивості елемента даних %1$d</string>
+    <string name="pref_title_performance">Заголовок %1$d</string>
     <string name="pid">PID</string>
     <string name="pidLabel">Мітка</string>
     <string name="pidShowLabel">Показати мітку</string>
