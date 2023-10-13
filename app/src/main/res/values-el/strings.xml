@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="activity_credits_title">πληροφοριες</string>
-    <string name="activity_main_title">\n\n</string>
     <string name="activity_settings_title">Ρυθμισης</string>
     <string name="activity_stopwatch_title">Χρονόμετρο</string>
-    <string name="app_car_service_name">\n\n</string>
-    <string name="app_name">\n\n</string>
     <string name="credits_author">βασισμένη στην εφαρμογή του :</string>
     <string name="credits_basedon">Με βάση την εφαρμογή SDK και επίδειξης από:</string>
     <string name="credits_drivesafely">Ασφαλή οδήγηση.</string>
