@@ -208,22 +208,19 @@ open class DashboardFragment : CarFragment() {
     private fun updateScale(largeCenter: Boolean) {
         val scaleFactor = if (largeCenter) resources.getFraction(R.fraction.scale_gauge, 1, 1) else 1f
         gaugeViews[0]!!.scaleX = scaleFactor
-        gaugeViews[0]!!.post {
-            val preWidth = gaugeViews[0]!!.width * scaleFactor
-            val postWidth = gaugeViews[0]!!.width
-            val halfDiff = ((preWidth - postWidth) * 0.25f)
-            displays[0]!!.rootView?.translationX = halfDiff
-            displays[2]!!.rootView?.translationX = halfDiff
-        }
         gaugeViews[0]!!.scaleY = scaleFactor
+        val convertScale = {
+            display: TorqueDisplay ->
+            ((display.rootView.width * scaleFactor -  display.rootView.width) * 0.5f)
+        }
+        gaugeViews[0]!!.post {
+            displays[0]!!.rootView.translationX = convertScale(displays[0]!!)
+            displays[2]!!.rootView.translationX = convertScale(displays[2]!!)
+        }
         gaugeViews[2]!!.scaleX = scaleFactor
         gaugeViews[2]!!.scaleY = scaleFactor
-        gaugeViews[2]!!.post {
-            val preWidth = gaugeViews[0]!!.width * scaleFactor
-            val postWidth = gaugeViews[0]!!.width
-            val halfDiff = ((preWidth - postWidth) * 0.25f)
-            displays[1]!!.rootView?.translationX = -halfDiff
-            displays[3]!!.rootView?.translationX = -halfDiff
+        gaugeViews[2]!!.post {           displays[1]!!.rootView.translationX = -convertScale(displays[1]!!)
+            displays[3]!!.rootView.translationX = -convertScale(displays[3]!!)
         }
     }
 

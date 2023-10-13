@@ -14,7 +14,7 @@ import timber.log.Timber
 import kotlin.math.roundToInt
 
 class TorqueDisplay : Fragment() {
-    var rootView: View? = null
+    lateinit var rootView: View
     private var unit = ""
     private var numberFormatter = NumberFormat.getInstance()
     var isBottomDisplay = false
@@ -33,6 +33,7 @@ class TorqueDisplay : Fragment() {
         Timber.i("onCreateView")
         binding = FragmentDisplayBinding.inflate(inflater, container, false)
         binding.showBottom = isBottomDisplay
+        rootView = binding.root
         return binding.root
     }
     // this sets all the labels/values in an initial state, depending on the chosen options
