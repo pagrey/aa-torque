@@ -2,7 +2,7 @@
 ![downloads](https://img.shields.io/github/downloads/agronick/aa-torque/total.svg)
 
 
-# Android Auto Plugin for Torque
+# Torque Plugin for Android Auto 
 
 This is a performance monitor based on [Chillout's Performance Monitor](https://github.com/jilleb/mqb-pm) which was based on Martoreto's aa-stats.
 The app has been modified with a focus on making it more customizable with the ability
