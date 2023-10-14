@@ -23,15 +23,16 @@ all data from Torque in a way that is as customizable as possible.
 
 # Instructions:
 
-Download the latest [release](https://github.com/agronick/aa-torque/releases).
 
 ## Prepare
+- Download the latest [release](https://github.com/agronick/aa-torque/releases).
 - Install [Torque Pro](https://play.google.com/store/apps/details?id=org.prowl.torque&hl=en_US&gl=US)
 - Make sure Android Auto is in developer mode: Open Android Auto (while not connected to the car), go to About. Tap the "About Android Auto" header 10 times until you see a toast message saying you're a developer. From the right top corner select developer options, scroll down and make sure you check "Unknown sources". This will allow programs from non-Playstore apps to be run on Android Auto. See a picture guide how to enable Developer mode here: https://www.howtogeek.com/271132/how-to-enable-developer-settings-on-android-auto/
 
 ## Install
-- Download and install the APK
-- Select the options menu and select force update so your phone will reinstall it thinking it came from the Play Store
+- Install the APK that you downloaded in the _Prepare_ section using your normal package installer
+- Open _AA Torque Settings_
+- Select the options menu and select force update. Follow the process so your phone will reinstall it thinking it came from the Play Store.
 - If this fails, you can try using [Kingstaller](https://github.com/fcaronte/KingInstaller/releases) so your phone thinks it came from the Play Store. Reference the Kingstaller README if you have issues installing. 
 
 Note: Do not open a bug for an installation issue. This is a hack and may take time and effort in order to get it to work. I can not troubleshoot every phone. Pixel phones have special instructions on the Kingstaller page. There seems to be issues with Android 14 which may be able to be bypassed with root.
