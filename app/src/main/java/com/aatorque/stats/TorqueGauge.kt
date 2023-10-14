@@ -15,19 +15,21 @@ import androidx.core.graphics.BlendModeCompat
 import androidx.fragment.app.Fragment
 import com.aatorque.datastore.MaxControl
 import com.aatorque.stats.databinding.FragmentGaugeBinding
-import com.github.anastr.speedviewlib.Gauge
+import com.github.anastr.speedviewlib.ImageSpeedometer
 import com.github.anastr.speedviewlib.RaySpeedometer
 import com.github.anastr.speedviewlib.Speedometer
-import com.github.anastr.speedviewlib.components.Indicators.ImageIndicator
-import com.github.anastr.speedviewlib.components.Indicators.Indicator
+import com.github.anastr.speedviewlib.components.Section
+import com.github.anastr.speedviewlib.components.indicators.Indicator
+import com.github.anastr.speedviewlib.components.indicators.TriangleIndicator
 import timber.log.Timber
 import java.util.Locale
+import kotlin.math.abs
 
 
-class TorqueGauge : Fragment(){
+class TorqueGauge : Fragment() {
 
     private var rootView: View? = null
-    private lateinit var mClock: Speedometer
+    private lateinit var mClock: ImageSpeedometer
     private lateinit var mRayClock: RaySpeedometer
     private lateinit var mGraphValue: TextView
     private lateinit var mTextMax: TextView
@@ -47,6 +49,7 @@ class TorqueGauge : Fragment(){
         outState.putFloat("torqueMax", binding.maxValue)
         outState.putBoolean("rayOn", rayOn)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,19 +64,54 @@ class TorqueGauge : Fragment(){
         mTextTitle = view.findViewById(R.id.textTitle)
         mIcon = view.findViewById(R.id.textIcon)
         mMax = view.findViewById(R.id.dial_Max)
-        mMax.setIndicator(Indicator.Indicators.TriangleIndicator)
-        mMax.indicatorColor = resources.getColor(R.color.red, null)
         rootView = view
+       return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val state = savedInstanceState ?: Bundle()
-        turnTickEnabled(state.getBoolean("ticksOn", false))
-        turnMinMaxMarksEnabled(MaxControl.forNumber(state.getInt("maxMarksOn", MaxControl.OFF_VALUE)))
-        turnMinMaxTextViewsEnabled(MaxControl.forNumber(state.getInt("maxOn", MaxControl.OFF_VALUE)))
-        turnRaysEnabled(state.getBoolean("rayOn", false))
+        mMax.indicator = TriangleIndicator(requireContext())
+        mMax.indicator.color = requireContext().theme.obtainStyledAttributes(intArrayOf(R.attr.themedNeedleColor)).getColor(0, Color.RED)
         setMinMax(
             state.getFloat("minValue", 0f).toInt(),
             state.getFloat("maxValue", 100f).toInt()
         )
-        return rootView
+        turnMinMaxMarksEnabled(
+            MaxControl.forNumber(
+                state.getInt(
+                    "maxMarksOn",
+                    MaxControl.OFF_VALUE
+                )
+            )
+        )
+        turnMinMaxTextViewsEnabled(
+            MaxControl.forNumber(
+                state.getInt(
+                    "maxOn",
+                    MaxControl.OFF_VALUE
+                )
+            )
+        )
+        turnRaysEnabled(state.getBoolean("rayOn", false))
+        turnTickEnabled(state.getBoolean("ticksOn", false))
+        mMax.clearSections()
+        mMax.addSections(
+            Section(
+                0f, 1f,
+                android.R.color.transparent
+            )
+        )
+        mRayClock.clearSections()
+        mRayClock.addSections(
+            Section(
+                0f, 1f,
+                requireContext().theme.obtainStyledAttributes(intArrayOf(R.attr.themedNeedleColor))
+                    .getColor(
+                        0, Color.WHITE
+                    )
+            )
+        )
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -93,6 +131,7 @@ class TorqueGauge : Fragment(){
     fun turnMinMaxTextViewsEnabled(enabled: MaxControl) {
         binding.showLimitBelow = enabled
     }
+
     fun turnTickEnabled(enabled: Boolean) {
         binding.ticksOn = enabled
     }
@@ -105,19 +144,15 @@ class TorqueGauge : Fragment(){
             mRayClock.setIndicator(Indicator.Indicators.NoIndicator)
         }
 
-        var clockSize = mClock.height
-        if (clockSize == 0) {
-            clockSize = 250
-        }
         //this is to enable an image as indicator.
-        val typedArray = requireContext().theme.obtainStyledAttributes(intArrayOf(R.attr.themedNeedle))
-        val resourceId = typedArray.getResourceId(0, 0)
-        typedArray.recycle()
-        val imageIndicator = ImageIndicator(requireContext(), resourceId, clockSize, clockSize)
-        val color = mClock.indicatorColor
+        val indicatorDrawable =
+            requireContext().theme.obtainStyledAttributes(intArrayOf(R.attr.themedNeedle))
+                .getDrawable(0)
+        val imageIndicator = SizedImageIndicator(requireContext(), indicatorDrawable!!)
+        val color = mClock.indicator.color
         Timber.i("IndicatorColor: $color")
         if (color == 1996533487) {       // if indicator color in the style is @color:aqua, make it an imageindicator
-            mClock.setIndicator(imageIndicator)
+            mClock.indicator = imageIndicator
             mRayClock.indicatorLightColor = Color.parseColor("#00FFFFFF")
         } else {
             //mClockLeft.setIndicator(Indicator.Indicators.HalfLineIndicator);
@@ -140,24 +175,17 @@ class TorqueGauge : Fragment(){
         } else if (color == -14575885) {
             //if theme has transparent indicator color, give clocks a custom image indicator
             //todo: do this on other fragments as well
-            mClock.setIndicator(imageIndicator)
+            mClock.indicator = imageIndicator
             mClock.indicatorLightColor = Color.parseColor("#00FFFFFF")
             mRayClock.indicatorLightColor = Color.parseColor("#00FFFFFF")
         }
     }
 
     fun setupClock(data: TorqueData) {
-
         data.notifyUpdate = this::onUpdate
-
-
         val iconDrawableName = data.getDrawableName() ?: "ic_none"
         val iconText = if (data.display.showLabel) data.display.label else ""
 
-        val typedArray2 =
-            requireContext().theme.obtainStyledAttributes(intArrayOf(R.attr.themedStopWatchBackground))
-
-        typedArray2.recycle()
         // get min/max values and unit from torque
         val context = requireContext()
 
@@ -167,25 +195,14 @@ class TorqueGauge : Fragment(){
                 "drawable",
                 context.packageName,
             )
-        }  catch (e: NotFoundException) {
+        } catch (e: NotFoundException) {
             R.drawable.ic_none
         }
-        val typedArray =
-            context.theme.obtainStyledAttributes(intArrayOf(R.attr.themedEmptyDialBackground))
-        val emptyBackgroundResource = typedArray.getResourceId(0, 0)
-        typedArray.recycle()
 
         // set mIcon. mClocks that don't need an mIcon have ic_none as mIcon
         mIcon.setBackgroundResource(resId)
         mTextTitle.text = iconText
-        mClock.setUnit(data.display.unit)
-
-        if (data.display.maxValue <= 1) {
-            mClock.tickTextFormat = Gauge.FLOAT_FORMAT.toInt()
-        } else {
-            mClock.tickTextFormat = Gauge.INTEGER_FORMAT.toInt()
-        }
-
+        mClock.unit = data.display.unit
 
         //dynamically scale the mIcon_space in case there's only an mIcon, and no text
         if (iconText != "" && resId == R.drawable.ic_none) {
@@ -195,31 +212,24 @@ class TorqueGauge : Fragment(){
         }
 
 
-        //determine the mClock format
-        if (!data.display.wholeNumbers) {
-            mClock.speedTextFormat = Gauge.FLOAT_FORMAT.toInt()
-        } else {
-            mClock.speedTextFormat = Gauge.INTEGER_FORMAT.toInt()
-        }
-
         // make the icon appear in the color of unitTextColor
         val iconBackground = mIcon.background
         if (iconBackground != null) {
             val iconTint = mClock.unitTextColor
-            iconBackground.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
-                iconTint,
-                BlendModeCompat.SRC_ATOP,
-            )
+            iconBackground.colorFilter =
+                BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+                    iconTint,
+                    BlendModeCompat.SRC_ATOP,
+                )
             mIcon.background = iconBackground
             mIcon.setTextColor(iconTint)
         }
 
         setMinMax(data.display.minValue, data.display.maxValue)
-        mClock.setSpeedAt(mClock.getMinSpeed())
-        mMax.setSpeedAt(mMax.getMinSpeed())
-        mRayClock.setSpeedAt(mRayClock.getMinSpeed())
+        mClock.setSpeedAt(mClock.minSpeed)
+        mMax.setSpeedAt(mMax.minSpeed)
+        mRayClock.setSpeedAt(mRayClock.minSpeed)
         binding.limitValue = "-"
-        turnTickEnabled(data.display.ticksActive)
         turnTickEnabled(data.display.ticksActive)
         turnMinMaxMarksEnabled(data.display.maxMarksActive)
         turnMinMaxTextViewsEnabled(data.display.maxValuesActive)
@@ -228,28 +238,44 @@ class TorqueGauge : Fragment(){
 
     private fun setMinMax(minspeed: Int, maxspeed: Int) {
         val minimum = minspeed.toFloat()
-        val maximum = maxspeed.toFloat()
-        if (minspeed >= maxspeed) {
+        var maximum = maxspeed.toFloat()
+        if (minspeed > maxspeed) {
             Timber.e("Maxspeed is not greater than minspeed min:${minspeed} max:${maxspeed}")
-        } else {
-            binding.minLimit = minimum
-            binding.maxLimit = maximum
+        } else if (minimum == maximum) {
+            Timber.e("Maxspeed is equal to minspeed min:${minspeed} max:${maxspeed}")
+            maximum += 1f
         }
+        binding.minLimit = minimum.coerceAtMost(maximum)
+        binding.maxLimit = maximum.coerceAtLeast(minimum)
+        val format = if (
+            // -1 because 0 is a tick
+            (binding.maxLimit - abs(binding.minLimit)) < (mClock.tickNumber - 1)
+        ) "%.1f" else "%.0f"
+        val locale = Locale.getDefault()
+        mClock.onPrintTickLabel = { _, speed -> format.format(locale, speed) }
     }
 
-    fun onUpdate(data: TorqueData) {
+    private fun onUpdate(data: TorqueData) {
         val fVal = data.lastData.toFloat()
         mClock.speedTo(fVal, TorqueRefresher.REFRESH_INTERVAL)
         mRayClock.speedTo(fVal, TorqueRefresher.REFRESH_INTERVAL)
         if (data.display.maxMarksActive == MaxControl.MAX && data.maxValue.isFinite()) {
             mMax.setSpeedAt(data.maxValue.toFloat())
-        } else if(data.display.maxMarksActive == MaxControl.MIN && data.minValue.isFinite()) {
+            Timber.d("Settings max speed ${data.maxValue}")
+        } else if (data.display.maxMarksActive == MaxControl.MIN && data.minValue.isFinite()) {
             mMax.setSpeedAt(data.minValue.toFloat())
+            Timber.d("Settings min speed ${data.minValue}")
         }
         if (data.display.maxValuesActive != MaxControl.OFF) {
-            val possibleValue = if (data.display.maxValuesActive == MaxControl.MAX) data.maxValue else data.minValue
+            val possibleValue =
+                if (data.display.maxValuesActive == MaxControl.MAX) data.maxValue else data.minValue
             if (possibleValue.isFinite()) {
-                binding.limitValue = String.format(Locale.US, "%.1f", possibleValue)
+                binding.limitValue = "%.${
+                    if (possibleValue >= 1000 || data.display.wholeNumbers) '0' else '1'
+                }f".format(
+                    Locale.getDefault(),
+                    possibleValue
+                )
             }
         }
     }
