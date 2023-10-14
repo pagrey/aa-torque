@@ -55,7 +55,7 @@ Some screenshots of the app:
 
 ![rx2ohmzjsirb1](https://github.com/agronick/aa-torque/assets/2042303/52c83a91-c3b6-430e-967a-4473fc51e51e)
 
-
+![a](https://user-images.githubusercontent.com/147246549/273383355-63414b98-c333-4760-8e71-772ba823d65b.png)
 
 
 ## Custom Expressions
