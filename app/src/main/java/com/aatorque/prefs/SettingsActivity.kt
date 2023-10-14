@@ -147,7 +147,9 @@ class SettingsActivity : AppCompatActivity(),
             R.id.force_update -> {
                 lifecycleScope.launch(Dispatchers.IO) {
                     if (!checkUpdate(true)) {
-                        Toast.makeText(this@SettingsActivity, R.string.update_failed, Toast.LENGTH_SHORT).show()
+                        runOnUiThread {
+                            Toast.makeText(this@SettingsActivity, R.string.update_failed, Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
                 true
@@ -382,7 +384,7 @@ class SettingsActivity : AppCompatActivity(),
                 }.show()
         }
 
-        return needsUpdate == null
+        return true
     }
 
     private fun logsToClipboard() {
