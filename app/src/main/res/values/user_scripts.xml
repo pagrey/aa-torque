@@ -19,7 +19,7 @@
         <item>(a − 32) × 5/9</item>
         <item>a * 14.5038</item>
         <item>a / 14.5038</item>
-        <item>a * 0.0689475729</item>
+        <item>a * 0.621371</item>
         <item>IF(a == 0, \"Off\", \"On\")</item>
         <item>a / 1.356</item>
         <item>a * 0.015850323074494</item>
