@@ -4,8 +4,7 @@
     <PreferenceCategory
         android:key="displayCat"
         android:singleLineTitle="false"
-        android:title="@string/torque_waiting"
-        android:layout="@layout/prefcat">
+        android:title="@string/torque_waiting">
 
         <EditTextPreference
             android:key="performanceTitle"

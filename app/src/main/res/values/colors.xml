@@ -24,5 +24,18 @@
 
     <color name="cardview_background">@color/cardview_dark_background</color>
 
+    <color name="primary_dark_material_dark">#0051B5</color>
+    <color name="design_default_color_secondary">#658DBD</color>
+    <color name="meterial_accient">#11206C</color>
 
+    <color name="primaryColor">#0051B5</color>
+    <color name="primaryLightColor">#658DBD</color>
+    <color name="primaryDarkColor">#11206C</color>
+
+    <color name="secondaryColor">#CC0051B5</color>
+    <color name="secondaryLightColor">#CC658DBD</color>
+    <color name="secondaryDarkColor">#CC11206C</color>
+
+    <color name="primaryTextColor">@color/white</color>
+    <color name="secondaryTextColor">#222</color>
 </resources>

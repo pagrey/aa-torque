@@ -1,20 +1,53 @@
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.Material3.Light">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
+        <item name="colorOnPrimary">@color/primaryTextColor</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
+        <item name="colorOnSecondary">@color/secondaryTextColor</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/primaryColor</item>
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/blue</item>
+        <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
+        <item name="actionBarStyle">@style/Base.Widget.AppCompat.ActionBar</item>
         <item name="windowActionModeOverlay">true</item>
-        <item name="actionModeBackground">@color/accent</item>
-        <item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="actionModeBackground">@color/primaryColor</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.Material3.Dark.ActionBar</item>
+        <item name="popupMenuBackground">@color/primaryColor</item>
     </style>
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+
+    <style name="Widget.App.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/primaryColor</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Toolbar</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.Material3.Dark.ActionBar</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
     </style>
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ThemeOverlay.App.Toolbar" parent="">
+        <item name="colorSurface">@color/primaryColor</item>
+        <item name="colorOnSurface">@color/primaryDarkColor</item>
+    </style>
+
+    <style name="CarAppTheme" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:textAppearance" tools:ignore="PrivateResource">
+            @style/CarBody1
+        </item>
+        <item name="carButtonStyle" tools:ignore="PrivateResource">
+            @style/CarButton
+        </item>
+        <item name="carCardStyle" tools:ignore="PrivateResource">
+            @style/CarFloatingCard
+        </item>
+        <item name="carTextViewStyle" tools:ignore="PrivateResource">
+            @style/CarTextView
+        </item>
+    </style>
 
     <style name="AppTheme.Car" parent="@style/CarAppTheme" tools:ignore="PrivateResource">
         <item name="themedCarBackground">@drawable/background_incar_black</item>
@@ -23,7 +56,7 @@
     </style>
 
     <style name="AppTheme.Car.Speedometer">
-        <item name="android:padding">25dp</item>
+        <item name="android:padding">20dp</item>
 
         <item name="sv_backgroundCircleColor">@android:color/transparent</item>
         <item name="sv_centerCircleColor">@android:color/transparent</item>
@@ -38,7 +71,7 @@
         <item name="sv_speedTextSize">32sp</item>
         <item name="sv_textColor">@android:color/transparent</item>
         <item name="sv_textSize">12sp</item>
-        <item name="sv_unit"></item>
+        <item name="sv_unit" />
         <item name="sv_unitSpeedInterval">4dp</item>
         <item name="sv_unitTextColor">@color/car_primary</item>
         <item name="sv_unitTextSize">20sp</item>

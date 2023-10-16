@@ -60,8 +60,7 @@
         android:persistent="false"
         />
     <PreferenceCategory
-        android:title="@string/custom_script"
-        android:layout="@layout/prefcat">
+        android:title="@string/custom_script">
      <CheckBoxPreference
         android:key="runcustomScript"
         android:title="@string/enable_script"
@@ -79,7 +78,6 @@
     <PreferenceCategory
         android:key="gaugeSettings"
         android:title="@string/gauge_settings"
-        android:layout="@layout/prefcat"
         android:enabled="false">
         <CheckBoxPreference
             android:defaultValue="false"
