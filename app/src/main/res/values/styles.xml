@@ -20,7 +20,10 @@
         <item name="actionBarTheme">@style/ThemeOverlay.Material3.Dark.ActionBar</item>
         <item name="popupMenuBackground">@color/primaryColor</item>
         <item name="tintColor">@color/tintColor</item>
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:itemBackground">@color/bgColor</item>
     </style>
+
 
     <style name="Widget.App.Toolbar" parent="Widget.Material3.Toolbar">
         <item name="android:background">@color/primaryColor</item>
@@ -29,10 +32,11 @@
         <item name="actionBarTheme">@style/ThemeOverlay.Material3.Dark.ActionBar</item>
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="android:itemBackground">@color/bgColor</item>
     </style>
 
     <style name="ThemeOverlay.App.Toolbar" parent="">
-        <item name="colorSurface">@color/primaryColor</item>
+        <item name="colorSurface">@color/bgColor</item>
         <item name="colorOnSurface">@color/primaryDarkColor</item>
     </style>
 
