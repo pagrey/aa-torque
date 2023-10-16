@@ -45,6 +45,7 @@
         android:dependency="pidList"
         android:enabled="false"
         android:persistent="false"
+        app:tint="@color/tintColor"
         />
     <EditTextPreference
         android:key="unit"

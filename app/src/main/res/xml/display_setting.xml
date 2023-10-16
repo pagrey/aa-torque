@@ -10,7 +10,7 @@
             android:key="performanceTitle"
             android:title=""
             android:defaultValue=""
-            android:icon="@drawable/ic_settings_title"
+            android:icon="@drawable/settings_title_tint"
             android:inputType="text"
             android:persistent="false"
             />

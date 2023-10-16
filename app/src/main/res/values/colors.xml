@@ -37,5 +37,7 @@
     <color name="secondaryDarkColor">#CC11206C</color>
 
     <color name="primaryTextColor">@color/white</color>
+    <color name="bgColor">#FDFDFD</color>
     <color name="secondaryTextColor">#222</color>
+    <color name="tintColor">@color/primaryDarkColor</color>
 </resources>

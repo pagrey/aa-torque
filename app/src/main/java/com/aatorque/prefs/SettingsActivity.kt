@@ -104,6 +104,16 @@ class SettingsActivity : AppCompatActivity(),
             object : FragmentManager.FragmentLifecycleCallbacks() {
                 override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
                     super.onFragmentResumed(fm, f)
+                    supportActionBar!!.subtitle = if (f is SettingsDashboard) {
+                        resources.getString(
+                            R.string.pref_data_element_settings,
+                            f.dashboardIndex() + 1
+                        )
+                    } else if (f is SettingsPIDFragment) {
+                        f.requireArguments().getCharSequence("title")
+                    } else {
+                        null
+                    }
                     supportActionBar!!.setDisplayHomeAsUpEnabled(f !is SettingsFragment)
                 }
             }, false

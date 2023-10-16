@@ -5,6 +5,7 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
@@ -46,10 +47,7 @@ class SettingsDashboard : PreferenceFragmentCompat() {
             torqueService.loadPidInformation(false) { pids ->
                 activity?.let {
                     it.runOnUiThread {
-                        mainCat.title = resources.getString(
-                            R.string.pref_data_element_settings,
-                            dashboardIndex() + 1
-                        )
+                        mainCat.title = null
                         val dbIndex = dashboardIndex()
                         lifecycleScope.launch {
                             requireContext().dataStore.data.collect { userPreference ->
@@ -78,8 +76,8 @@ class SettingsDashboard : PreferenceFragmentCompat() {
                                                     requireContext(),
                                                     icons[i][j]
                                                 )
-                                                it.fragment =
-                                                    SettingsPIDFragment::class.java.canonicalName
+                                                DrawableCompat.setTint(it.icon!!, resources.getColor(R.color.tintColor, requireContext().theme))
+                                                it.fragment = SettingsPIDFragment::class.java.canonicalName
                                             }
                                         )
                                     }

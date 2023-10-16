@@ -27,7 +27,7 @@ import kotlin.math.floor
 
 
 class SettingsPIDFragment:  PreferenceFragmentCompat() {
-    var prefCat: PreferenceCategory? = null
+    lateinit var prefCat: PreferenceCategory
     var mBound: Boolean = false
 
     var isClock = true
@@ -54,6 +54,7 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
 
     var torqueConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
+            pidPref.title = null
             torqueService = (service as TorqueServiceWrapper.LocalBinder).getService()
             torqueService!!.loadPidInformation(false) {
                 pids ->
@@ -62,8 +63,8 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
                     val names = pids.map { it.second[0] }.toTypedArray()
                     pidPref.entryValues = arrayOf("") + valuesQuery
                     pidPref.entries = arrayOf(getString(R.string.element_none)) + names
-                    prefCat!!.isEnabled = true
-                    prefCat!!.summary = null
+                    prefCat.isEnabled = true
+                    prefCat.summary = null
                 }
             }
         }
@@ -75,10 +76,7 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.pid_setting)
-        prefCat = findPreference("pidCategory")
-        assert(prefCat != null)
-        prefCat?.title = requireArguments().getCharSequence("title")
-
+        prefCat = findPreference("pidCategory")!!
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

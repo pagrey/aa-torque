@@ -151,4 +151,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.settings)
     }
+
+    override fun onStart() {
+        super.onStart()
+        (requireActivity() as SettingsActivity).supportActionBar!!.subtitle = null
+    }
 }

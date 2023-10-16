@@ -1,9 +1,8 @@
 package com.aatorque.prefs
 
+
 import android.content.Context
 import android.util.AttributeSet
-
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.preference.ListPreference
 import com.aatorque.stats.R
 
@@ -54,13 +54,11 @@ class ImageListPreference(
 
     var iconResArray: IntArray
     var bgColor: Int? = null
+    var tint = 0
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ImageListPreference)
-        typedArray.getResourceId(R.styleable.ImageListPreference_imageBackground, 0).let {
-            if (it != 0) {
-                bgColor = context.getColor(it)
-            }
-        }
+        typedArray.getColor(R.styleable.ImageListPreference_imageBackground, 0)
+        tint = typedArray.getColor(R.styleable.ImageListPreference_tint, 0)
         iconResArray = typedArray.getResourceId(R.styleable.ImageListPreference_entryImages, 0).let {
             context.resources.obtainTypedArray(it).run {
                 val array = IntArray(length())
@@ -122,6 +120,11 @@ class ImageListPreference(
                 if (it != lastIconResource) {
                     lastIconResource = it
                     icon = AppCompatResources.getDrawable(context, it)
+                    icon?.let { icon ->
+                        if (tint != 0) {
+                            DrawableCompat.setTint(icon, tint)
+                        }
+                    }
                 }
             }
         }

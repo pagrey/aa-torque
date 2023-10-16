@@ -21,7 +21,9 @@
             android:title="@string/pref_font"
             app:entryImages="@array/FontThumbs"
             android:persistent="false"
-            app:imageBackground="@color/white" />
+            app:imageBackground="@color/white"
+            app:tint="@color/tintColor"
+        />
         <com.aatorque.prefs.ImageListPreference
             android:entries="@array/backgroundstrings"
             android:entryValues="@array/backgrounds"
@@ -39,7 +41,7 @@
             android:summaryOn="@string/pref_shrink_gauge_on"
             android:persistent="false"
             android:title="@string/pref_shrink_gauge"
-            android:iconSpaceReserved="false" />
+             />
 
         <CheckBoxPreference
             android:defaultValue="false"
@@ -47,7 +49,7 @@
             android:summary="@string/rotary_desc"
             android:persistent="false"
             android:title="@string/rotary_input"
-            android:iconSpaceReserved="false" />
+             />
 
 
 
@@ -57,7 +59,7 @@
             android:title="@string/num_screens"
             android:defaultValue="1"
             android:persistent="false"
-            android:iconSpaceReserved="false"
+
         />
 
     </PreferenceCategory>
