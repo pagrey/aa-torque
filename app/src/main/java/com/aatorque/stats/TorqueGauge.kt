@@ -136,6 +136,10 @@ class TorqueGauge : Fragment() {
         binding.ticksOn = enabled
     }
 
+    fun turnWholeNumbers(enabled: Boolean) {
+        binding.wholeNumbers = enabled
+    }
+
     fun turnRaysEnabled(enabled: Boolean) {
         rayOn = enabled
         mRayClock.visibility = if (enabled) View.VISIBLE else View.INVISIBLE
@@ -234,6 +238,7 @@ class TorqueGauge : Fragment() {
         turnMinMaxMarksEnabled(data.display.maxMarksActive)
         turnMinMaxTextViewsEnabled(data.display.maxValuesActive)
         turnRaysEnabled(data.display.highVisActive)
+        turnWholeNumbers(data.display.wholeNumbers)
     }
 
     private fun setMinMax(minspeed: Int, maxspeed: Int) {
