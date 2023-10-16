@@ -18,7 +18,6 @@ import kotlinx.coroutines.runBlocking
 
 class MainCarActivity : CarActivity() {
     private var mCurrentFragmentTag: String? = null
-    private var selectedBackground: String? = null
     private val mMenuCallbacks: MenuCallbacks = object : MenuCallbacks {
         override fun onMenuItemClicked(name: String) {
             when (name) {
