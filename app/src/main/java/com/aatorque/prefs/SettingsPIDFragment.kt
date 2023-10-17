@@ -54,7 +54,6 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
 
     var torqueConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
-            pidPref.title = null
             torqueService = (service as TorqueServiceWrapper.LocalBinder).getService()
             torqueService!!.loadPidInformation(false) {
                 pids ->
