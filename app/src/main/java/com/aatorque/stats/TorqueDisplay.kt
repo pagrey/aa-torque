@@ -3,7 +3,6 @@ package com.aatorque.stats
 import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.graphics.Typeface
-import android.icu.text.NumberFormat
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,20 +10,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.aatorque.stats.databinding.FragmentDisplayBinding
 import timber.log.Timber
-import kotlin.math.roundToInt
 
 class TorqueDisplay : Fragment() {
     lateinit var rootView: View
     private var unit = ""
-    private var numberFormatter = NumberFormat.getInstance()
     var isBottomDisplay = false
     private lateinit var binding: FragmentDisplayBinding
-
-    init {
-        numberFormatter.maximumFractionDigits = 2
-        numberFormatter.minimumFractionDigits = 0
-        numberFormatter.isGroupingUsed = true
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -84,12 +75,6 @@ class TorqueDisplay : Fragment() {
 
     @SuppressLint("SetTextI18n")
     fun onUpdate(data: TorqueData) {
-        binding.value = if (data.lastDataStr != null) {
-            data.lastDataStr + unit
-        } else if (data.display.wholeNumbers) {
-             "${data.lastData.roundToInt()}$unit"
-        } else {
-            "${numberFormatter.format(data.lastData)}${unit}"
-        }
+        binding.value = data.lastDataStr + unit
     }
 }
