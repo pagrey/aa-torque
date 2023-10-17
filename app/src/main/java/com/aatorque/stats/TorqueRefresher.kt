@@ -23,6 +23,7 @@ class TorqueRefresher {
         const val REFRESH_INTERVAL = 300L
     }
 
+
     fun populateQuery(pos: Int, query: Display): TorqueData {
         data[pos]?.stopRefreshing(true)
         val td = TorqueData(query)
@@ -57,7 +58,7 @@ class TorqueRefresher {
 
     fun doRefresh(service: TorqueService, torqueData: TorqueData) {
         service.runIfConnected { ts ->
-            val value = try {
+            var value = try {
                  ts.getPIDValuesAsDouble(arrayOf(torqueData.pid!!))[0]
             } catch (e: ArrayIndexOutOfBoundsException) {
                 Timber.e("Torque returned invalid data")
