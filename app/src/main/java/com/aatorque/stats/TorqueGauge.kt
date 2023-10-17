@@ -23,7 +23,6 @@ import com.github.anastr.speedviewlib.components.indicators.Indicator
 import com.github.anastr.speedviewlib.components.indicators.TriangleIndicator
 import timber.log.Timber
 import java.util.Locale
-import kotlin.math.abs
 
 
 class TorqueGauge : Fragment() {
@@ -254,7 +253,7 @@ class TorqueGauge : Fragment() {
         binding.maxLimit = maximum.coerceAtLeast(minimum)
         val format = if (
             // -1 because 0 is a tick
-            (binding.maxLimit - abs(binding.minLimit)) < (mClock.tickNumber - 1)
+            (binding.maxLimit - binding.minLimit) < (mClock.tickNumber - 1)
         ) "%.1f" else "%.0f"
         val locale = Locale.getDefault()
         mClock.onPrintTickLabel = { _, speed -> format.format(locale, speed) }
@@ -266,10 +265,10 @@ class TorqueGauge : Fragment() {
         mRayClock.speedTo(fVal, TorqueRefresher.REFRESH_INTERVAL)
         if (data.display.maxMarksActive == MaxControl.MAX && data.maxValue.isFinite()) {
             mMax.setSpeedAt(data.maxValue.toFloat())
-            Timber.d("Settings max speed ${data.maxValue}")
+            Timber.d("Setting max speed ${data.maxValue}")
         } else if (data.display.maxMarksActive == MaxControl.MIN && data.minValue.isFinite()) {
             mMax.setSpeedAt(data.minValue.toFloat())
-            Timber.d("Settings min speed ${data.minValue}")
+            Timber.d("Setting min speed ${data.minValue}")
         }
         if (data.display.maxValuesActive != MaxControl.OFF) {
             val possibleValue =
