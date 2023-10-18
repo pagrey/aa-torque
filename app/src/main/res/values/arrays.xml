@@ -256,10 +256,11 @@
         <item>@drawable/thumb_background_incar_skoda</item>
         <item>@drawable/thumb_background_incar_skoda2</item>
         <item>@drawable/thumb_background_incar_skodaone</item>
-        <item>@drawable/thumb_background_incar_test</item>
         <item>@drawable/thumb_background_incar_beetle</item>
         <item>@drawable/thumb_background_incar_dots</item>
         <item>@drawable/thumb_background_incar_aa</item>
+        <item>@drawable/thumb_background_incar_test</item>
+        <item>@drawable/thumb_background_incar_test</item>
     </array>
 
     <string-array name="backgroundstrings">
@@ -280,10 +281,11 @@
         <item>@string/bg_skoda</item>
         <item>@string/bg_skoda2</item>
         <item>@string/bg_skodaone</item>
-        <item>@string/bg_test</item>
         <item>@string/bg_beetle</item>
         <item>@string/bg_dots</item>
         <item>@string/bg_aa</item>
+        <item>@string/bg_test</item>
+        <item>@string/bg_test</item>
     </string-array>
 
     <array name="backgrounds">
@@ -304,10 +306,11 @@
         <item>background_incar_skoda</item>
         <item>background_incar_skoda2</item>
         <item>background_incar_skodaone</item>
-        <item>background_incar_test</item>
         <item>background_incar_beetle</item>
         <item>background_incar_dots</item>
         <item>background_incar_aa</item>
+        <item>background_incar_test</item>
+        <item>background_incar_test_small</item>
     </array>
     <string-array name="minmax_enum_value">
         <item>0</item>
