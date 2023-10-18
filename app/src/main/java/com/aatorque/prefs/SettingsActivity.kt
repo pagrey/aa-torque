@@ -78,11 +78,8 @@ class SettingsActivity : AppCompatActivity(),
                             intent.putExtra(Intent.EXTRA_INSTALLER_PACKAGE_NAME, "com.android.vending")
                             applicationContext.startActivity(intent)
                         }
-                    }).setNegativeButton(android.R.string.cancel, object: DialogInterface.OnClickListener{
-                        override fun onClick(p0: DialogInterface?, p1: Int) {
-                            p0?.dismiss()
-                        }
-                    }).show()
+                    }).setNegativeButton(android.R.string.cancel
+                    ) { p0, p1 -> p0?.dismiss() }.show()
             }
         }
     }
