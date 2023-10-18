@@ -1,27 +1,28 @@
 package com.aatorque.stats
 
+import android.icu.math.BigDecimal
 import android.icu.text.NumberFormat
 import com.aatorque.datastore.Display
 import com.ezylang.evalex.BaseException
 import com.ezylang.evalex.Expression
 import timber.log.Timber
-import java.math.MathContext
-import java.math.RoundingMode
 import java.util.concurrent.ScheduledFuture
 
 class TorqueData(val display: Display) {
     companion object {
         const val PREFIX = "torque_"
         val drawableRegex = Regex("res/drawable/(?<name>.+)\\.[a-z]+")
-        val twoPlaces = MathContext(2, RoundingMode.HALF_UP)
-        val intPlaces = MathContext(0, RoundingMode.HALF_UP)
-        private val numberFormatter = NumberFormat.getInstance()
+        val twoPlaces: NumberFormat = NumberFormat.getNumberInstance()
+        val intPlaces: NumberFormat = NumberFormat.getIntegerInstance()
     }
 
     init {
-        numberFormatter.maximumFractionDigits = 2
-        numberFormatter.minimumFractionDigits = 0
-        numberFormatter.isGroupingUsed = true
+        twoPlaces.maximumFractionDigits = 2
+        twoPlaces.minimumFractionDigits = 0
+        twoPlaces.isGroupingUsed = true
+        intPlaces.isGroupingUsed = true
+        twoPlaces.roundingMode = BigDecimal.ROUND_HALF_UP
+        twoPlaces.roundingMode = BigDecimal.ROUND_HALF_UP
     }
 
     var pid: String? = null
@@ -60,14 +61,10 @@ class TorqueData(val display: Display) {
     }
 
     private fun convertValue(value: Double): Pair<Double, String> {
-        val mc = if (display.wholeNumbers) {
-            intPlaces
-        } else {
-            twoPlaces
-        }
+        val numberFormatter = if (display.wholeNumbers) intPlaces else twoPlaces
         if (!display.enableScript || display.customScript == "") {
             return Pair(value, try{
-                numberFormatter.format(value.toBigDecimal().round(mc))
+                numberFormatter.format(value)
             } catch (ex: IllegalArgumentException) {
                 Timber.e("Exception formatting unconverted value $value", ex)
                 value.toString()
@@ -83,7 +80,7 @@ class TorqueData(val display: Display) {
             val asNumber = result.numberValue
             val asString = try {
                 result.stringValue.toDouble()
-                numberFormatter.format(result.numberValue.round(mc))
+                numberFormatter.format(result.numberValue)
             } catch (e: NumberFormatException) {
                 result.stringValue
             }
