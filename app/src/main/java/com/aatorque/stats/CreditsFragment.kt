@@ -18,22 +18,26 @@ class CreditsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Timber.i("onCreateView")
-        val view = inflater.inflate(R.layout.fragment_credits, container, false)
-        view.findViewById<View>(R.id.githubBtn).setOnClickListener { _: View? ->
-            val intent =
-                Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/agronick/aa-torque"))
-            startActivity(intent)
-        }
-        view.findViewById<View>(R.id.donateBtn).setOnClickListener { _: View? ->
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/sponsors/agronick"))
-            startActivity(intent)
-        }
+        return inflater.inflate(R.layout.fragment_credits, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        btnOpenUrl(R.id.githubBtn, "https://github.com/agronick/aa-torque")
+        btnOpenUrl(R.id.donateBtn, "https://github.com/sponsors/agronick")
+        btnOpenUrl(R.id.translateBtn, "https://poeditor.com/join/project/yttme0y1VZ")
         val iconCredits = view.findViewById<LinearLayout>(R.id.ic_credits_list)
         resources.getStringArray(R.array.ic_credits_items).forEach {
             val tv = TextView(requireContext())
             tv.text = Html.fromHtml(it, Html.FROM_HTML_MODE_COMPACT)
+            tv.linksClickable = true
             iconCredits.addView(tv)
         }
-        return view
+    }
+
+    fun btnOpenUrl(res: Int, url: String) {
+        requireView().findViewById<View>(res).setOnClickListener { _: View? ->
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        }
     }
 }

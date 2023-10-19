@@ -65,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="mobrembski, lucas-m-g, meich, borconi, mikhailkozlov, javigody, nerone,  illclown, divacky, calfredop"/>
+        android:text="Ddemtlapps, Hugo Morais, Jose Alberto Morales Nery, kacnje, Mirco, Paul Rusu, tasos-kom, Vasyl Solevych, Vincent chouquet, Vladi69"/>
 
 
     <TextView
@@ -87,17 +87,25 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="20dp">
-    <Button
+
+        <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/githubBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/github"
         android:text=" Github"/>
-    <Button
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/translateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/translate" />
+
+        <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/donateBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Donate" />
+        android:text="@string/donate" />
 
     </LinearLayout>
 
