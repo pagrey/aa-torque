@@ -211,7 +211,7 @@ open class DashboardFragment : CarFragment() {
     }
 
     private fun setupBackground(newBackground: String?) {
-        val resId = resources.getIdentifier(newBackground, "drawable", requireContext().packageName)
+        val resId = resources.getIdentifier(newBackground ?: "background_incar_black", "drawable", requireContext().packageName)
         if (resId != 0) {
             binding.background = resId
         }
