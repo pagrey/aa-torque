@@ -76,6 +76,7 @@ class MainCarActivity : CarActivity() {
         } */
         val statusBarController = carUiController.statusBarController
         carfragment.setupStatusBar(statusBarController)
+        setIgnoreConfigChanges(0xFFFF)
     }
 
 
@@ -112,7 +113,6 @@ class MainCarActivity : CarActivity() {
             }
             trans.commit()
         }
-        setIgnoreConfigChanges(0xFFFF)
     }
 
     private fun setLocalTheme(theme: String?): Boolean {
