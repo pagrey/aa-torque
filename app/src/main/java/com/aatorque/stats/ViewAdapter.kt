@@ -3,6 +3,7 @@ package com.aatorque.stats
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
+import com.github.anastr.speedviewlib.Gauge
 import com.github.anastr.speedviewlib.ImageSpeedometer
 import kotlin.math.roundToInt
 
@@ -40,4 +41,9 @@ fun wholeNumbers(view: ImageSpeedometer, wholeNumbers: Boolean) {
     } else {
         { speed -> "%.1f".format(view.locale, speed) }
     }
+}
+
+@BindingAdapter("minMax")
+fun setMinMax(view: Gauge, minMax: Pair<Float, Float>) {
+    view.setMinMaxSpeed(minMax.first, minMax.second)
 }

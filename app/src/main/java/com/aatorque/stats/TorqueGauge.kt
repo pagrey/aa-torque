@@ -249,12 +249,13 @@ class TorqueGauge : Fragment() {
             Timber.e("Maxspeed is equal to minspeed min:${minspeed} max:${maxspeed}")
             maximum += 1f
         }
-        binding.minLimit = minimum.coerceAtMost(maximum)
-        binding.maxLimit = maximum.coerceAtLeast(minimum)
+        val minLimit = minimum.coerceAtMost(maximum)
+        val maxLimit = maximum.coerceAtLeast(minimum)
         val format = if (
             // -1 because 0 is a tick
-            (binding.maxLimit - binding.minLimit) < (mClock.tickNumber - 1)
+            (maxLimit - minLimit) < (mClock.tickNumber - 1)
         ) "%.1f" else "%.0f"
+        binding.minMax = Pair(minLimit, maxLimit)
         val locale = Locale.getDefault()
         mClock.onPrintTickLabel = { _, speed -> format.format(locale, speed) }
     }
