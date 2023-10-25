@@ -366,7 +366,7 @@ class SettingsActivity : AppCompatActivity(),
                 Snackbar.LENGTH_LONG
             )
                 .setDuration(10000)
-                .setActionTextColor(resources.getColor(R.color.white, null))
+                .setActionTextColor(resources.getColor(R.color.snackbarBtnText, theme))
                 .setAction(R.string.download) {
                     ContextCompat.registerReceiver(
                         baseContext,

@@ -21,7 +21,6 @@
             android:title="@string/pref_font"
             app:entryImages="@array/FontThumbs"
             android:persistent="false"
-            app:imageBackground="@color/white"
             app:tint="@color/tintColor"
         />
         <com.aatorque.prefs.ImageListPreference

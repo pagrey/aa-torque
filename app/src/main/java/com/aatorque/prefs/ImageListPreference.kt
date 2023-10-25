@@ -35,7 +35,7 @@ class ImageListPreference(
         context: Context,
         private val layoutResource: Int,
         private val items: List<CustomListItem>,
-        private val bgColor: Int?,
+        private val tintColor: Int?,
     ) : ArrayAdapter<CustomListItem>(context, layoutResource, items) {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val view = convertView ?: LayoutInflater.from(context).inflate(layoutResource, parent, false)
@@ -43,8 +43,8 @@ class ImageListPreference(
             val icon = view.findViewById<ImageView>(R.id.icon)
             val title = view.findViewById<TextView>(R.id.title)
             icon.setImageResource(item.iconRes)
-            if (bgColor != null) {
-                icon.setBackgroundColor(bgColor)
+            if (tintColor != null) {
+                icon.setColorFilter(tintColor)
             }
             title.text = item.title
             return view
@@ -57,7 +57,6 @@ class ImageListPreference(
     var tint = 0
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ImageListPreference)
-        typedArray.getColor(R.styleable.ImageListPreference_imageBackground, 0)
         tint = typedArray.getColor(R.styleable.ImageListPreference_tint, 0)
         iconResArray = typedArray.getResourceId(R.styleable.ImageListPreference_entryImages, 0).let {
             context.resources.obtainTypedArray(it).run {
@@ -91,7 +90,7 @@ class ImageListPreference(
         }.sortedBy { it.title }
 
         val lv = ListView(context)
-        val adapter = CustomListAdapter(context, R.layout.icon_list_row, items, bgColor)
+        val adapter = CustomListAdapter(context, R.layout.icon_list_row, items, tint)
 
         AlertDialog.Builder(context)
             .setTitle(dialogTitle)

@@ -39,4 +39,5 @@
     <color name="bgColor">#FDFDFD</color>
     <color name="secondaryTextColor">#222</color>
     <color name="tintColor">@color/primaryDarkColor</color>
+    <color name="snackbarBtnText">@color/white</color>
 </resources>

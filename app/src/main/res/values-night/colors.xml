@@ -4,4 +4,5 @@
     <color name="secondaryTextColor">#FFF</color>
     <color name="secondaryColor">#2196F3</color>
     <color name="tintColor">#2196F3</color>
+    <color name="snackbarBtnText">#2196F3</color>
 </resources>
