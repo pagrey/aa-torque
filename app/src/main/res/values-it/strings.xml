@@ -18,7 +18,7 @@
     <string name="element_lateralAcceleration">"G laterale"</string>
     <string name="element_longitudinalAcceleration">"G longitudinale"</string>
     <string name="element_navAltitude">"Altitudine"</string>
-    <string name="element_navHeading">"Heading"</string>
+    <string name="element_navHeading">"Direzione"</string>
     <string name="element_none">"Nessuno"</string>
     <string name="element_odometer">"Odometro"</string>
     <string name="element_oilTemperature">"Temperatura olio motore"</string>
@@ -56,10 +56,13 @@
     <string name="pref_ticks">"Valori sugli indicatori"</string>
     <string name="pref_ticks_off">"Nascondi i valori sugli indicatori"</string>
     <string name="pref_ticks_on">"Mostra i valori sugli indicatori"</string>
-    <string name="pref_view">Vista %1$d</string>
+    <string name="pref_view1">"Vista 1 (in alto a sx)"</string>
+    <string name="pref_view2">"Vista 2 (in alto a dx)"</string>
+    <string name="pref_view3">"Vista 3 (in basso a sx)"</string>
+    <string name="pref_view4">"Vista 4 (in basso a dx)"</string>
     <string name="element_torque_fuelpressure">"Pressione carburante"</string>
     <string name="element_torque_engineload">"Carico motore"</string>
-    <string name="element_torque_timing_advance">"Timing advance"</string>
+    <string name="element_torque_timing_advance">"Anticipo"</string>
     <string name="element_torque_throttle_position">"Posizione acceleratore (Collettore)"</string>
     <string name="element_torque_turboboost">"Pressione sovralimentazione turbo"</string>
     <string name="element_torque_phonebatterylevel">"Batteria telefono"</string>
@@ -91,8 +94,8 @@
     <string name="bg_dots">"Punti"</string>
     <string name="bg_aa">"Android Auto"</string>
     <string name="item_details_go_back">"Indietro"</string>
-    <string name="pref_data_element_settings">Impostazioni elemento dati %1$d</string>
-    <string name="pref_title_performance">Titolo %1$d</string>
+    <string name="pref_dataelementsettings_1">"Impostazioni elemento dati 1"</string>
+    <string name="pref_title_performance_1">"Titolo 1"</string>
     <string name="pid">"PID"</string>
     <string name="pidLabel">"Etichetta"</string>
     <string name="pidShowLabel">"Mostra etichetta"</string>
@@ -113,7 +116,7 @@
     <string name="custom_expression">"Espressione personalizzata"</string>
     <string name="status_connecting_torque">"Connessione a Torque…"</string>
     <string name="status_connecting_to_ecu">"Connessione a ECU…"</string>
-    <string name="credits_modifications">"Con modifiche di:"</string>
+    <string name="credits_modifications">"Modificato da:"</string>
     <string name="export_dashboards">"Esporta quadri"</string>
     <string name="import_dashboards">"Importa quadri"</string>
     <string name="file_exported_successfully">"File esportato correttamente"</string>
@@ -130,7 +133,7 @@
     <string name="pref_shrink_gauge_on">"Enfatizza indicatore centrale"</string>
     <string name="new_version">"Nuova versione disponibile"</string>
     <string name="download">"Scarica"</string>
-    <string name="download_instructions">"Scarico aggiornamento"</string>
+    <string name="download_instructions">"Scarico aggiornamento. Installa con Kingstaller."</string>
     <string name="expressionDocumentation">"Visualizza la documentazione"</string>
     <string name="copy_logs">"Copia registri negli appunti"</string>
     <string name="convert_f_to_c">"Fahrenheit in Celsius"</string>
@@ -149,4 +152,14 @@
     <string name="element_transmission">"Trasmissione"</string>
     <string name="download_complete">"Download completato"</string>
     <string name="icon_credits">"Crediti icone"</string>
+    <string name="action_preview"></string>
+    <string name="pref_view"></string>
+    <string name="pref_data_element_settings"></string>
+    <string name="pref_title_performance"></string>
+    <string name="download_dialog"></string>
+    <string name="force_update"></string>
+    <string name="update_failed"></string>
+    <string name="convert_minutes_seconds"></string>
+    <string name="donate"></string>
+    <string name="translate"></string>
 </resources>
