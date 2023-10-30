@@ -8,13 +8,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import com.aatorque.stats.databinding.FragmentDisplayBinding
 import timber.log.Timber
 
 class TorqueDisplay : Fragment() {
     lateinit var rootView: View
     private var unit = ""
-    var isBottomDisplay = false
+
+    private val bottomBacking = MutableLiveData(false)
+    var isBottomDisplay
+        get() = bottomBacking.value
+        set(value) {
+            bottomBacking.value = value
+        }
+    private val sideBacking = MutableLiveData(false)
+    var isSideDisplay
+        get() = sideBacking.value
+        set(value) {
+            sideBacking.value = value
+        }
     private lateinit var binding: FragmentDisplayBinding
 
     override fun onCreateView(
@@ -23,8 +36,15 @@ class TorqueDisplay : Fragment() {
     ): View {
         Timber.i("onCreateView")
         binding = FragmentDisplayBinding.inflate(inflater, container, false)
-        binding.showBottom = isBottomDisplay
         rootView = binding.root
+        bottomBacking.observeForever {
+            binding.showBottom = it
+        }
+        sideBacking.observeForever {
+            binding.showSide = it
+        }
+        binding.showBottom = isBottomDisplay
+        binding.showSide = isSideDisplay
         return binding.root
     }
     // this sets all the labels/values in an initial state, depending on the chosen options
