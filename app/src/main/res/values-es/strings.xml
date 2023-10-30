@@ -64,7 +64,10 @@
     <string name="pref_ticks">"Valores tick"</string>
     <string name="pref_ticks_off">"No mostrar valores de ticks"</string>
     <string name="pref_ticks_on">"Mostrar valores de ticks"</string>
-    <string name="pref_view">"Vista %1$d"</string>
+    <string name="pref_view1">"Vista 1"</string>
+    <string name="pref_view2">"Vista 2"</string>
+    <string name="pref_view3">"Vista 3"</string>
+    <string name="pref_view4">"Vista 4"</string>
     <string name="element_torque_fuelpressure">"Presión de combustible"</string>
     <string name="element_torque_engineload">"Carga del motor"</string>
     <string name="element_torque_timing_advance">"Avance de tiempo"</string>
@@ -113,8 +116,8 @@
     <string name="bg_dots">"Puntos"</string>
     <string name="bg_aa">"Android Auto"</string>
     <string name="item_details_go_back">"Volver"</string>
-    <string name="pref_data_element_settings">Ajustes de elementos de datos %1$d</string>
-    <string name="pref_title_performance">Titulo %1$d</string>
+    <string name="pref_dataelementsettings_1">"Ajustes de elementos de datos 1"</string>
+    <string name="pref_title_performance_1">"Titulo 1"</string>
     <string name="pid">"PID"</string>
     <string name="pidLabel">"Etiqueta"</string>
     <string name="pidShowLabel">"Mostrar etiqueta"</string>
@@ -152,7 +155,7 @@
     <string name="pref_shrink_gauge_on">"Enfatizar indicador central"</string>
     <string name="new_version">"Una nueva versión esta disponible"</string>
     <string name="download">"Descargar"</string>
-    <string name="download_instructions">"Descargando actualización"</string>
+    <string name="download_instructions">"Descargando actualización. Instalar con Kingstaller."</string>
     <string name="expressionDocumentation">"Ver documentación"</string>
     <string name="copy_logs">"Copiar logs al portapapeles"</string>
     <string name="convert_f_to_c">"Farenheit a Celsius"</string>
@@ -173,4 +176,14 @@
     <string name="element_transmission">"Transmisión"</string>
     <string name="download_complete">"Descarga completa"</string>
     <string name="icon_credits">"Créditos de los Íconos"</string>
+    <string name="action_preview"></string>
+    <string name="pref_view"></string>
+    <string name="pref_data_element_settings"></string>
+    <string name="pref_title_performance"></string>
+    <string name="download_dialog"></string>
+    <string name="force_update"></string>
+    <string name="update_failed"></string>
+    <string name="convert_minutes_seconds"></string>
+    <string name="donate"></string>
+    <string name="translate"></string>
 </resources>
