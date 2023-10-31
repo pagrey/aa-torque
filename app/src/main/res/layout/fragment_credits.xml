@@ -65,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="Ddemtlapps, Hugo Morais, Jose Alberto Morales Nery, kacnje, Mirco, Paul Rusu, tasos-kom, Vasyl Solevych, Vincent chouquet, Vladi69"/>
+        android:text="mkwatchface, Ddemtlapps, Hugo Morais, Jose Alberto Morales Nery, kacnje, Mirco, Paul Rusu, tasos-kom, Vasyl Solevych, Vincent chouquet, Vladi69"/>
 
 
     <TextView
