@@ -34,10 +34,6 @@
     <string name="pref_leftclock">"Левый прибор"</string>
     <string name="pref_rightclock">"Правый прибор"</string>
     <string name="pref_theme">"Тема"</string>
-    <string name="pref_view1">"Вид 1"</string>
-    <string name="pref_view2">"Вид 2"</string>
-    <string name="pref_view3">"Вид 3"</string>
-    <string name="pref_view4">"Вид 4"</string>
     <string name="element_torque_fuelpressure">"Давление топлива"</string>
     <string name="element_torque_engineload">"Нагрузка двигателя"</string>
     <string name="element_torque_phonebatterylevel">"Заряд батареи телефона"</string>
@@ -59,7 +55,6 @@
     <string name="bg_dots">"Точки"</string>
     <string name="bg_aa">"Андроид Авто"</string>
     <string name="item_details_go_back">"Назад"</string>
-    <string name="pref_title_performance_1">"Название 1"</string>
     <string name="pid">"PID"</string>
     <string name="pidLabel">"Название"</string>
     <string name="pidShowLabel">"Показывать название"</string>

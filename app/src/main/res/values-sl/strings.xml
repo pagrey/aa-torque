@@ -30,10 +30,6 @@
     <string name="pref_leftclock">"Levi merilnik"</string>
     <string name="pref_rightclock">"Desni merilnik"</string>
     <string name="pref_theme">"Tema"</string>
-    <string name="pref_view1">"Pogled 1"</string>
-    <string name="pref_view2">"Pogled 2"</string>
-    <string name="pref_view3">"Pogled 3"</string>
-    <string name="pref_view4">"Pogled 4"</string>
     <string name="element_barometer">"Pritisk"</string>
     <string name="bg_test">"Test"</string>
     <string name="pref_background">"Ozadje"</string>

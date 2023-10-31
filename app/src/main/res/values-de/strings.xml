@@ -28,8 +28,4 @@
     <string name="pref_leftclock">"Instrument links"</string>
     <string name="pref_rightclock">"Instrument rechts"</string>
     <string name="pref_theme">"Thema"</string>
-    <string name="pref_view1">"Element 1"</string>
-    <string name="pref_view2">"Element 2"</string>
-    <string name="pref_view3">"Element 3"</string>
-    <string name="pref_view4">"Element 4"</string>
     </resources>

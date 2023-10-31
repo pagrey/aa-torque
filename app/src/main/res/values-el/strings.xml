@@ -1,17 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="activity_credits_title">"πληροφοριες"</string>
-    <string name="activity_main_title">"
-
-"</string>
     <string name="activity_settings_title">"Ρυθμισης"</string>
     <string name="activity_stopwatch_title">"Χρονόμετρο"</string>
-    <string name="app_car_service_name">"
-
-"</string>
-    <string name="app_name">"
-
-"</string>
     <string name="credits_author">"βασισμένη στην εφαρμογή του :"</string>
     <string name="credits_basedon">"Με βάση την εφαρμογή SDK και επίδειξης από:"</string>
     <string name="credits_drivesafely">"Ασφαλή οδήγηση."</string>
@@ -62,10 +53,6 @@
     <string name="pref_ticks">"Τιμές τικ"</string>
     <string name="pref_ticks_off">"Μην εμφανίζετε την αξία των κροτώνων"</string>
     <string name="pref_ticks_on">"Εμφάνιση τιμής κροτώνων"</string>
-    <string name="pref_view1">"Προβολή 1"</string>
-    <string name="pref_view2">"Προβολή 2"</string>
-    <string name="pref_view3">"Προβολή 3"</string>
-    <string name="pref_view4">"Προβολή 4"</string>
     <string name="element_torque_fuelpressure">"Πίεση καυσίμου"</string>
     <string name="element_torque_engineload">"Φορτίο κινητήρα"</string>
     <string name="element_torque_timing_advance">"Προώθηση χρόνου"</string>
@@ -97,8 +84,6 @@
     <string name="bg_dots">"Αποσιωπητικά"</string>
     <string name="bg_aa">"Android Auto"</string>
     <string name="item_details_go_back">"Πήγαινε πίσω"</string>
-    <string name="pref_dataelementsettings_1">"Ρυθμίσεις στοιχείων δεδομένων 1"</string>
-    <string name="pref_title_performance_1">"Τίτλος 1"</string>
     <string name="pid">"PID"</string>
     <string name="pidLabel">"Επιγραφή"</string>
     <string name="pidShowLabel">"Εμφάνιση ετικέτας"</string>

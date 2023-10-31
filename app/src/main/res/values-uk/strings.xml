@@ -56,10 +56,6 @@
     <string name="pref_ticks">"Значення галочок"</string>
     <string name="pref_ticks_off">"Не відображати значення галочок"</string>
     <string name="pref_ticks_on">"Відображати значення галочок"</string>
-    <string name="pref_view1">"Вигляд 1"</string>
-    <string name="pref_view2">"Вигляд 2"</string>
-    <string name="pref_view3">"Вигляд 3"</string>
-    <string name="pref_view4">"Вигляд 4"</string>
     <string name="element_torque_fuelpressure">"Тиск палива"</string>
     <string name="element_torque_engineload">"Навантаження двигуна"</string>
     <string name="element_torque_timing_advance">"Випередження часу"</string>
@@ -94,8 +90,6 @@
     <string name="bg_dots">"Крапки"</string>
     <string name="bg_aa">"Android Auto"</string>
     <string name="item_details_go_back">"Перейти назад"</string>
-    <string name="pref_dataelementsettings_1">"Властивості елемента даних 1"</string>
-    <string name="pref_title_performance_1">"Заголовок 1"</string>
     <string name="pid">"PID"</string>
     <string name="pidLabel">"Мітка"</string>
     <string name="pidShowLabel">"Показати мітку"</string>
@@ -114,8 +108,8 @@
     <string name="custom_script_desc">"Запустити вираз EvalEx. Використовуйте a для представлення поточного значення"</string>
     <string name="formulas">"Формула"</string>
     <string name="custom_expression">"Користувацький вираз"</string>
-    <string name="status_connecting_torque">"Підключення до Torque..."</string>
-    <string name="status_connecting_to_ecu">"Підключення до ЕБУ..."</string>
+    <string name="status_connecting_torque">"Підключення до Torque…"</string>
+    <string name="status_connecting_to_ecu">"Підключення до ЕБУ…"</string>
     <string name="credits_modifications">"Зі змінами та доповненнями:"</string>
     <string name="export_dashboards">"Експортувати панель приладів"</string>
     <string name="import_dashboards">"Імпортувати панель приладів"</string>

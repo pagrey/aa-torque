@@ -40,10 +40,6 @@
     <string name="pref_font">Fonte</string>
     <string name="pref_highlow">Valores máximos</string>
     <string name="pref_theme">Tema</string>
-    <string name="pref_view1">Vista 1</string>
-    <string name="pref_view2">Vista 2</string>
-    <string name="pref_view3">Vista 3</string>
-    <string name="pref_view4">Vista 4</string>
     <string name="element_torque_fuelpressure">Pressão do combustível</string>
     <string name="element_torque_engineload">Carga do motor</string>
     <string name="element_torque_throttle_position">Posição do acelerador (admissão)</string>

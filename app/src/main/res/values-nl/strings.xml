@@ -40,15 +40,9 @@
     <string name="pref_ticks">"Waarden op de klok"</string>
     <string name="pref_ticks_off">"Geef geen waarde bij de streepjes"</string>
     <string name="pref_ticks_on">"Geef waarde weer bij de streepjes"</string>
-    <string name="pref_view1">"Element 1"</string>
-    <string name="pref_view2">"Element 2"</string>
-    <string name="pref_view3">"Element 3"</string>
-    <string name="pref_view4">"Element 4"</string>
     <string name="bg_vwplaid">"GTI ruitjespatroon"</string>
     <string name="bg_gte">"GTE ruitjespatroon"</string>
     <string name="bg_vwgtd">"GTD ruitjespatroon"</string>
     <string name="pref_background">"Achtergrond"</string>
     <string name="item_details_go_back">"Terug"</string>
-    <string name="pref_dataelementsettings_1">"Data element instellingen (1e dashboard)"</string>
-    <string name="pref_title_performance_1">"Titel"</string>
     </resources>
