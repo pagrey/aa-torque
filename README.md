@@ -11,7 +11,11 @@ to obtain any PID from Torque. Torque pro is required to use this app.
 The original app focused on VAG (Volkswagen Auto Group) cars. This version focuses on exposing
 all data from Torque in a way that is as customizable as possible.
 
-[English isn't your native language? Help translate this app!](https://poeditor.com/join/project/yttme0y1VZ)
+## Help and helping
+- Visit [the dicussions page](https://github.com/agronick/aa-torque/discussions) to ask questions and get support
+- English isn't your native language? [Help translate this app!](https://poeditor.com/join/project/yttme0y1VZ). Many of the translations are incomplete.
+- Help spread the word. Make posts on forums and other social networks showing off your setup.
+- This app is taking hundreds of hours of work. If you enjoy it consider donating on [Paypal](https://www.paypal.me/kagronick) or [Github Sponsors](https://github.com/agronick).
 
 # Main features:
 - Display data from Torque including custom PIDs
