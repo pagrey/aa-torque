@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 
 
 class MainCarActivity : CarActivity() {
@@ -42,6 +43,7 @@ class MainCarActivity : CarActivity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (event?.action == KeyEvent.ACTION_DOWN) {
             val intent = Intent("KEY_DOWN").apply {
+                Timber.i("Key down $keyCode")
                 putExtra("KEY_CODE", keyCode)
             }
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
