@@ -47,6 +47,9 @@ Some screenshots of the app:
 
 ![278239030-0d8ded34-9528-48db-a285-e81e4b849717](https://github.com/agronick/aa-torque/assets/2042303/e31b0598-25ec-4003-bcee-11e5e108d3a4)
 
+![chat_view](https://github.com/agronick/aa-torque/assets/2042303/a99571f9-0bb3-43ec-89ce-938e41506e97)
+New chart view!
+
 ![Screenshot_20231002_130401](https://github.com/agronick/aa-torque/assets/2042303/229315c8-ad3b-42e6-86e6-e7fe7abb16a8)
 
 ![Screenshot_20231002_130452](https://github.com/agronick/aa-torque/assets/2042303/698c666b-5e3c-4611-80a5-8e767b04186a)
