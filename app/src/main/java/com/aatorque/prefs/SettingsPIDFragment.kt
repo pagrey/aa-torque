@@ -2,6 +2,7 @@ package com.aatorque.prefs
 
 import android.content.ComponentName
 import android.content.ServiceConnection
+import android.graphics.Color
 import android.os.Bundle
 import android.os.IBinder
 import android.text.InputType
@@ -49,6 +50,7 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
     lateinit var maxValuesActivePref: ListPreference
     lateinit var maxMarksActivePref: ListPreference
     lateinit var highVisActivePref: CheckBoxPreference
+    lateinit var colorPref: ColorPreference
 
     var torqueService: TorqueServiceWrapper? = null
 
@@ -102,6 +104,7 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
         maxValuesActivePref = findPreference("maxValuesActive")!!
         maxMarksActivePref = findPreference("maxMarksActive")!!
         highVisActivePref = findPreference("highVisActive")!!
+        colorPref = findPreference("chartColor")!!
 
         pidPref.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
         imagePref.setSummaryProvider {
@@ -182,6 +185,11 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
             maxValuesActivePref.value = display.maxValuesActive.number.toString()
             maxMarksActivePref.value = display.maxMarksActive.number.toString()
             highVisActivePref.isChecked = display.highVisActive
+            colorPref.colorValue = display.chartColor.let {
+                if (it == 0) {
+                    resources.obtainTypedArray(R.array.chartColors).getColor(index, Color.WHITE)
+                } else it
+            }
             jsPref.setValue(display.customScript)
             if (pidPref.value.startsWith("torque")) {
                 enableItems(true)
@@ -240,6 +248,8 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
             MaxControl.forNumber(maxValuesActivePref.value.toInt())
         ).setHighVisActive(
             highVisActivePref.isChecked
+        ).setChartColor(
+            colorPref.colorValue
         )
         if (imagePref.value != null) {
             display = display.setIcon(imagePref.value)
@@ -278,5 +288,4 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
             mBound = false
         }
     }
-
 }

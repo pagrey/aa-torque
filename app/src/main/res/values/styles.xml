@@ -461,4 +461,9 @@
         <item name="android:minHeight">48dp</item>
         <item name="android:maxHeight">480dp</item>
     </style>
+
+    <style name="AppTheme.PreferenceDialog" parent="Theme.MaterialComponents.DayNight.Dialog">
+        <item name="positiveButtonText">@android:string/ok</item>
+        <item name="negativeButtonText">@android:string/cancel</item>
+    </style>
 </resources>

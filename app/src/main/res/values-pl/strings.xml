@@ -40,10 +40,6 @@
     <string name="pref_ticks">"Pokaż wartości pośrednie"</string>
     <string name="pref_ticks_off">"Nie pokazuj wartości pośrednich"</string>
     <string name="pref_ticks_on">"Pokaż wartości pośrednie"</string>
-    <string name="pref_view1">"Widok 1"</string>
-    <string name="pref_view2">"Widok 2"</string>
-    <string name="pref_view3">"Widok 3"</string>
-    <string name="pref_view4">"Widok 4"</string>
     <string name="element_torque_fuelpressure">"Torque - Fuel pressure"</string>
     <string name="element_torque_engineload">"Torque - Engine load"</string>
     <string name="element_torque_timing_advance">"Torque - Timing advance"</string>

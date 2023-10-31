@@ -56,10 +56,6 @@
     <string name="pref_ticks">"Valori sugli indicatori"</string>
     <string name="pref_ticks_off">"Nascondi i valori sugli indicatori"</string>
     <string name="pref_ticks_on">"Mostra i valori sugli indicatori"</string>
-    <string name="pref_view1">"Vista 1 (in alto a sx)"</string>
-    <string name="pref_view2">"Vista 2 (in alto a dx)"</string>
-    <string name="pref_view3">"Vista 3 (in basso a sx)"</string>
-    <string name="pref_view4">"Vista 4 (in basso a dx)"</string>
     <string name="element_torque_fuelpressure">"Pressione carburante"</string>
     <string name="element_torque_engineload">"Carico motore"</string>
     <string name="element_torque_timing_advance">"Anticipo"</string>

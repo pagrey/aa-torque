@@ -96,9 +96,17 @@ class TorqueChart: Fragment() {
     fun setupItems(torqueData: Array<TorqueData>) {
         graph.series.clear()
         series.clear()
-        val colors = arrayOf(R.color.graphColor1, R.color.graphColor2, R.color.graphColor3).map {
-            resources.getColor(it, context?.theme)
+
+        val defaultColors = resources.obtainTypedArray(R.array.chartColors)
+        val colors = torqueData.mapIndexed { index, td ->
+            td.display.chartColor.let {
+                if (it == 0) {
+                    defaultColors.getColor(index, Color.WHITE)
+                } else it
+            }
         }
+        defaultColors.recycle()
+
         binding.labelWrap.removeAllViews()
         legendBinding = torqueData.mapIndexed { idx, data ->
             val line = LineGraphSeries<DataPointInterface>()

@@ -357,5 +357,9 @@
         <item>transmission by Gustyne Pissesa Ardhaneswari from <a href="https://thenounproject.com/browse/icons/term/transmission/" target="_blank" title="transmission Icons">Noun Project</a> (CC BY 3.0)</item>
     </string-array>
 
-
+    <array name="chartColors">
+        <item>@color/graphColor1</item>
+        <item>@color/graphColor2</item>
+        <item>@color/graphColor3</item>
+    </array>
 </resources>

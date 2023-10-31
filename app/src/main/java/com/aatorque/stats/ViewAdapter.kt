@@ -64,10 +64,10 @@ fun setMinMax(view: Gauge, minMax: Pair<Float, Float>) {
 fun setLayoutHeight(view: View, height: Int?, width: Int?) {
     val layoutParams: ViewGroup.LayoutParams = view.layoutParams
     if (height != null) {
-        layoutParams.height = height as Int
+        layoutParams.height = height
     }
     if (width != null) {
-        layoutParams.width = width as Int
+        layoutParams.width = width
     }
     view.layoutParams = layoutParams
 }
