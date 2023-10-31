@@ -6,10 +6,8 @@ labels: ''
 assignees: ''
 
 ---
-
 | :exclamation:  Please write your issue in English  |
 |-----------------------------------------|
-
 
 **Describe the bug**
 Check the discussions page if this is not a bug. A clear and concise description of what the bug is.
@@ -24,4 +22,4 @@ paste it here. If the application is crashing, you can copy and paste the email 
 Capture screenshots or take a video of what is happening.
 
 **Phone**
-Leave information on the phone/car/head unit this issue is happening on.
+Leave information on the phone, car, or head unit this issue is happening on.
