@@ -346,9 +346,9 @@
     </style>
 
     <style name="AppTheme.MK" parent="AppTheme">
-        <item name="themedDialBackground">@drawable/dial_background_blank_mk</item>
-        <item name="themedEmptyDialBackground">@drawable/dial_background_marks_mk</item>
-        <item name="themedBlankDialBackground">@drawable/dial_background_marks_mk</item>
+        <item name="themedDialBackground">@drawable/dial_background_marks_mk</item>
+        <item name="themedEmptyDialBackground">@drawable/dial_background_blank_mk</item>
+        <item name="themedBlankDialBackground">@drawable/dial_background_blank_mk</item>
         <item name="themedNeedle">@drawable/needle_mk</item>
         <item name="themedStopWatchBackground">@drawable/dial_background_blank_mk</item>
         <item name="themedNeedleColor">@color/red</item>
@@ -460,10 +460,5 @@
         <item name="android:maxWidth">@dimen/progress_bar_height_material_car</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:maxHeight">480dp</item>
-    </style>
-
-    <style name="AppTheme.PreferenceDialog" parent="Theme.MaterialComponents.DayNight.Dialog">
-        <item name="positiveButtonText">@android:string/ok</item>
-        <item name="negativeButtonText">@android:string/cancel</item>
     </style>
 </resources>
