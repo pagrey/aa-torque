@@ -18,6 +18,7 @@ class ColorPreference(context: Context, attributeSet: AttributeSet) : Preference
         }
     fun onCreateDialogView(context: Context): ColorPickerView {
         val picker = ColorPickerView(context)
+        picker.showHex(false)
         picker.color = colorValue
         return picker
     }
