@@ -357,7 +357,7 @@
         <item name="sv_indicatorColor">@color/aqua</item>
         <item name="sv_indicatorWidth">0dp</item>
         <item name="sv_tickPadding">30dp</item>
-        <item name="sv_tickRotation">true</item>
+        <item name="sv_tickRotation">false</item>
     </style>
 
     <style name="AppTheme.Testing" parent="AppTheme">
