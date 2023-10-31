@@ -13,7 +13,7 @@ all data from Torque in a way that is as customizable as possible.
 
 ## Help and helping
 - Visit [the dicussions page](https://github.com/agronick/aa-torque/discussions) to ask questions and get support
-- English isn't your native language? [Help translate this app!](https://poeditor.com/join/project/yttme0y1VZ). Many of the translations are incomplete.
+- English isn't your native language? [Help translate this app!](https://poeditor.com/join/project/yttme0y1VZ) Many of the translations are incomplete.
 - Help spread the word. Make posts on forums and other social networks showing off your setup.
 - This app is taking hundreds of hours of work. If you enjoy it consider donating on [Paypal](https://www.paypal.me/kagronick) or [Github Sponsors](https://github.com/agronick).
 
@@ -30,8 +30,8 @@ all data from Torque in a way that is as customizable as possible.
 
 ## Prepare
 - Download the latest [release](https://github.com/agronick/aa-torque/releases).
-- Install [Torque Pro](https://play.google.com/store/apps/details?id=org.prowl.torque&hl=en_US&gl=US)
-- Make sure Android Auto is in developer mode: Open Android Auto (while not connected to the car), go to About. Tap the "About Android Auto" header 10 times until you see a toast message saying you're a developer. From the right top corner select developer options, scroll down and make sure you check "Unknown sources". This will allow programs from non-Playstore apps to be run on Android Auto. See a picture guide how to enable Developer mode here: https://www.howtogeek.com/271132/how-to-enable-developer-settings-on-android-auto/
+- Install [Torque Pro](https://play.google.com/store/apps/details?id=org.prowl.torque&hl=en_US&gl=US) You will need this app and a cheap OBD2 Bluetooth module.
+- Make sure Android Auto is in developer mode: Open Android Auto (while not connected to the car), go to About. Tap the "About Android Auto" header 10 times until you see a toast message saying you're a developer. From the right top corner select developer options, scroll down and make sure you check "Unknown sources". This will allow programs from non-Playstore apps to be run on Android Auto. [See a picture guide how to enable Developer mode here](https://www.howtogeek.com/271132/how-to-enable-developer-settings-on-android-auto/).
 
 ## Install
 - Install the APK that you downloaded in the _Prepare_ section using your normal package installer
@@ -39,7 +39,13 @@ all data from Torque in a way that is as customizable as possible.
 - Select the options menu and select force update. Follow the process so your phone will reinstall it thinking it came from the Play Store.
 - If this fails, you can try using [Kingstaller](https://github.com/fcaronte/KingInstaller/releases) so your phone thinks it came from the Play Store. Reference the Kingstaller README if you have issues installing. 
 
-Note: Do not open a bug for an installation issue. This is a hack and may take time and effort in order to get it to work. I can not troubleshoot every phone. Pixel phones have special instructions on the Kingstaller page. There seems to be issues with Android 14 which may be able to be bypassed with root.
+Note: Do not open a bug for an installation issue. You need to bypass restrictions put in place by Google to get this app working on Android Auto. These instructions will work for most phones. I can not troubleshoot every phone. Pixel phones have special instructions on the [Kingstaller README](https://github.com/fcaronte/KingInstaller). 
+
+The Kingstaller README has this to say about Pixel Phones:
+
+> For this phone you need to reinstall\update the current Google PackageInstaller, you can download the same version from ApkMirror or similar site, or you can get the apk directly from your phone using a file manager with that feature (I'm use mixplorer) then install the apk as normal and now you can use kinginstaller to install the app and will work!
+
+There seems to be issues with Android 14 as well. If you upgrade to Android 14 you may need to uninstall and reinstall. Check the [discussions](https://github.com/agronick/aa-torque/discussions) page for help installing.
 
 ## Using
 - Open the AA Torque settings, grant all the rights it's requesting. If you don't do this, the app will NOT work.
