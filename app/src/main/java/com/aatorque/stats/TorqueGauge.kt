@@ -202,7 +202,7 @@ class TorqueGauge : Fragment() {
 
         // set mIcon. mClocks that don't need an mIcon have ic_none as mIcon
         mIcon.setBackgroundResource(resId)
-        mTextTitle.text = iconText
+        binding.title = iconText
         mClock.unit = data.display.unit
 
         //dynamically scale the mIcon_space in case there's only an mIcon, and no text
