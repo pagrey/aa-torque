@@ -18,7 +18,15 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         Timber.plant(logTree)
+        fixAndroid14Perms()
         PreferenceManager.setDefaultValues(this, R.xml.settings, false)
+    }
+    
+    fun fixAndroid14Perms() {
+        for (file in codeCacheDir.listFiles() ?: emptyArray()) {
+            file.setReadOnly()
+        }
+        codeCacheDir.setReadOnly()
     }
 
     override fun attachBaseContext(base:Context) {
