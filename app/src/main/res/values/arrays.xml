@@ -49,6 +49,30 @@
         <item>@drawable/ic_theme_test</item>
     </array>
 
+    <array name="ThemeList">
+        <item>@style/AppTheme.Volkswagen</item>
+        <item>@style/AppTheme.VolkswagenGTI</item>
+        <item>@style/AppTheme.VolkswagenGTE</item>
+        <item>@style/AppTheme.VolkswagenMIB2</item>
+        <item>@style/AppTheme.VolkswagenAID</item>
+        <item>@style/AppTheme.Clubsport</item>
+        <item>@style/AppTheme.Seat</item>
+        <item>@style/AppTheme.SeatCupra</item>
+        <item>@style/AppTheme.Cupra</item>
+        <item>@style/AppTheme.Skoda</item>
+        <item>@style/AppTheme.SkodaOneApp</item>
+        <item>@style/AppTheme.SkodavRS</item>
+        <item>@style/AppTheme.SkodaVC</item>
+        <item>@style/AppTheme.Audi</item>
+        <item>@style/AppTheme.AudiVC</item>
+        <item>@style/AppTheme.AudiTT</item>
+        <item>@style/AppTheme.Minimalistic</item>
+        <item>@style/AppTheme.Dark</item>
+        <item>@style/AppTheme.Ford</item>
+        <item>@style/AppTheme.BMW</item>
+        <item>@style/AppTheme.Testing</item>
+    </array>
+
     <string-array name="fontEntries">
         <item>@string/font_segments</item>
         <item>@string/font_vw</item>

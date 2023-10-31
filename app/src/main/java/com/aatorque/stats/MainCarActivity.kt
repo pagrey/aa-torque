@@ -133,7 +133,7 @@ class MainCarActivity : CarActivity() {
     private fun setLocalTheme(theme: String?): Boolean {
         if (lastTheme != theme) {
             lastTheme = theme
-            setTheme(mapTheme(theme))
+            setTheme(mapTheme(this, theme))
             return true
         }
         return false

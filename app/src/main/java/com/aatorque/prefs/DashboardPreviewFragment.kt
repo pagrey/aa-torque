@@ -1,5 +1,6 @@
 package com.aatorque.prefs
 
+import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
@@ -32,7 +33,7 @@ class DashboardPreviewFragment: Fragment() {
         val data = runBlocking {
             requireContext().dataStore.data.first()
         }
-        inflater.context.setTheme(mapTheme(data.selectedTheme))
+        inflater.context.setTheme(mapTheme(requireContext(), data.selectedTheme))
         forceRotate(true)
         return view
     }
@@ -67,29 +68,15 @@ class DashboardPreviewFragment: Fragment() {
 }
 
 @StyleRes
-fun mapTheme(theme: String?):  Int {
-    return when (theme) {
-        "VW GTI" -> R.style.AppTheme_VolkswagenGTI
-        "VW R/GTE" -> R.style.AppTheme_VolkswagenGTE
-        "VW" -> R.style.AppTheme_Volkswagen
-        "VW MIB2" -> R.style.AppTheme_VolkswagenMIB2
-        "VW AID" -> R.style.AppTheme_VolkswagenAID
-        "Seat Cupra" -> R.style.AppTheme_SeatCupra
-        "Cupra Division" -> R.style.AppTheme_Cupra
-        "Audi TT" -> R.style.AppTheme_AudiTT
-        "Seat" -> R.style.AppTheme_Seat
-        "Skoda" -> R.style.AppTheme_Skoda
-        "Skoda ONE" -> R.style.AppTheme_SkodaOneApp
-        "Skoda vRS" -> R.style.AppTheme_SkodavRS
-        "Skoda Virtual Cockpit" -> R.style.AppTheme_SkodaVC
-        "Audi" -> R.style.AppTheme_Audi
-        "Audi Virtual Cockpit" -> R.style.AppTheme_AudiVC
-        "Clubsport" -> R.style.AppTheme_Clubsport
-        "Minimalistic" -> R.style.AppTheme_Minimalistic
-        "Test" -> R.style.AppTheme_Testing
-        "Dark" -> R.style.AppTheme_Dark
-        "Mustang GT" -> R.style.AppTheme_Ford
-        "BMW" -> R.style.AppTheme_BMW
-        else -> R.style.AppTheme_VolkswagenMIB2
+fun mapTheme(context: Context, theme: String?):  Int {
+    val findIndex = context.resources.getStringArray(R.array.Themes).indexOf(theme)
+    if (findIndex != -1) {
+        val arr = context.resources.obtainTypedArray(R.array.ThemeList)
+        try{
+            return arr.getResourceId(findIndex, R.style.AppTheme_AudiVC)
+        } finally {
+            arr.recycle()
+        }
     }
+    return R.style.AppTheme_AudiVC
 }
