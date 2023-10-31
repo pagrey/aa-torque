@@ -16,11 +16,9 @@ Check the discussions page if this is not a bug. A clear and concise description
 Be as descriptive as possible. Check the [discussions](https://github.com/agronick/aa-torque/discussions)
 page first. If this is not a bug, you can make a post on the discussions page.
 
-
 **Log output**
 After your issue happens click the three dots on the settings menu to obtain the log output and 
 paste it here. If the application is crashing, you can copy and paste the email it generates.
-
 
 **Media**
 Capture screenshots or take a video of what is happening.
