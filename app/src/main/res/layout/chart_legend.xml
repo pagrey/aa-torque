@@ -2,9 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="android.graphics.Typeface" />
         <variable
             name="binding"
             type="com.aatorque.stats.TorqueChart.LegendBinding" />
+        <variable
+            name="font"
+            type="Typeface" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -30,6 +34,7 @@
             android:gravity="center_vertical"
             android:maxLines="1"
             android:ellipsize="marquee"
+            android:typeface="@{font}"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -42,6 +47,7 @@
             android:minWidth="150dp"
             android:layout_weight="1"
             android:maxLines="1"
+            android:typeface="@{font}"
             />
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

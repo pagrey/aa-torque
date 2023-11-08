@@ -16,11 +16,12 @@ import android.widget.ImageButton
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.InputDeviceCompat
 import androidx.fragment.app.FragmentContainerView
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.aatorque.prefs.SettingsViewModel
 import com.aatorque.prefs.dataStore
 import com.aatorque.stats.databinding.FragmentDashboardBinding
 import com.google.android.apps.auto.sdk.StatusBarController
@@ -52,6 +53,7 @@ open class DashboardFragment : CarFragment() {
     private var mStarted = false
     lateinit var binding: FragmentDashboardBinding
     lateinit var torqueChart: TorqueChart
+    lateinit var settingsViewModel: SettingsViewModel
 
     companion object {
         const val DISPLAY_OFFSET = 3
@@ -59,6 +61,7 @@ open class DashboardFragment : CarFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        settingsViewModel = ViewModelProvider(requireActivity())[SettingsViewModel::class.java]
         torqueService.startTorque(requireContext())
     }
 
@@ -68,6 +71,14 @@ open class DashboardFragment : CarFragment() {
     ): View? {
         Timber.i("onCreateView")
         binding = FragmentDashboardBinding.inflate(inflater, container, false)
+
+        settingsViewModel.typefaceLiveData.observe(viewLifecycleOwner) {
+            binding.font = it
+        }
+        settingsViewModel.chartVisible.observe(viewLifecycleOwner) {
+            binding.showChart = it
+        }
+
         this.rootView = binding.root
 
         mLayoutDashboard = rootView.findViewById(R.id.layoutDashboard)
@@ -112,10 +123,7 @@ open class DashboardFragment : CarFragment() {
                 binding.title = screens.title
 
                 val showChartChanged = binding.showChart != it.showChart
-                binding.showChart = it.showChart
-                for (display in displays) {
-                    display?.isSideDisplay = it.showChart
-                }
+                settingsViewModel.chartVisible.value = it.showChart
 
                 if (it.showChart) {
                     torqueChart.setupItems(
@@ -301,16 +309,9 @@ open class DashboardFragment : CarFragment() {
             "skoda" -> R.font.skoda
             "larabie" -> R.font.larabie
             "ford" -> R.font.unitedsans
-	    "ev" -> R.font.ev
+            "ev" -> R.font.ev
             else -> R.font.digital
         }
-        val typeface = ResourcesCompat.getFont(requireContext(), font)!!
-            for (gauge in guages) {
-            gauge?.setupTypeface(typeface)
-        }
-        for (display in displays) {
-            display?.setupTypeface(typeface)
-        }
-        binding.font = typeface
+        settingsViewModel.setFont(font)
     }
 }

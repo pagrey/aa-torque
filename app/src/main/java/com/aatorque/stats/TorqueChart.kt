@@ -10,8 +10,10 @@ import android.view.ViewTreeObserver
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.aatorque.prefs.SettingsViewModel
 import com.aatorque.stats.databinding.FragmentChartBinding
 import com.google.common.collect.ImmutableList
 import com.jjoe64.graphview.DefaultLabelFormatter
@@ -39,6 +41,12 @@ class TorqueChart: Fragment() {
     private lateinit var binding: FragmentChartBinding
     private var startDate by Delegates.notNull<Long>()
     lateinit var legendBinding: List<LegendBinding>
+    lateinit var settingsViewModel: SettingsViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        settingsViewModel = ViewModelProvider(requireActivity())[SettingsViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -142,7 +150,7 @@ class TorqueChart: Fragment() {
         binding.layoutManager = StaggeredGridLayoutManager(legendBinding.size, RecyclerView.VERTICAL).apply {
             gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         }
-        binding.legendData = LegendAdapter(ImmutableList.copyOf(legendBinding))
+        binding.legendData = LegendAdapter(settingsViewModel, ImmutableList.copyOf(legendBinding))
         graph.viewport.setMinX(Date().time - 22_000.0)
     }
 

@@ -153,7 +153,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center_vertical"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@{showChart ? 20 : 0}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/dashContent"

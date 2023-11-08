@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
+import com.aatorque.prefs.SettingsViewModel
 import com.aatorque.stats.databinding.FragmentDisplayBinding
 import timber.log.Timber
 
@@ -22,13 +24,13 @@ class TorqueDisplay : Fragment() {
         set(value) {
             bottomBacking.value = value
         }
-    private val sideBacking = MutableLiveData(false)
-    var isSideDisplay
-        get() = sideBacking.value
-        set(value) {
-            sideBacking.value = value
-        }
     private lateinit var binding: FragmentDisplayBinding
+    lateinit var settingsViewModel: SettingsViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        settingsViewModel = ViewModelProvider(requireActivity())[SettingsViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,15 +38,15 @@ class TorqueDisplay : Fragment() {
     ): View {
         Timber.i("onCreateView")
         binding = FragmentDisplayBinding.inflate(inflater, container, false)
+        settingsViewModel.typefaceLiveData.observe(viewLifecycleOwner, this::setupTypeface)
         rootView = binding.root
         bottomBacking.observeForever {
             binding.showBottom = it
         }
-        sideBacking.observeForever {
+        binding.showBottom = isBottomDisplay
+        settingsViewModel.chartVisible.observe(viewLifecycleOwner) {
             binding.showSide = it
         }
-        binding.showBottom = isBottomDisplay
-        binding.showSide = isSideDisplay
         return binding.root
     }
     // this sets all the labels/values in an initial state, depending on the chosen options

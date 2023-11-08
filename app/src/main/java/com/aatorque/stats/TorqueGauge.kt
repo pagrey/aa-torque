@@ -13,7 +13,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.aatorque.datastore.MaxControl
+import com.aatorque.prefs.SettingsViewModel
 import com.aatorque.stats.databinding.FragmentGaugeBinding
 import com.github.anastr.speedviewlib.ImageSpeedometer
 import com.github.anastr.speedviewlib.RaySpeedometer
@@ -34,9 +36,15 @@ class TorqueGauge : Fragment() {
     private lateinit var mTextTitle: TextView
     private lateinit var mIcon: TextView
     private lateinit var mMax: Speedometer
+    lateinit var settingsViewModel: SettingsViewModel
 
     private var rayOn = false
     private lateinit var binding: FragmentGaugeBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        settingsViewModel = ViewModelProvider(requireActivity())[SettingsViewModel::class.java]
+    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -54,6 +62,7 @@ class TorqueGauge : Fragment() {
     ): View? {
         Timber.i("onCreateView")
         binding = FragmentGaugeBinding.inflate(inflater, container, false)
+        settingsViewModel.typefaceLiveData.observe(viewLifecycleOwner, this::setupTypeface)
         val view = binding.root
         mClock = view.findViewById(R.id.dial)
         mRayClock = view.findViewById(R.id.ray)
