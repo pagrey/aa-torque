@@ -356,7 +356,7 @@
         <item name="sv_indicatorLightColor">#44FFFFFF</item>
         <item name="sv_indicatorColor">@color/aqua</item>
         <item name="sv_indicatorWidth">0dp</item>
-        <item name="sv_tickPadding">30dp</item>
+        <item name="sv_tickPadding">20dp</item>
         <item name="sv_tickRotation">false</item>
     </style>
 
@@ -372,6 +372,21 @@
         <item name="sv_indicatorColor">@color/aqua</item>
         <item name="sv_indicatorWidth">0dp</item>
         <item name="sv_tickPadding">12dp</item>
+        <item name="sv_tickRotation">false</item>
+    </style>
+
+    <style name="AppTheme.EV" parent="AppTheme">
+        <item name="themedDialBackground">@drawable/dial_background_marks_ev</item>
+        <item name="themedEmptyDialBackground">@drawable/dial_background_blank_ev</item>
+        <item name="themedBlankDialBackground">@drawable/dial_background_blank_ev</item>
+        <item name="themedNeedle">@drawable/needle_ev</item>
+        <item name="themedStopWatchBackground">@drawable/dial_background_blank_ev</item>
+        <item name="themedNeedleColor">@color/aqua</item>
+        <item name="sv_withIndicatorLight">false</item>
+        <item name="sv_indicatorLightColor">#44FFFFFF</item>
+        <item name="sv_indicatorColor">@color/aqua</item>
+        <item name="sv_indicatorWidth">0dp</item>
+        <item name="sv_tickPadding">10dp</item>
         <item name="sv_tickRotation">false</item>
     </style>
 
