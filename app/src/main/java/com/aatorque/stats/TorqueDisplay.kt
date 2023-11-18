@@ -29,7 +29,7 @@ class TorqueDisplay : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        settingsViewModel = ViewModelProvider(requireActivity())[SettingsViewModel::class.java]
+        settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
     }
 
     override fun onCreateView(
