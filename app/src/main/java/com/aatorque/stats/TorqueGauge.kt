@@ -1,5 +1,6 @@
 package com.aatorque.stats
 
+import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources.NotFoundException
 import android.graphics.Color
@@ -41,9 +42,10 @@ class TorqueGauge : Fragment() {
     private var rayOn = false
     private lateinit var binding: FragmentGaugeBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        settingsViewModel = ViewModelProvider(requireActivity())[SettingsViewModel::class.java]
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

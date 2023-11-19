@@ -1,5 +1,6 @@
 package com.aatorque.stats
 
+import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
@@ -43,11 +44,6 @@ class TorqueChart: Fragment() {
     lateinit var legendBinding: List<LegendBinding>
     lateinit var settingsViewModel: SettingsViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,6 +51,10 @@ class TorqueChart: Fragment() {
     ): View? {
         binding = FragmentChartBinding.inflate(inflater, container, false)
         return binding.root
+    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        settingsViewModel = ViewModelProvider(requireActivity())[SettingsViewModel::class.java]
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

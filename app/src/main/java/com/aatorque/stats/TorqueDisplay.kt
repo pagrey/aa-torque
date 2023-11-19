@@ -1,6 +1,7 @@
 package com.aatorque.stats
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.res.Resources
 import android.graphics.Typeface
 import android.os.Bundle
@@ -27,9 +28,9 @@ class TorqueDisplay : Fragment() {
     private lateinit var binding: FragmentDisplayBinding
     lateinit var settingsViewModel: SettingsViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        settingsViewModel = ViewModelProvider(requireActivity())[SettingsViewModel::class.java]
     }
 
     override fun onCreateView(

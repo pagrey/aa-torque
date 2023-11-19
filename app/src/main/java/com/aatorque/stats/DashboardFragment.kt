@@ -61,8 +61,12 @@ open class DashboardFragment : CarFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
         torqueService.startTorque(requireContext())
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        settingsViewModel = ViewModelProvider(requireActivity())[SettingsViewModel::class.java]
     }
 
     override fun onCreateView(
