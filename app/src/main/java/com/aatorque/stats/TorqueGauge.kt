@@ -45,7 +45,7 @@ class TorqueGauge : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        settingsViewModel = ViewModelProvider(requireActivity())[SettingsViewModel::class.java]
+        settingsViewModel = ViewModelProvider(requireParentFragment())[SettingsViewModel::class.java]
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
