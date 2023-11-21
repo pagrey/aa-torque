@@ -54,10 +54,12 @@
             type="String" />
     </data>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintWrapper"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clipChildren="false">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/halfTop"
@@ -72,7 +74,7 @@
                 android:id="@+id/textMax"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="20dp"
                 android:drawableStart="@{showLimitBelow == MaxControl.MAX ? @drawable/ic_max_text : @drawable/ic_min_text}"
                 android:elevation="1dp"
                 android:ellipsize="marquee"
@@ -82,9 +84,11 @@
                 android:textSize="24sp"
                 android:typeface="@{font}"
                 android:visibility="@{showLimitBelow == MaxControl.OFF ? View.INVISIBLE : View.VISIBLE}"
+                app:layout_constraintHeight="true"
                 app:layout_constrainedHeight="true"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintTop_toBottomOf="@id/dial"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -93,7 +97,7 @@
                 android:id="@+id/textIcon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
                 android:alpha="1.0"
                 android:background="@drawable/ic_oil"
                 android:backgroundTint="@color/car_primary"
@@ -127,7 +131,7 @@
             <com.github.anastr.speedviewlib.ImageSpeedometer
                 android:id="@+id/dial"
                 style="@style/AppTheme.Car.Speedometer"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:elevation="0dp"
                 app:layout_constrainedHeight="true"
