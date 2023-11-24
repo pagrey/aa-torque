@@ -235,12 +235,11 @@
                     android:layout_height="0dp"
                     android:layout="@layout/fragment_display"
                     android:clipChildren="false"
-                    android:layout_marginTop="@{showChart ? 0 : 10}"
                     app:layout_constraintVertical_chainStyle="spread_inside"
                     app:layout_constraintRight_toLeftOf="@{showChart ? LayoutParams.UNSET : @id/line50}"
                     app:layout_constraintLeft_toRightOf="@{showChart ? @id/chartFrag : @id/line25}"
                     app:layout_constraintRight_toRightOf="@{showChart ? @id/dashContent : LayoutParams.UNSET}"
-                    app:layout_constraintTop_toTopOf="@{showChart ? @id/chartFrag : @id/gaugeCenter}"
+                    app:layout_constraintTop_toTopOf="@{showChart ? @id/chartFrag : @id/horizTop}"
                     app:layout_constraintBottom_toTopOf="@{showChart ? @id/display2 : LayoutParams.UNSET}" />
 
                 <androidx.fragment.app.FragmentContainerView
@@ -250,10 +249,9 @@
                     android:layout_height="0dp"
                     android:layout="@layout/fragment_display"
                     android:clipChildren="false"
-                    android:layout_marginTop="@{showChart ? 0 : 10}"
                     app:layout_constraintRight_toLeftOf="@{showChart ? LayoutParams.UNSET : @id/line75}"
                     app:layout_constraintLeft_toRightOf="@{showChart ? @id/chartFrag : @id/line50}"
-                    app:layout_constraintTop_toTopOf="@{showChart ? LayoutParams.UNSET : @id/gaugeCenter}"
+                    app:layout_constraintTop_toTopOf="@{showChart ? LayoutParams.UNSET : @id/horizTop}"
                     app:layout_constraintTop_toBottomOf="@{showChart ? @id/display1 : LayoutParams.UNSET}"
                     app:layout_constraintBottom_toTopOf="@{showChart ? @id/display3 : LayoutParams.UNSET}" />
 
@@ -264,12 +262,10 @@
                     android:layout_height="0dp"
                     android:layout="@layout/fragment_display"
                     android:clipChildren="false"
-                    android:layout_marginBottom="@{showChart ? 0 : 30}"
-                    app:layout_constraintBottom_toBottomOf="@{showChart ? LayoutParams.UNSET : @id/gaugeCenter}"
                     app:layout_constraintRight_toRightOf="@{showChart ? @id/display2 : @id/line50}"
                     app:layout_constraintLeft_toLeftOf="@{showChart ? @id/display2  : @id/line25}"
                     app:layout_constraintTop_toBottomOf="@{showChart ? @id/display2 : LayoutParams.UNSET}"
-                    app:layout_constraintBottom_toTopOf="@{showChart ? @id/display4 : LayoutParams.UNSET}"/>
+                    app:layout_constraintBottom_toTopOf="@{showChart ? @id/display4 : @id/horizBottom}"/>
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/display4"
@@ -278,10 +274,27 @@
                     android:layout_height="0dp"
                     android:layout="@layout/fragment_display"
                     android:clipChildren="false"
-                    android:layout_marginBottom="@{showChart ? 0 : 30}"
-                    app:layout_constraintBottom_toBottomOf="@{showChart ? @id/chartFrag : @id/gaugeLeft}"
+                    app:layout_constraintBottom_toBottomOf="@{showChart ? @id/chartFrag : @id/horizBottom}"
                     app:layout_constraintRight_toRightOf="@{showChart ? @id/display3 : @id/line75}"
                     app:layout_constraintLeft_toLeftOf="@{showChart ? @id/display3 : @id/line50}"/>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/horizTop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/gaugeLeft"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_begin="20dp" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/horizBottom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@id/gaugeLeft"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_end="45dp" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline1"
