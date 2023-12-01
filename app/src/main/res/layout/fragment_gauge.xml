@@ -10,9 +10,13 @@
 
         <import type="com.aatorque.stats.ViewAdapterKt" />
 
+        <import type="kotlin.jvm.functions.Function2"/>
+
         <import type="android.view.View" />
 
         <import type="kotlin.Pair" />
+
+        <import type="com.aatorque.stats.TorqueGaugeKt" />
 
         <variable
             name="font"
@@ -52,6 +56,10 @@
         <variable
             name="title"
             type="String" />
+
+        <variable
+            name="tickFormatter"
+            type="Function2&lt;Integer, Float, String>" />
     </data>
 
 
@@ -149,7 +157,8 @@
                 app:sv_unitTextSize="20sp"
                 app:minMax="@{minMax}"
                 app:textTypeface="@{font}"
-                app:tickNumber="@{ticksOn ? 9 : 0}"
+                app:tickNumber="@{ticksOn ? TorqueGaugeKt.NUM_TICKS : 0}"
+                app:onPrintTickLabel="@{ tickFormatter }"
                 app:wholeNumbers="@{wholeNumbers}" />
 
             <com.github.anastr.speedviewlib.SpeedView

@@ -151,7 +151,7 @@
 
         <item name="sv_indicatorColor">@color/aqua</item>
         <item name="sv_indicatorWidth">0dp</item>
-        <item name="sv_tickPadding">20dp</item>
+        <item name="sv_tickPadding">18dp</item>
         <item name="sv_tickRotation">false</item>
     </style>
 

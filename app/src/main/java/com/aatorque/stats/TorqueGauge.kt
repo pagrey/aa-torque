@@ -27,16 +27,26 @@ import com.github.anastr.speedviewlib.components.indicators.TriangleIndicator
 import timber.log.Timber
 import java.util.Locale
 
-
+const val NUM_TICKS = 9
 class TorqueGauge : Fragment() {
 
     private var rootView: View? = null
-    private lateinit var mClock: ImageSpeedometer
-    private lateinit var mRayClock: RaySpeedometer
-    private lateinit var mTextMax: TextView
-    private lateinit var mTextTitle: TextView
-    private lateinit var mIcon: TextView
-    private lateinit var mMax: Speedometer
+    private val mClock: ImageSpeedometer
+        get() {
+            return binding.dial
+        }
+    private val mRayClock: RaySpeedometer
+        get() {
+            return binding.ray
+        }
+    private val mIcon: TextView
+        get() {
+            return binding.textIcon
+        }
+    private val mMax: Speedometer
+        get() {
+            return binding.dialMax
+        }
     lateinit var settingsViewModel: SettingsViewModel
 
     private var rayOn = false
@@ -66,43 +76,14 @@ class TorqueGauge : Fragment() {
         binding = FragmentGaugeBinding.inflate(inflater, container, false)
         settingsViewModel.typefaceLiveData.observe(viewLifecycleOwner, this::setupTypeface)
         val view = binding.root
-        mClock = view.findViewById(R.id.dial)
-        mRayClock = view.findViewById(R.id.ray)
-        mTextMax = view.findViewById(R.id.textMax)
-        mTextTitle = view.findViewById(R.id.textTitle)
-        mIcon = view.findViewById(R.id.textIcon)
-        mMax = view.findViewById(R.id.dial_Max)
         rootView = view
        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val state = savedInstanceState ?: Bundle()
         mMax.indicator = TriangleIndicator(requireContext())
         mMax.indicator.color = requireContext().theme.obtainStyledAttributes(intArrayOf(R.attr.themedNeedleColor)).getColor(0, Color.RED)
-        setMinMax(
-            state.getFloat("minValue", 0f).toInt(),
-            state.getFloat("maxValue", 100f).toInt()
-        )
-        turnMinMaxMarksEnabled(
-            MaxControl.forNumber(
-                state.getInt(
-                    "maxMarksOn",
-                    MaxControl.OFF_VALUE
-                )
-            )
-        )
-        turnMinMaxTextViewsEnabled(
-            MaxControl.forNumber(
-                state.getInt(
-                    "maxOn",
-                    MaxControl.OFF_VALUE
-                )
-            )
-        )
-        turnRaysEnabled(state.getBoolean("rayOn", false))
-        turnTickEnabled(state.getBoolean("ticksOn", false))
         mMax.clearSections()
         mMax.addSections(
             Section(
@@ -120,6 +101,32 @@ class TorqueGauge : Fragment() {
                     )
             )
         )
+        savedInstanceState?.let {
+            state ->
+            setMinMax(
+                state.getFloat("minValue", 0f).toInt(),
+                state.getFloat("maxValue", 100f).toInt()
+            )
+            turnMinMaxMarksEnabled(
+                MaxControl.forNumber(
+                    state.getInt(
+                        "maxMarksOn",
+                        MaxControl.OFF_VALUE
+                    )
+                )
+            )
+            turnMinMaxTextViewsEnabled(
+                MaxControl.forNumber(
+                    state.getInt(
+                        "maxOn",
+                        MaxControl.OFF_VALUE
+                    )
+                )
+            )
+            turnRaysEnabled(state.getBoolean("rayOn", false))
+            turnTickEnabled(state.getBoolean("ticksOn", false))
+        }
+        mClock.invalidate()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -261,12 +268,13 @@ class TorqueGauge : Fragment() {
         val minLimit = minimum.coerceAtMost(maximum)
         val maxLimit = maximum.coerceAtLeast(minimum)
         val format = if (
-            // -1 because 0 is a tick
-            (maxLimit - minLimit) < (mClock.tickNumber - 1)
+            (maxLimit - minLimit) < (NUM_TICKS - 1)
         ) "%.1f" else "%.0f"
         binding.minMax = Pair(minLimit, maxLimit)
         val locale = Locale.getDefault()
-        mClock.onPrintTickLabel = { _, speed -> format.format(locale, speed) }
+        binding.tickFormatter = { _, speed ->
+            format.format(locale, speed)
+        }
     }
 
     private fun onUpdate(data: TorqueData) {
