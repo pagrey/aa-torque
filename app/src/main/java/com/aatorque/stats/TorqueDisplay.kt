@@ -57,11 +57,11 @@ class TorqueDisplay : Fragment() {
         data.notifyUpdate = this::onUpdate
 
         var icon = data.getDrawableName() ?: "ic_none"
+        binding.iconText = ""
+        binding.value = ""
+        binding.icon = null
 
-        if (data.pid == null) {
-            binding.iconText = ""
-            binding.value = ""
-        } else {
+        if (data.pid != null) {
             if (data.display.showLabel || data.display.icon == "" || data.display.icon == "ic_none") {
                 binding.iconText = data.display.label
                 binding.icon = R.drawable.ic_none
