@@ -28,6 +28,7 @@ import timber.log.Timber
 import java.util.Locale
 
 const val NUM_TICKS = 9
+val MIN_MAX_DEFAULT = Pair(0f, 100f)
 class TorqueGauge : Fragment() {
 
     private var rootView: View? = null
@@ -74,6 +75,7 @@ class TorqueGauge : Fragment() {
     ): View? {
         Timber.i("onCreateView")
         binding = FragmentGaugeBinding.inflate(inflater, container, false)
+        binding.minMax = MIN_MAX_DEFAULT
         settingsViewModel.typefaceLiveData.observe(viewLifecycleOwner, this::setupTypeface)
         val view = binding.root
         rootView = view
@@ -104,8 +106,8 @@ class TorqueGauge : Fragment() {
         savedInstanceState?.let {
             state ->
             setMinMax(
-                state.getFloat("minValue", 0f).toInt(),
-                state.getFloat("maxValue", 100f).toInt()
+                state.getFloat("minValue", MIN_MAX_DEFAULT.first).toInt(),
+                state.getFloat("maxValue", MIN_MAX_DEFAULT.second).toInt()
             )
             turnMinMaxMarksEnabled(
                 MaxControl.forNumber(
