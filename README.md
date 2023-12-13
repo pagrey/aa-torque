@@ -4,6 +4,10 @@
 
 # Torque Plugin for Android Auto 
 
+
+![new ev theme](https://user-images.githubusercontent.com/62142158/280562239-e03cd94b-fad1-4f93-969d-1d348152425d.jpg)
+
+
 This is a performance monitor based on [Chillout's Performance Monitor](https://github.com/jilleb/mqb-pm) which was based on Martoreto's aa-stats.
 The app has been modified with a focus on making it more customizable with the ability
 to obtain any PID from Torque. Torque pro is required to use this app.
@@ -55,12 +59,9 @@ There seems to be issues with Android 14 as well. If you upgrade to Android 14 y
 # Screenshots:
 Some screenshots of the app:
 
-![new ev theme](https://user-images.githubusercontent.com/62142158/280562239-e03cd94b-fad1-4f93-969d-1d348152425d.jpg)
-
 ![278239030-0d8ded34-9528-48db-a285-e81e4b849717](https://github.com/agronick/aa-torque/assets/2042303/e31b0598-25ec-4003-bcee-11e5e108d3a4)
 
 ![chat_view](https://github.com/agronick/aa-torque/assets/2042303/a99571f9-0bb3-43ec-89ce-938e41506e97)
-New chart view!
 
 ![Screenshot_20231002_130401](https://github.com/agronick/aa-torque/assets/2042303/229315c8-ad3b-42e6-86e6-e7fe7abb16a8)
 
