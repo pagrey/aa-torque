@@ -130,7 +130,7 @@
     <string name="dashboards">Dashboards</string>
     <string name="rotary_input">Rotary input</string>
     <string name="rotary_desc">Disable buttons and use rotary dial if equipped</string>
-    <string name="minmax_below">Minmax below gauge</string>
+    <string name="minmax_below">Min/Max below gauge</string>
     <string name="minmax_below_desc">Place min/max values below gauge instead of overlapping the bottom of the gauge</string>
     <string name="enable_script">Run unit conversion</string>
     <string name="enable_script_desc">Run formula on output</string>
