@@ -26,6 +26,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     lateinit var fontPref: ImageListPreference
     lateinit var centerGaugeLargePref: CheckBoxPreference
     lateinit var rotaryInputPref: CheckBoxPreference
+    lateinit var minMaxBelowPref: CheckBoxPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +38,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         fontPref = findPreference("selectedFont")!!
         centerGaugeLargePref = findPreference("centerGaugeLarge")!!
         rotaryInputPref = findPreference("rotaryInput")!!
+        minMaxBelowPref = findPreference("minMaxBelow")!!
         themePref.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
         fontPref.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
         backgroundPref.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
@@ -103,7 +105,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
             return@setOnPreferenceChangeListener true
         }
-
+        minMaxBelowPref.setOnPreferenceChangeListener{
+            preference, newValue ->
+            updateDatastorePref {
+                it.setMinMaxBelow(newValue as Boolean)
+            }
+            return@setOnPreferenceChangeListener true
+        }
 
         numScreensPref.setOnBindEditTextListener {
             it.inputType = InputType.TYPE_CLASS_NUMBER
@@ -116,6 +124,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 backgroundPref.value = it.selectedBackground
                 centerGaugeLargePref.isChecked = it.centerGaugeLarge
                 rotaryInputPref.isChecked = it.rotaryInput
+                minMaxBelowPref.isChecked = it.minMaxBelow
             }
         }
         lifecycleScope.launch {

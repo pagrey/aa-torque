@@ -23,7 +23,7 @@
         android:id="@+id/valueElement"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:ellipsize="none"
@@ -36,7 +36,8 @@
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@{showBottom || showSide ? LayoutParams.UNSET : LayoutParams.PARENT_ID}"
+        app:layout_constraintBottom_toBottomOf="@{showBottom || showSide ? LayoutParams.PARENT_ID : LayoutParams.UNSET}" />
 
     <TextView
         android:id="@+id/iconElement"

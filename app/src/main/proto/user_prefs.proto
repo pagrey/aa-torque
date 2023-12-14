@@ -41,4 +41,5 @@ message UserPreference {
   string selectedBackground = 18;
   bool rotaryInput = 20;
   bool centerGaugeLarge = 21;
+  bool minMaxBelow = 23;
 }

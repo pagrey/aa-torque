@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.Guideline
 import androidx.databinding.BindingAdapter
 import com.github.anastr.speedviewlib.Gauge
 import com.github.anastr.speedviewlib.ImageSpeedometer
@@ -56,8 +57,8 @@ fun wholeNumbers(view: ImageSpeedometer, wholeNumbers: Boolean) {
 }
 
 @BindingAdapter("minMax")
-fun setMinMax(view: Gauge, minMax: Pair<Float, Float>) {
-    view.setMinMaxSpeed(minMax.first, minMax.second)
+fun setMinMax(view: Gauge, minMax: Pair<Float, Float>?) {
+    view.setMinMaxSpeed(minMax?.first ?: 0f, minMax?.second ?: 100f)
 }
 
 @BindingAdapter("android:layout_height", "android:layout_width", requireAll = false)
@@ -72,21 +73,27 @@ fun setLayoutHeight(view: View, height: Int?, width: Int?) {
     view.layoutParams = layoutParams
 }
 
+val convertDp = {value: Int? ->
+    if (value == null) {
+        null
+    } else {
+        (value * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
+    }
+}
 
 @BindingAdapter("android:layout_marginTop", "android:layout_marginLeft", "android:layout_marginRight", "android:layout_marginBottom", requireAll = false)
 fun setLayoutMargin(view: View, top: Int?, left: Int?, right: Int?, bottom: Int?) {
     val lp =  view.layoutParams as MarginLayoutParams?
-    val convertDp = {value: Int? ->
-        if (value == null) {
-            null
-        } else {
-            (value * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
-        }
-    }
     lp?.setMargins(
         convertDp(left) ?: lp.leftMargin,
         convertDp(top) ?: lp.topMargin,
         convertDp(right) ?: lp.rightMargin,
         convertDp(bottom) ?: lp.bottomMargin
     )
+}
+
+@BindingAdapter("layout_constraintGuide_end", "layout_constraintGuide_begin", requireAll = false)
+fun setLayoutMargin(view: Guideline, end: Int?, begin: Int?) {
+    convertDp(end)?.let { view.setGuidelineEnd(it) }
+    convertDp(begin)?.let { view.setGuidelineBegin(it) }
 }

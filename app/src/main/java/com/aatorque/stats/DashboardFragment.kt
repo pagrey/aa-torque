@@ -78,6 +78,9 @@ open class DashboardFragment : CarFragment() {
         settingsViewModel.chartVisible.observe(viewLifecycleOwner) {
             binding.showChart = it
         }
+        settingsViewModel.minMaxBelow.observe(viewLifecycleOwner) {
+            binding.minMaxBelow = it
+        }
 
         this.rootView = binding.root
 
@@ -124,6 +127,7 @@ open class DashboardFragment : CarFragment() {
 
                 val showChartChanged = binding.showChart != it.showChart
                 settingsViewModel.chartVisible.value = it.showChart
+                settingsViewModel.minMaxBelow.value = it.minMaxBelow
 
                 if (it.showChart) {
                     torqueChart.setupItems(

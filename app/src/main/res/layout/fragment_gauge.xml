@@ -18,6 +18,8 @@
 
         <import type="com.aatorque.stats.TorqueGaugeKt" />
 
+        <import type="androidx.constraintlayout.widget.ConstraintLayout.LayoutParams" />
+
         <variable
             name="font"
             type="Typeface" />
@@ -25,6 +27,7 @@
         <variable
             name="minMax"
             type="Pair&lt;Float, Float&gt;" />
+
         <variable
             name="maxValue"
             type="float" />
@@ -60,6 +63,10 @@
         <variable
             name="tickFormatter"
             type="Function2&lt;Integer, Float, String>" />
+
+        <variable
+            name="minMaxBelow"
+            type="Boolean" />
     </data>
 
 
@@ -95,8 +102,8 @@
                 app:layout_constraintHeight="true"
                 app:layout_constrainedHeight="true"
                 app:layout_constrainedWidth="true"
-                app:layout_constraintTop_toBottomOf="@id/dial"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@{minMaxBelow ? @id/dial : LayoutParams.UNSET}"
+                app:layout_constraintBottom_toBottomOf="@{minMaxBelow ? @id/constraintWrapper : @id/dial}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -120,9 +127,8 @@
 
             <TextView
                 android:id="@+id/textTitle"
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:layout_marginTop="20dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:ellipsize="marquee"
                 android:gravity="center"
                 android:singleLine="true"
@@ -145,7 +151,8 @@
                 app:layout_constrainedHeight="true"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintBottom_toTopOf="@id/textMax"
+                app:layout_constraintBottom_toTopOf="@{minMaxBelow ? @id/textMax : LayoutParams.UNSET}"
+                app:layout_constraintBottom_toBottomOf="@{minMaxBelow ? LayoutParams.UNSET : LayoutParams.PARENT_ID}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textTitle"

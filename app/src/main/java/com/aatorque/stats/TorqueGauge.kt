@@ -75,8 +75,10 @@ class TorqueGauge : Fragment() {
     ): View? {
         Timber.i("onCreateView")
         binding = FragmentGaugeBinding.inflate(inflater, container, false)
-        binding.minMax = MIN_MAX_DEFAULT
         settingsViewModel.typefaceLiveData.observe(viewLifecycleOwner, this::setupTypeface)
+        settingsViewModel.minMaxBelow.observe(viewLifecycleOwner) {
+            binding.minMaxBelow = it
+        }
         val view = binding.root
         rootView = view
        return rootView

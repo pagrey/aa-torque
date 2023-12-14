@@ -34,6 +34,10 @@
         <variable
             name="showChart"
             type="Boolean" />
+
+        <variable
+            name="minMaxBelow"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -155,7 +159,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center_vertical"
             android:layout_centerVertical="true"
-            android:layout_marginTop="@{showChart ? 20 : 0}">
+            android:layout_marginTop="@{showChart ? 15 : 0}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/dashContent"
@@ -192,7 +196,8 @@
                     android:visibility="@{!showChart ? View.VISIBLE : View.GONE}"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/guideline1"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
 
 
                 <androidx.fragment.app.FragmentContainerView
@@ -285,7 +290,7 @@
                     app:layout_constraintTop_toTopOf="@id/gaugeLeft"
                     app:layout_constraintStart_toStartOf="parent"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_begin="20dp" />
+                    app:layout_constraintGuide_begin="15dp" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/horizBottom"
@@ -294,7 +299,7 @@
                     app:layout_constraintBottom_toBottomOf="@id/gaugeLeft"
                     app:layout_constraintStart_toStartOf="parent"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_end="45dp" />
+                    app:layout_constraintGuide_end="@{minMaxBelow ? 45 : 0}" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline1"
