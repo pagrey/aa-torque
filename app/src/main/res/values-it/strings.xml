@@ -94,8 +94,6 @@
     <string name="bg_dots">Punti</string>
     <string name="bg_aa">Android Auto</string>
     <string name="item_details_go_back">Indietro</string>
-    <string name="pref_dataelementsettings_1">Impostazioni elementi 1</string>
-    <string name="pref_title_performance_1">Titolo 1</string>
     <string name="pid">PID</string>
     <string name="pidLabel">Etichetta</string>
     <string name="pidShowLabel">Mostra etichetta</string>

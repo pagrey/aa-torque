@@ -64,10 +64,6 @@
     <string name="pref_ticks">Valores tick</string>
     <string name="pref_ticks_off">No mostrar valores de ticks</string>
     <string name="pref_ticks_on">Mostrar valores de ticks</string>
-    <string name="pref_view1">Vista 1</string>
-    <string name="pref_view2">Vista 2</string>
-    <string name="pref_view3">Vista 3</string>
-    <string name="pref_view4">Vista 4</string>
     <string name="element_torque_fuelpressure">Presión de combustible</string>
     <string name="element_torque_engineload">Carga del motor</string>
     <string name="element_torque_timing_advance">Avance de tiempo</string>
