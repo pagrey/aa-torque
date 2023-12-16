@@ -112,7 +112,7 @@
                 android:id="@+id/textIcon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="45dp"
                 android:alpha="1.0"
                 android:background="@drawable/ic_oil"
                 android:backgroundTint="@color/car_primary"
