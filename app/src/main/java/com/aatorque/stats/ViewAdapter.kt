@@ -1,6 +1,7 @@
 package com.aatorque.stats
 
 import android.content.res.Resources
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
@@ -10,6 +11,7 @@ import androidx.databinding.BindingAdapter
 import com.github.anastr.speedviewlib.Gauge
 import com.github.anastr.speedviewlib.ImageSpeedometer
 import kotlin.math.roundToInt
+
 
 @BindingAdapter(
     "layout_constraintTop_toBottomOf",
@@ -64,22 +66,21 @@ fun setMinMax(view: Gauge, minMax: Pair<Float, Float>?) {
 @BindingAdapter("android:layout_height", "android:layout_width", requireAll = false)
 fun setLayoutHeight(view: View, height: Int?, width: Int?) {
     val layoutParams: ViewGroup.LayoutParams = view.layoutParams
-    if (height != null) {
-        layoutParams.height = height
+    height?.let {
+        layoutParams.height = it
     }
-    if (width != null) {
+    width?.let {
         layoutParams.width = width
     }
     view.layoutParams = layoutParams
 }
 
-val convertDp = {value: Int? ->
-    if (value == null) {
-        null
-    } else {
-        (value * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
+fun convertDp(value: Int?): Int? {
+    return value?.let {
+        (it / (Resources.getSystem().displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
     }
 }
+
 
 @BindingAdapter("android:layout_marginTop", "android:layout_marginLeft", "android:layout_marginRight", "android:layout_marginBottom", requireAll = false)
 fun setLayoutMargin(view: View, top: Int?, left: Int?, right: Int?, bottom: Int?) {
