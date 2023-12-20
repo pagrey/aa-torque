@@ -9,8 +9,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.fragment.app.Fragment
@@ -39,10 +37,6 @@ class TorqueGauge : Fragment() {
     private val mRayClock: RaySpeedometer
         get() {
             return binding.ray
-        }
-    private val mIcon: TextView
-        get() {
-            return binding.textIcon
         }
     private val mMax: Speedometer
         get() {
@@ -171,7 +165,8 @@ class TorqueGauge : Fragment() {
         val indicatorDrawable =
             requireContext().theme.obtainStyledAttributes(intArrayOf(R.attr.themedNeedle))
                 .getDrawable(0)
-        val imageIndicator = SizedImageIndicator(requireContext(), indicatorDrawable!!)
+        val imageIndicator =
+            com.aatorque.stats.SizedImageIndicator(requireContext(), indicatorDrawable!!)
         val color = mClock.indicator.color
         Timber.i("IndicatorColor: $color")
         if (color == 1996533487) {       // if indicator color in the style is @color:aqua, make it an imageindicator
@@ -221,33 +216,19 @@ class TorqueGauge : Fragment() {
         } catch (e: NotFoundException) {
             R.drawable.ic_none
         }
+        val drawable = context.theme.getDrawable(
+            resId
+        )
 
-        // set mIcon. mClocks that don't need an mIcon have ic_none as mIcon
-        mIcon.setBackgroundResource(resId)
         binding.title = iconText
         mClock.unit = data.display.unit
 
-        //dynamically scale the mIcon_space in case there's only an mIcon, and no text
-        if (iconText != "" && resId == R.drawable.ic_none) {
-            val params = mIcon.layoutParams as ConstraintLayout.LayoutParams
-            params.width = 40
-            mIcon.layoutParams = params
-        }
+        drawable?.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+            mClock.unitTextColor,
+            BlendModeCompat.SRC_ATOP,
+        )
 
-
-        // make the icon appear in the color of unitTextColor
-        val iconBackground = mIcon.background
-        if (iconBackground != null) {
-            val iconTint = mClock.unitTextColor
-            iconBackground.colorFilter =
-                BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
-                    iconTint,
-                    BlendModeCompat.SRC_ATOP,
-                )
-            mIcon.background = iconBackground
-            mIcon.setTextColor(iconTint)
-        }
-
+        binding.icon = drawable
         setMinMax(data.display.minValue, data.display.maxValue)
         mClock.setSpeedAt(mClock.minSpeed)
         mMax.setSpeedAt(mMax.minSpeed)

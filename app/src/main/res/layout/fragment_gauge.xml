@@ -20,6 +20,8 @@
 
         <import type="androidx.constraintlayout.widget.ConstraintLayout.LayoutParams" />
 
+        <import type="android.graphics.drawable.Drawable" />
+
         <variable
             name="font"
             type="Typeface" />
@@ -67,6 +69,10 @@
         <variable
             name="minMaxBelow"
             type="Boolean" />
+
+        <variable
+            name="icon"
+            type="Drawable" />
     </data>
 
 
@@ -107,24 +113,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-
-            <TextView
-                android:id="@+id/textIcon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="45dp"
-                android:alpha="1.0"
-                android:background="@drawable/ic_oil"
-                android:backgroundTint="@color/car_primary"
-                android:elevation="5dp"
-                android:gravity="center"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:typeface="@{font}"
-                app:layout_constraintTop_toTopOf="@id/halfTop"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"  />
-
             <TextView
                 android:id="@+id/textTitle"
                 android:layout_width="0dp"
@@ -142,7 +130,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.github.anastr.speedviewlib.ImageSpeedometer
+            <com.aatorque.stats.TorqueSpeedometer
                 android:id="@+id/dial"
                 style="@style/AppTheme.Car.Speedometer"
                 android:layout_width="0dp"
@@ -166,7 +154,8 @@
                 app:textTypeface="@{font}"
                 app:tickNumber="@{ticksOn ? TorqueGaugeKt.NUM_TICKS : 0}"
                 app:onPrintTickLabel="@{ tickFormatter }"
-                app:wholeNumbers="@{wholeNumbers}" />
+                app:wholeNumbers="@{wholeNumbers}"
+                app:icon="@{icon}" />
 
             <com.github.anastr.speedviewlib.SpeedView
                 android:id="@+id/dial_Max"
