@@ -69,6 +69,7 @@ jobs:
       - name: Build Release apk
         if: github.repository == 'agronick/aa-torque'
         run: >
+          echo "" >> ./local.properties
           ./gradlew assembleRelease 
           -Pandroid.injected.signing.store.file=$HOME/debug.keystore 
           -Pandroid.injected.signing.key.alias=androiddebugkey 
