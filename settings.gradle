@@ -1,2 +1,3 @@
-include ':app', ':aauto-sdk'
+include ':app', ':aauto-sdk', ':speedviewlib'
 project(':aauto-sdk').projectDir = new File('lib/aauto-sdk')
+project(':speedviewlib').projectDir = new File(rootDir, 'lib/speedviewlib/speedviewlib')

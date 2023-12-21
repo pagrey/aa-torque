@@ -1,3 +1,7 @@
 [submodule "lib/aauto-sdk"]
 	path = lib/aauto-sdk
 	url = https://github.com/cupral/aauto-sdk.git
+
+[submodule "lib/speedviewlib"]
+	path = lib/speedviewlib
+	url = git@github.com:agronick/SpeedView.git

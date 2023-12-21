@@ -2,9 +2,10 @@ package com.aatorque.stats
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Rect
+import android.graphics.RectF
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import androidx.core.graphics.toRect
 import com.github.anastr.speedviewlib.ImageSpeedometer
 
 class TorqueSpeedometer @JvmOverloads constructor(
@@ -21,22 +22,30 @@ class TorqueSpeedometer @JvmOverloads constructor(
     }
 
     val iconSize = dpTOpx(33f)
+    val halfIcon = (iconSize * 0.5f)
 
-    private fun getIconBounds(): Rect {
+    override fun getSpeedUnitTextBounds(): RectF {
+        return super.getSpeedUnitTextBounds().apply {
+            top -= halfIcon
+            bottom -= halfIcon
+        }
+    }
+
+    private fun getIconBounds(): RectF {
         val bounds = getSpeedUnitTextBounds()
-        val minPoint = (bounds.left + ((bounds.right - bounds.left) * 0.5f)).toInt()
-        val half = (iconSize * 0.5).toInt()
-        return Rect(
-            minPoint - half,
-            bounds.bottom.toInt(),
-            minPoint + half,
-            (bounds.bottom + iconSize).toInt(),
+        val minPoint = (bounds.left + ((bounds.right - bounds.left) * 0.5f))
+
+        return RectF(
+            minPoint - halfIcon,
+            bounds.bottom,
+            minPoint + halfIcon,
+            bounds.bottom + iconSize,
         )
     }
 
     private fun drawIcon(canvas: Canvas) {
         icon?.let{
-            it.bounds = getIconBounds()
+            it.bounds = getIconBounds().toRect()
             it.draw(canvas)
         }
     }

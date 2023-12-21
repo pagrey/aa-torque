@@ -93,6 +93,7 @@ configurations {
 dependencies {
     // Replaced with updated SDK from "https://github.com/cupral/aauto-sdk.git" (as git-submodule)
     //implementation 'com.github.martoreto:aauto-sdk:v4.7'
+    implementation project(path: ':speedviewlib', configuration: 'default')
 
     implementation 'com.github.martoreto:aauto-sdk:v4.7'
     implementation 'com.jjoe64:graphview:4.2.2'
@@ -100,8 +101,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.android.material:material:1.10.0'
-    implementation 'com.github.anastr:speedviewlib:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
     implementation 'com.austingreco:image-list-preference:1.0.0'
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
     implementation 'com.jakewharton.timber:timber:5.0.1'
@@ -114,13 +114,14 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.2.1'
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.7.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.6'
+    implementation project(':speedviewlib')
 
     testImplementation 'junit:junit:4.13.2'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.21'
     implementation 'com.ezylang:EvalEx:3.1.0'
 
-    implementation 'androidx.annotation:annotation:1.7.0'
+    implementation 'androidx.annotation:annotation:1.7.1'
     implementation "androidx.datastore:datastore:1.0.0"
     implementation 'com.google.protobuf:protobuf-javalite:3.25.1'
     implementation 'rongi.rotate-layout:rotate-layout:3.0.0'
