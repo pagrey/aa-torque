@@ -78,6 +78,7 @@ jobs:
       - name: Build Release apk for forked repos
         if: github.repository != 'agronick/aa-torque'
         run: >
+          echo "" >> ./local.properties
           ./gradlew assembleRelease 
 
       - name: Rename release
