@@ -21,7 +21,7 @@ class TorqueSpeedometer @JvmOverloads constructor(
         drawIcon(canvas)
     }
 
-    val iconSize = dpTOpx(33f)
+    val iconSize = dpTOpx(40f)
     val halfIcon = (iconSize * 0.5f)
 
     override fun getSpeedUnitTextBounds(): RectF {
