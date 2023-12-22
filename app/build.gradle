@@ -31,7 +31,7 @@ android {
             useSupportLibrary true
         }
         buildConfigField "boolean", "SIMULATE_METRICS", "false"
-        resourceConfigurations += ['en', 'cs', 'de', 'el', 'es', 'fr', 'fr-rCA', 'it', 'nl', 'pl', 'pt', 'ru', 'sl', 'uk']
+        resourceConfigurations += ['en', 'cs', 'de', 'el', 'es', 'fr', 'fr-rCA', 'it', 'nl', 'pl', 'pt', 'pt-br', 'ru', 'sl', 'uk']
     }
     applicationVariants.all {
         buildConfigField "String", "RELEASE_URL", "\"https://api.github.com/repos/${ghOwner}/${ghPackage}/releases/latest\""
