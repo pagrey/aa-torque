@@ -1,6 +1,8 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="activity_credits_title">Créditos</string>
+
+    <!-- Fuzzy -->
     <string name="activity_main_title">AA Torque</string>
     <string name="activity_settings_title">Definições</string>
     <string name="activity_stopwatch_title">Cronómetro</string>
@@ -38,6 +40,8 @@
     <string name="element_tire">Pneu</string>
     <string name="pref_centerclock">Mostradores centrais</string>
     <string name="pref_font">Fonte</string>
+
+    <!-- Fuzzy -->
     <string name="pref_highlow">Valores máximos</string>
     <string name="pref_theme">Tema</string>
     <string name="element_torque_fuelpressure">Pressão do combustível</string>
@@ -52,4 +56,4 @@
     <string name="element_barometer">Barómetro</string>
     <string name="bg_vw2">Fibra de carbono</string>
     <string name="pref_background">Segundo plano</string>
-    </resources>
+</resources>
