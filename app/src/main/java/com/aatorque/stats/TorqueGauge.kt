@@ -165,8 +165,7 @@ class TorqueGauge : Fragment() {
         val indicatorDrawable =
             requireContext().theme.obtainStyledAttributes(intArrayOf(R.attr.themedNeedle))
                 .getDrawable(0)
-        val imageIndicator =
-            com.aatorque.stats.SizedImageIndicator(requireContext(), indicatorDrawable!!)
+        val imageIndicator = SizedImageIndicator(requireContext(), indicatorDrawable!!)
         val color = mClock.indicator.color
         Timber.i("IndicatorColor: $color")
         if (color == 1996533487) {       // if indicator color in the style is @color:aqua, make it an imageindicator
@@ -207,18 +206,17 @@ class TorqueGauge : Fragment() {
         // get min/max values and unit from torque
         val context = requireContext()
 
-        val resId = try {
-            resources.getIdentifier(
-                if (iconDrawableName == "") "ic_none" else iconDrawableName,
-                "drawable",
-                context.packageName,
+        val drawable = if (iconDrawableName != "ic_none") try {
+            context.theme.getDrawable(
+                resources.getIdentifier(
+                    iconDrawableName,
+                    "drawable",
+                    context.packageName,
+                )
             )
         } catch (e: NotFoundException) {
-            R.drawable.ic_none
-        }
-        val drawable = context.theme.getDrawable(
-            resId
-        )
+            null
+        } else null
 
         binding.title = iconText
         mClock.unit = data.display.unit

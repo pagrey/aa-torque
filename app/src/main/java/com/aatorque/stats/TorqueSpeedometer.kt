@@ -21,13 +21,19 @@ class TorqueSpeedometer @JvmOverloads constructor(
         drawIcon(canvas)
     }
 
-    val iconSize = dpTOpx(40f)
+    val iconSize = dpTOpx(35f)
     val halfIcon = (iconSize * 0.5f)
+    val squeezeTop = dpTOpx(7f)
+    val squeezeBottom = dpTOpx(3f)
 
     override fun getSpeedUnitTextBounds(): RectF {
         return super.getSpeedUnitTextBounds().apply {
-            top -= halfIcon
-            bottom -= halfIcon
+            if (icon != null) {
+                top -= halfIcon
+                bottom -= halfIcon
+                top += squeezeTop
+                bottom += squeezeTop
+            }
         }
     }
 
@@ -37,9 +43,9 @@ class TorqueSpeedometer @JvmOverloads constructor(
 
         return RectF(
             minPoint - halfIcon,
-            bounds.bottom,
+            bounds.bottom - squeezeBottom,
             minPoint + halfIcon,
-            bounds.bottom + iconSize,
+            bounds.bottom + iconSize - squeezeBottom,
         )
     }
 
