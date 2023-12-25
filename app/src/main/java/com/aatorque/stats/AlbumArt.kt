@@ -1,16 +1,16 @@
 package com.aatorque.stats
 
 import android.content.ComponentName
+import android.graphics.Bitmap
 import android.media.MediaMetadata
 import android.media.session.MediaController
 import android.media.session.MediaSessionManager
 import android.media.session.PlaybackState
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -19,15 +19,18 @@ abstract class AlbumArt : CarFragment() {
     val registed = HashMap<Int, () -> Unit>()
     private val updateChannel = MutableSharedFlow<MediaMetadata?>()
 
-    @OptIn(FlowPreview::class)
-    override fun onStart() {
-        super.onStart()
-        registerMedia()
+    suspend fun setupListenMedia() {
         lifecycleScope.launch {
             updateChannel.asSharedFlow()
-                .debounce(300)
-                .collect(this@AlbumArt::onMediaChanged)
+                .distinctUntilChangedBy {
+                    metaDataToArt(it).hashCode()
+                }
+                .collect {
+                    Timber.i("Sending new metadata ${it}")
+                    onMediaChanged(it)
+                }
         }
+        registerMedia()
     }
 
     private fun registerMedia() {
@@ -81,6 +84,7 @@ abstract class AlbumArt : CarFragment() {
                 if (isActive(it.playbackState)) {
                     lifecycleScope.launch {
                         updateChannel.emit(it.metadata)
+                        Timber.i("Sending initial metadata ${it.metadata}")
                     }
                 }
             }
@@ -106,5 +110,13 @@ abstract class AlbumArt : CarFragment() {
         }
     }
 
-    abstract fun onMediaChanged(medadata: MediaMetadata?)
+    fun metaDataToArt(medadata: MediaMetadata?): Bitmap? {
+        return medadata?.getBitmap(
+            MediaMetadata.METADATA_KEY_ART
+        ) ?: medadata?.getBitmap(
+            MediaMetadata.METADATA_KEY_ALBUM_ART
+        )
+    }
+
+    abstract suspend fun onMediaChanged(medadata: MediaMetadata?)
 }

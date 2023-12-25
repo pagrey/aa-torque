@@ -68,6 +68,8 @@ open class DashboardFragment : AlbumArt() {
 
     private var lastBackground: Int = 0
     val setInitialBackground = Mutex()
+    val flagAlbumArtSet = Mutex()
+    var shouldDisplayArtwork = false
     var displayingArtwork = false
     var albumBlurEffect: RenderEffect? by Delegates.observable(null) { property, oldValue, newValue ->
         if (displayingArtwork) {
@@ -144,6 +146,7 @@ open class DashboardFragment : AlbumArt() {
     }
 
     override fun onStart() {
+        super.onStart()
         lifecycleScope.launch {
             setInitialBackground.lock()
             requireContext().dataStore.data.map {
@@ -153,8 +156,8 @@ open class DashboardFragment : AlbumArt() {
                 setInitialBackground.unlock()
             }
         }
-        super.onStart()
         lifecycleScope.launch {
+            flagAlbumArtSet.lock()
             requireContext().dataStore.data.collect {
                 val screens = it.screensList[abs(it.currentScreen) % it.screensCount]
                 binding.title = screens.title
@@ -165,14 +168,18 @@ open class DashboardFragment : AlbumArt() {
                 if (it.opacity != 0) {
                     binding.gaugeAlpha = 0.01f * it.opacity
                 }
-                albumBlurEffect =
-                    if (it.blurArt != 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        val blurFloat = it.blurArt.toFloat()
-                        RenderEffect.createBlurEffect(
-                            blurFloat, blurFloat,
-                            Shader.TileMode.MIRROR
-                        )
-                    } else null
+                shouldDisplayArtwork = it.albumArt
+                flagAlbumArtSet.unlock()
+
+                albumBlurEffect = if (
+                    it.blurArt != 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                ) {
+                    val blurFloat = it.blurArt.toFloat()
+                    RenderEffect.createBlurEffect(
+                        blurFloat, blurFloat,
+                        Shader.TileMode.MIRROR
+                    )
+                } else null
                 albumColorFilter = if (it.darkenArt != 0) {
                     PorterDuffColorFilter(
                         Color.valueOf(0f, 0f, 0f, it.darkenArt * 0.01f).toArgb(),
@@ -223,6 +230,9 @@ open class DashboardFragment : AlbumArt() {
             }.distinctUntilChanged().collect(
                 this@DashboardFragment::updateScale
             )
+        }
+        lifecycleScope.launch {
+            setupListenMedia()
         }
     }
 
@@ -316,25 +326,23 @@ open class DashboardFragment : AlbumArt() {
         torqueService.requestQuit(requireContext())
     }
 
-    override fun onMediaChanged(medadata: MediaMetadata?) {
-        lifecycleScope.launch {
+    override suspend fun onMediaChanged(medadata: MediaMetadata?) {
+        Timber.i("Got new metadata $medadata shouldDisplay: $shouldDisplayArtwork")
+        flagAlbumArtSet.withLock {
+            if (!shouldDisplayArtwork) return
             if (medadata != null) {
                 setInitialBackground.withLock {
-                    binding.background = medadata.getBitmap(
-                        MediaMetadata.METADATA_KEY_ART
-                    ) ?: medadata.getBitmap(
-                        MediaMetadata.METADATA_KEY_ALBUM_ART
-                    )
+                    binding.background = metaDataToArt(medadata)
                     if (binding.background != null) {
                         binding.blurEffect = albumBlurEffect
                         binding.colorFilter = albumColorFilter
                         displayingArtwork = true
-                        return@launch
+                        return
                     }
                 }
             }
-            setupBackground(lastBackground)
         }
+        setupBackground(lastBackground)
     }
 
     private fun updateScale(largeCenter: Boolean) {
@@ -357,7 +365,7 @@ open class DashboardFragment : AlbumArt() {
         binding.colorFilter = null
         displayingArtwork = false
         if (resource != 0) {
-            binding.background = BitmapFactory.decodeResource(resources, resource);
+            binding.background = BitmapFactory.decodeResource(resources, resource)
         }
     }
 
