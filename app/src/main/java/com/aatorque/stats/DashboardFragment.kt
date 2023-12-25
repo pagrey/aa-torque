@@ -32,12 +32,11 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.aatorque.prefs.SettingsViewModel
 import com.aatorque.prefs.dataStore
 import com.aatorque.stats.databinding.FragmentDashboardBinding
+import com.aatorque.utils.CountDownLatch
 import com.google.android.apps.auto.sdk.StatusBarController
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import timber.log.Timber
 import kotlin.math.abs
 import kotlin.properties.Delegates
@@ -67,8 +66,7 @@ open class DashboardFragment : AlbumArt() {
     lateinit var settingsViewModel: SettingsViewModel
 
     private var lastBackground: Int = 0
-    val setInitialBackground = Mutex()
-    val flagAlbumArtSet = Mutex()
+    val albumArtReady = CountDownLatch(2)
     var shouldDisplayArtwork = false
     var displayingArtwork = false
     var albumBlurEffect: RenderEffect? by Delegates.observable(null) { property, oldValue, newValue ->
@@ -148,16 +146,14 @@ open class DashboardFragment : AlbumArt() {
     override fun onStart() {
         super.onStart()
         lifecycleScope.launch {
-            setInitialBackground.lock()
             requireContext().dataStore.data.map {
                 it.selectedBackground
             }.distinctUntilChanged().collect {
                 setupBackground(it)
-                setInitialBackground.unlock()
+                albumArtReady.countDown()
             }
         }
         lifecycleScope.launch {
-            flagAlbumArtSet.lock()
             requireContext().dataStore.data.collect {
                 val screens = it.screensList[abs(it.currentScreen) % it.screensCount]
                 binding.title = screens.title
@@ -169,7 +165,7 @@ open class DashboardFragment : AlbumArt() {
                     binding.gaugeAlpha = 0.01f * it.opacity
                 }
                 shouldDisplayArtwork = it.albumArt
-                flagAlbumArtSet.unlock()
+                albumArtReady.countDown()
 
                 albumBlurEffect = if (
                     it.blurArt != 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
@@ -328,18 +324,15 @@ open class DashboardFragment : AlbumArt() {
 
     override suspend fun onMediaChanged(medadata: MediaMetadata?) {
         Timber.i("Got new metadata $medadata shouldDisplay: $shouldDisplayArtwork")
-        flagAlbumArtSet.withLock {
-            if (!shouldDisplayArtwork) return
-            if (medadata != null) {
-                setInitialBackground.withLock {
-                    binding.background = metaDataToArt(medadata)
-                    if (binding.background != null) {
-                        binding.blurEffect = albumBlurEffect
-                        binding.colorFilter = albumColorFilter
-                        displayingArtwork = true
-                        return
-                    }
-                }
+        albumArtReady.await()
+        if (!shouldDisplayArtwork) return
+        if (medadata != null) {
+            binding.background = metaDataToArt(medadata)
+            if (binding.background != null) {
+                binding.blurEffect = albumBlurEffect
+                binding.colorFilter = albumColorFilter
+                displayingArtwork = true
+                return
             }
         }
         setupBackground(lastBackground)
