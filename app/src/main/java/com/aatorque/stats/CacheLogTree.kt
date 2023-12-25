@@ -20,7 +20,7 @@ class CacheLogTree: Timber.DebugTree() {
 
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
         if (BuildConfig.DEBUG) {
-            super.log(priority, tag, message, t)
+            super.log(priority, "AATORQUE:${tag ?: ""}", message, t)
         }
         logCache.add(
             LogDesc(priority, tag, message, t)

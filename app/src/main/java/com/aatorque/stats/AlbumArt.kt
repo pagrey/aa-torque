@@ -19,7 +19,17 @@ abstract class AlbumArt : CarFragment() {
     val registed = HashMap<Int, () -> Unit>()
     private val updateChannel = MutableSharedFlow<MediaMetadata?>()
 
-    suspend fun setupListenMedia() {
+    override fun onResume() {
+        super.onResume()
+        setupListenMedia()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        updateSessions(emptyList())
+    }
+
+    private fun setupListenMedia() {
         lifecycleScope.launch {
             updateChannel.asSharedFlow()
                 .distinctUntilChangedBy {
@@ -47,11 +57,6 @@ abstract class AlbumArt : CarFragment() {
         } catch (e: SecurityException) {
             Timber.e("No permission to read media", e)
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        updateSessions(emptyList())
     }
 
     private fun updateSessions(mediaControllers: List<MediaController>) {

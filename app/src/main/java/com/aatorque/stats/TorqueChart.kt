@@ -48,13 +48,15 @@ class TorqueChart: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentChartBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        settingsViewModel = ViewModelProvider(requireParentFragment())[SettingsViewModel::class.java]
+        settingsViewModel =
+            ViewModelProvider(requireParentFragment())[SettingsViewModel::class.java]
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,6 +85,7 @@ class TorqueChart: Fragment() {
         graph.gridLabelRenderer.verticalLabelsColor = Color.WHITE
         graph.gridLabelRenderer.isHorizontalLabelsVisible = true
         graph.gridLabelRenderer.isVerticalLabelsVisible = false
+
 
         view.viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
@@ -147,11 +150,14 @@ class TorqueChart: Fragment() {
             }
             binding
         }
-        binding.layoutManager = StaggeredGridLayoutManager(legendBinding.size, RecyclerView.VERTICAL).apply {
-            gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
-        }
+        binding.layoutManager =
+            StaggeredGridLayoutManager(legendBinding.size, RecyclerView.VERTICAL).apply {
+                gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+            }
         binding.legendData = LegendAdapter(settingsViewModel, ImmutableList.copyOf(legendBinding))
         graph.viewport.setMinX(Date().time - 22_000.0)
+        graph.viewport.setMaxY(100.0)
+        graph.viewport.setMinY(0.0)
     }
 
     fun notifyUpdate(data: TorqueData, binding: LegendBinding) {

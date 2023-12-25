@@ -65,6 +65,7 @@ open class DashboardFragment : AlbumArt() {
     lateinit var torqueChart: TorqueChart
     lateinit var settingsViewModel: SettingsViewModel
 
+    val viewReady = CountDownLatch(1)
     private var lastBackground: Int = 0
     val albumArtReady = CountDownLatch(2)
     var shouldDisplayArtwork = false
@@ -88,6 +89,94 @@ open class DashboardFragment : AlbumArt() {
         super.onCreate(savedInstanceState)
         settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
         torqueService.startTorque(requireContext())
+        val registerWithView = { call: suspend () -> Unit ->
+            lifecycleScope.launch {
+                viewReady.await()
+                call()
+            }
+        }
+        registerWithView {
+            requireContext().dataStore.data.map {
+                it.selectedBackground
+            }.distinctUntilChanged().collect {
+                setupBackground(it)
+                albumArtReady.countDown()
+            }
+        }
+        registerWithView {
+            requireContext().dataStore.data.collect {
+                val screens = it.screensList[abs(it.currentScreen) % it.screensCount]
+                binding.title = screens.title
+
+                val showChartChanged = binding.showChart != it.showChart
+                settingsViewModel.chartVisible.value = it.showChart
+                settingsViewModel.minMaxBelow.value = it.minMaxBelow
+                if (it.opacity != 0) {
+                    binding.gaugeAlpha = 0.01f * it.opacity
+                }
+                shouldDisplayArtwork = it.albumArt
+                albumArtReady.countDown()
+
+                albumBlurEffect = if (
+                    it.blurArt != 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                ) {
+                    val blurFloat = it.blurArt.toFloat()
+                    RenderEffect.createBlurEffect(
+                        blurFloat, blurFloat,
+                        Shader.TileMode.MIRROR
+                    )
+                } else null
+                albumColorFilter = if (it.darkenArt != 0) {
+                    PorterDuffColorFilter(
+                        Color.valueOf(0f, 0f, 0f, it.darkenArt * 0.01f).toArgb(),
+                        PorterDuff.Mode.DARKEN,
+                    )
+                } else null
+
+                if (it.showChart) {
+                    torqueChart.setupItems(
+                        screens.gaugesList.mapIndexed { index, display ->
+                            torqueRefresher.populateQuery(index, display)
+                        }.toTypedArray()
+                    )
+                } else {
+                    screens.gaugesList.forEachIndexed { index, display ->
+                        if (showChartChanged || torqueRefresher.hasChanged(index, display)) {
+                            val clock = torqueRefresher.populateQuery(index, display)
+                            guages[index]?.setupClock(clock)
+                        }
+                    }
+                }
+                screens.displaysList.forEachIndexed { index, display ->
+                    if (torqueRefresher.hasChanged(index + DISPLAY_OFFSET, display)) {
+                        val td = torqueRefresher.populateQuery(index + DISPLAY_OFFSET, display)
+                        displays[index]?.setupElement(td)
+                    }
+                }
+                torqueRefresher.makeExecutors(torqueService)
+            }
+        }
+        registerWithView {
+            requireContext().dataStore.data.map {
+                it.selectedFont
+            }.distinctUntilChanged().collect(
+                this@DashboardFragment::setupTypeface
+            )
+        }
+        registerWithView {
+            requireContext().dataStore.data.map {
+                it.rotaryInput
+            }.distinctUntilChanged().collect(
+                this@DashboardFragment::configureRotaryInput
+            )
+        }
+        registerWithView {
+            requireContext().dataStore.data.map {
+                it.centerGaugeLarge
+            }.distinctUntilChanged().collect(
+                this@DashboardFragment::updateScale
+            )
+        }
     }
 
     override fun onCreateView(
@@ -143,94 +232,6 @@ open class DashboardFragment : AlbumArt() {
         return this.rootView
     }
 
-    override fun onStart() {
-        super.onStart()
-        lifecycleScope.launch {
-            requireContext().dataStore.data.map {
-                it.selectedBackground
-            }.distinctUntilChanged().collect {
-                setupBackground(it)
-                albumArtReady.countDown()
-            }
-        }
-        lifecycleScope.launch {
-            requireContext().dataStore.data.collect {
-                val screens = it.screensList[abs(it.currentScreen) % it.screensCount]
-                binding.title = screens.title
-
-                val showChartChanged = binding.showChart != it.showChart
-                settingsViewModel.chartVisible.value = it.showChart
-                settingsViewModel.minMaxBelow.value = it.minMaxBelow
-                if (it.opacity != 0) {
-                    binding.gaugeAlpha = 0.01f * it.opacity
-                }
-                shouldDisplayArtwork = it.albumArt
-                albumArtReady.countDown()
-
-                albumBlurEffect = if (
-                    it.blurArt != 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-                ) {
-                    val blurFloat = it.blurArt.toFloat()
-                    RenderEffect.createBlurEffect(
-                        blurFloat, blurFloat,
-                        Shader.TileMode.MIRROR
-                    )
-                } else null
-                albumColorFilter = if (it.darkenArt != 0) {
-                    PorterDuffColorFilter(
-                        Color.valueOf(0f, 0f, 0f, it.darkenArt * 0.01f).toArgb(),
-                        PorterDuff.Mode.DARKEN,
-                    )
-                } else null
-
-                if (it.showChart) {
-                    torqueChart.setupItems(
-                        screens.gaugesList.mapIndexed { index, display ->
-                            torqueRefresher.populateQuery(index, display)
-                        }.toTypedArray()
-                    )
-                } else {
-                    screens.gaugesList.forEachIndexed { index, display ->
-                        if (showChartChanged || torqueRefresher.hasChanged(index, display)) {
-                            val clock = torqueRefresher.populateQuery(index, display)
-                            guages[index]?.setupClock(clock)
-                        }
-                    }
-                }
-                screens.displaysList.forEachIndexed { index, display ->
-                    if (torqueRefresher.hasChanged(index + DISPLAY_OFFSET, display)) {
-                        val td = torqueRefresher.populateQuery(index + DISPLAY_OFFSET, display)
-                        displays[index]?.setupElement(td)
-                    }
-                }
-                torqueRefresher.makeExecutors(torqueService)
-            }
-        }
-        lifecycleScope.launch {
-            requireContext().dataStore.data.map {
-                it.selectedFont
-            }.distinctUntilChanged().collect(
-                this@DashboardFragment::setupTypeface
-            )
-        }
-        lifecycleScope.launch {
-            requireContext().dataStore.data.map {
-                it.rotaryInput
-            }.distinctUntilChanged().collect(
-                this@DashboardFragment::configureRotaryInput
-            )
-        }
-        lifecycleScope.launch {
-            requireContext().dataStore.data.map {
-                it.centerGaugeLarge
-            }.distinctUntilChanged().collect(
-                this@DashboardFragment::updateScale
-            )
-        }
-        lifecycleScope.launch {
-            setupListenMedia()
-        }
-    }
 
     fun setScreen(direction: Int) {
         if (screensAnimating) return
@@ -291,11 +292,6 @@ open class DashboardFragment : AlbumArt() {
         sc.hideTitle()
     }
 
-    override fun onStop() {
-        super.onStop()
-        mStarted = false
-    }
-
     override fun onResume() {
         Timber.d("onResume")
         super.onResume()
@@ -308,6 +304,18 @@ open class DashboardFragment : AlbumArt() {
                 ConnectStatus.CONNECTED -> null
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        lifecycleScope.launch {
+            viewReady.countDown()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mStarted = false
     }
 
     override fun onPause() {
