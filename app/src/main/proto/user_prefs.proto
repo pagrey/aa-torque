@@ -42,4 +42,8 @@ message UserPreference {
   bool rotaryInput = 20;
   bool centerGaugeLarge = 21;
   bool minMaxBelow = 23;
+  bool albumArt = 24;
+  uint32 opacity = 25;
+  uint32 blurArt = 26;
+  uint32 darkenArt = 27;
 }

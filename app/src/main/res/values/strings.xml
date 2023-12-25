@@ -184,4 +184,13 @@
     <string name="translate">Translate</string>
     <string name="pref_chart_title">Chart line color</string>
     <string name="pref_chart_summary">Color to be used to draw lines on the chart</string>
+    <string name="media">Media</string>
+    <string name="media_background_title">Media Background</string>
+    <string name="media_background_summary">Use album art as background (beta)</string>
+    <string name="opacity_title">Gauge Opacity</string>
+    <string name="opacity_summary">Dim gauges to show more of background</string>
+    <string name="media_blur_title">Blur artwork</string>
+    <string name="media_blur_summary">Blur artwork to help improve readability</string>
+    <string name="media_darken_title">Darken artwork</string>
+    <string name="media_darken_summary">Darken artwork to help improve readability</string>
 </resources>

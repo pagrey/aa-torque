@@ -1,5 +1,6 @@
 package com.aatorque.prefs
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import androidx.lifecycle.lifecycleScope
@@ -9,8 +10,11 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SeekBarPreference
 import com.aatorque.datastore.UserPreference
+import com.aatorque.stats.NotiService
 import com.aatorque.stats.R
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.distinctUntilChangedBy
@@ -27,6 +31,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
     lateinit var centerGaugeLargePref: CheckBoxPreference
     lateinit var rotaryInputPref: CheckBoxPreference
     lateinit var minMaxBelowPref: CheckBoxPreference
+    lateinit var mediaBgPref: CheckBoxPreference
+    lateinit var opacityPref: SeekBarPreference
+    lateinit var darkenArtPref: SeekBarPreference
+    lateinit var blurArtPref: SeekBarPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,12 +47,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
         centerGaugeLargePref = findPreference("centerGaugeLarge")!!
         rotaryInputPref = findPreference("rotaryInput")!!
         minMaxBelowPref = findPreference("minMaxBelow")!!
+        mediaBgPref = findPreference("mediaBg")!!
+        opacityPref = findPreference("gaugeOpacity")!!
+        blurArtPref = findPreference("blurArtwork")!!
+        darkenArtPref = findPreference("darkenArtwork")!!
         themePref.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
         fontPref.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
         backgroundPref.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
         numScreensPref.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
-        numScreensPref.setOnPreferenceChangeListener {
-                _, newValue ->
+        numScreensPref.setOnPreferenceChangeListener { _, newValue ->
             val intVal = (newValue as String).toInt()
             if (intVal in 1..10) {
                 lifecycleScope.launch {
@@ -98,17 +109,42 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
             return@setOnPreferenceChangeListener true
         }
-        rotaryInputPref.setOnPreferenceChangeListener {
-                preference, newValue ->
+        rotaryInputPref.setOnPreferenceChangeListener { preference, newValue ->
             updateDatastorePref {
                 it.setRotaryInput(newValue as Boolean)
             }
             return@setOnPreferenceChangeListener true
         }
-        minMaxBelowPref.setOnPreferenceChangeListener{
-            preference, newValue ->
+        minMaxBelowPref.setOnPreferenceChangeListener { preference, newValue ->
             updateDatastorePref {
                 it.setMinMaxBelow(newValue as Boolean)
+            }
+            return@setOnPreferenceChangeListener true
+        }
+        mediaBgPref.setOnPreferenceChangeListener { preference, newValue ->
+            updateDatastorePref {
+                if (newValue as Boolean && !NotiService.isNotificationAccessEnabled) {
+                    startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
+                }
+                it.setAlbumArt(newValue)
+            }
+            return@setOnPreferenceChangeListener true
+        }
+        opacityPref.setOnPreferenceChangeListener { preference, newValue ->
+            updateDatastorePref {
+                it.setOpacity(newValue as Int)
+            }
+            return@setOnPreferenceChangeListener true
+        }
+        darkenArtPref.setOnPreferenceChangeListener { preference, newValue ->
+            updateDatastorePref {
+                it.setDarkenArt(newValue as Int)
+            }
+            return@setOnPreferenceChangeListener true
+        }
+        blurArtPref.setOnPreferenceChangeListener { preference, newValue ->
+            updateDatastorePref {
+                it.setBlurArt(newValue as Int)
             }
             return@setOnPreferenceChangeListener true
         }
@@ -125,6 +161,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 centerGaugeLargePref.isChecked = it.centerGaugeLarge
                 rotaryInputPref.isChecked = it.rotaryInput
                 minMaxBelowPref.isChecked = it.minMaxBelow
+                mediaBgPref.isChecked = it.albumArt
+                opacityPref.value = if (it.opacity == 0) 100 else it.opacity
+                blurArtPref.value = it.blurArt
+                darkenArtPref.value = it.darkenArt
             }
         }
         lifecycleScope.launch {
@@ -149,7 +189,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    private fun updateDatastorePref(updateBuilder: (obj: UserPreference.Builder) -> UserPreference.Builder): Unit {
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun updateDatastorePref(updateBuilder: (obj: UserPreference.Builder) -> UserPreference.Builder) {
         GlobalScope.launch(Dispatchers.IO) {
             requireContext().dataStore.updateData { currentSettings ->
                 updateBuilder(currentSettings.toBuilder()).build()

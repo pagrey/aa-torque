@@ -6,6 +6,14 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
+import android.graphics.RenderEffect
+import android.graphics.Shader
+import android.media.MediaMetadata
+import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -28,11 +36,14 @@ import com.google.android.apps.auto.sdk.StatusBarController
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import timber.log.Timber
 import kotlin.math.abs
+import kotlin.properties.Delegates
 
 
-open class DashboardFragment : CarFragment() {
+open class DashboardFragment : AlbumArt() {
     lateinit var rootView: View
     lateinit var mLayoutDashboard: ConstraintLayout
 
@@ -54,6 +65,20 @@ open class DashboardFragment : CarFragment() {
     lateinit var binding: FragmentDashboardBinding
     lateinit var torqueChart: TorqueChart
     lateinit var settingsViewModel: SettingsViewModel
+
+    private var lastBackground: Int = 0
+    val setInitialBackground = Mutex()
+    var displayingArtwork = false
+    var albumBlurEffect: RenderEffect? by Delegates.observable(null) { property, oldValue, newValue ->
+        if (displayingArtwork) {
+            binding.blurEffect = newValue
+        }
+    }
+    var albumColorFilter: PorterDuffColorFilter? by Delegates.observable(null) { property, oldValue, newValue ->
+        if (displayingArtwork) {
+            binding.colorFilter = newValue
+        }
+    }
 
     companion object {
         const val DISPLAY_OFFSET = 3
@@ -119,6 +144,15 @@ open class DashboardFragment : CarFragment() {
     }
 
     override fun onStart() {
+        lifecycleScope.launch {
+            setInitialBackground.lock()
+            requireContext().dataStore.data.map {
+                it.selectedBackground
+            }.distinctUntilChanged().collect {
+                setupBackground(it)
+                setInitialBackground.unlock()
+            }
+        }
         super.onStart()
         lifecycleScope.launch {
             requireContext().dataStore.data.collect {
@@ -128,6 +162,23 @@ open class DashboardFragment : CarFragment() {
                 val showChartChanged = binding.showChart != it.showChart
                 settingsViewModel.chartVisible.value = it.showChart
                 settingsViewModel.minMaxBelow.value = it.minMaxBelow
+                if (it.opacity != 0) {
+                    binding.gaugeAlpha = 0.01f * it.opacity
+                }
+                albumBlurEffect =
+                    if (it.blurArt != 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        val blurFloat = it.blurArt.toFloat()
+                        RenderEffect.createBlurEffect(
+                            blurFloat, blurFloat,
+                            Shader.TileMode.MIRROR
+                        )
+                    } else null
+                albumColorFilter = if (it.darkenArt != 0) {
+                    PorterDuffColorFilter(
+                        Color.valueOf(0f, 0f, 0f, it.darkenArt * 0.01f).toArgb(),
+                        PorterDuff.Mode.DARKEN,
+                    )
+                } else null
 
                 if (it.showChart) {
                     torqueChart.setupItems(
@@ -157,13 +208,6 @@ open class DashboardFragment : CarFragment() {
                 it.selectedFont
             }.distinctUntilChanged().collect(
                 this@DashboardFragment::setupTypeface
-            )
-        }
-        lifecycleScope.launch {
-            requireContext().dataStore.data.map {
-                it.selectedBackground
-            }.distinctUntilChanged().collect(
-                this@DashboardFragment::setupBackground
             )
         }
         lifecycleScope.launch {
@@ -272,14 +316,48 @@ open class DashboardFragment : CarFragment() {
         torqueService.requestQuit(requireContext())
     }
 
+    override fun onMediaChanged(medadata: MediaMetadata?) {
+        lifecycleScope.launch {
+            if (medadata != null) {
+                setInitialBackground.withLock {
+                    binding.background = medadata.getBitmap(
+                        MediaMetadata.METADATA_KEY_ART
+                    ) ?: medadata.getBitmap(
+                        MediaMetadata.METADATA_KEY_ALBUM_ART
+                    )
+                    if (binding.background != null) {
+                        binding.blurEffect = albumBlurEffect
+                        binding.colorFilter = albumColorFilter
+                        displayingArtwork = true
+                        return@launch
+                    }
+                }
+            }
+            setupBackground(lastBackground)
+        }
+    }
+
     private fun updateScale(largeCenter: Boolean) {
         binding.largeCenter = largeCenter
     }
 
     private fun setupBackground(newBackground: String?) {
-        val resId = resources.getIdentifier(newBackground ?: "background_incar_black", "drawable", requireContext().packageName)
-        if (resId != 0) {
-            binding.background = resId
+        lastBackground = context?.let {
+            resources.getIdentifier(
+                newBackground ?: "background_incar_black",
+                "drawable",
+                it.packageName
+            )
+        } ?: lastBackground
+        setupBackground(lastBackground)
+    }
+
+    private fun setupBackground(resource: Int) {
+        binding.blurEffect = null
+        binding.colorFilter = null
+        displayingArtwork = false
+        if (resource != 0) {
+            binding.background = BitmapFactory.decodeResource(resources, resource);
         }
     }
 
@@ -318,4 +396,6 @@ open class DashboardFragment : CarFragment() {
         }
         settingsViewModel.setFont(font)
     }
+
+
 }

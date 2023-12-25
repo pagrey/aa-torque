@@ -66,7 +66,45 @@
             android:defaultValue="1"
             android:persistent="false"
 
-        />
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/media">
+        <CheckBoxPreference
+            android:key="mediaBg"
+            android:persistent="false"
+            android:summary="@string/media_background_summary"
+            android:title="@string/media_background_title" />
+        <SeekBarPreference
+            android:defaultValue="0"
+            android:dependency="mediaBg"
+            android:key="blurArtwork"
+            android:max="30"
+            android:persistent="false"
+            android:summary="@string/media_blur_summary"
+            android:title="@string/media_blur_title"
+            app:min="0"
+            app:showSeekBarValue="true" />
+        <SeekBarPreference
+            android:defaultValue="0"
+            android:dependency="mediaBg"
+            android:key="darkenArtwork"
+            android:max="100"
+            android:persistent="false"
+            android:summary="@string/media_darken_summary"
+            android:title="@string/media_darken_title"
+            app:min="0"
+            app:showSeekBarValue="true" />
+        <SeekBarPreference
+            android:defaultValue="100"
+            android:key="gaugeOpacity"
+            android:max="100"
+            android:persistent="false"
+            android:summary="@string/opacity_summary"
+            android:title="@string/opacity_title"
+            app:min="50"
+            app:showSeekBarValue="true" />
 
     </PreferenceCategory>
 
