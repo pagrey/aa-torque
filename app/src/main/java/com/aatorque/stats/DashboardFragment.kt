@@ -39,7 +39,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.math.abs
-import kotlin.properties.Delegates
 
 
 open class DashboardFragment : AlbumArt() {
@@ -70,16 +69,25 @@ open class DashboardFragment : AlbumArt() {
     val albumArtReady = CountDownLatch(2)
     var shouldDisplayArtwork = false
     var displayingArtwork = false
-    var albumBlurEffect: RenderEffect? by Delegates.observable(null) { property, oldValue, newValue ->
-        if (displayingArtwork) {
-            binding.blurEffect = newValue
+    var albumBlurEffect: RenderEffect? = null
+        set(value) {
+            if (Build.VERSION.SDK_INT >= 31) {
+                if (displayingArtwork) {
+                    binding.blurEffect = value
+                }
+                field = value
+            }
         }
-    }
-    var albumColorFilter: PorterDuffColorFilter? by Delegates.observable(null) { property, oldValue, newValue ->
-        if (displayingArtwork) {
-            binding.colorFilter = newValue
+        get() {
+            return if (Build.VERSION.SDK_INT >= 31) field else null
         }
-    }
+    var albumColorFilter: PorterDuffColorFilter? = null
+        set(value) {
+            field = value
+            if (displayingArtwork) {
+                binding.colorFilter = value
+            }
+        }
 
     companion object {
         const val DISPLAY_OFFSET = 3
