@@ -8,7 +8,7 @@ import com.ezylang.evalex.Expression
 import timber.log.Timber
 import java.util.concurrent.ScheduledFuture
 
-class TorqueData(val display: Display) {
+class TorqueData(var display: Display) {
     companion object {
         const val PREFIX = "torque_"
         val drawableRegex = Regex("res/drawable/(?<name>.+)\\.[a-z]+")

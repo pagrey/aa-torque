@@ -18,18 +18,29 @@ class TorqueRefresher {
     val handler = Handler(Looper.getMainLooper())
     var lastConnectStatus = ConnectStatus.CONNECTING_TORQUE
     var conWatcher: ConStatusFn? = null
+    val cache = mutableMapOf<Int, HashMap<Int, TorqueData>>()
 
     companion object {
         const val REFRESH_INTERVAL = 300L
     }
 
 
-    fun populateQuery(pos: Int, query: Display): TorqueData {
+    fun populateQuery(pos: Int, screen: Int, query: Display): TorqueData {
         data[pos]?.stopRefreshing(true)
-        val td = TorqueData(query)
-        data[pos] = td
-        Timber.i("Setting query: $query for pos $pos")
-        return td
+        val cacheItem = cache[screen]?.get(pos)
+        val torqueData = if (cacheItem != null && cacheItem.display.pid == query.pid) {
+            cache[screen]!![pos]!!.also {
+                it.display = query
+            }
+        } else {
+            TorqueData(query)
+        }
+        cache.getOrPut(screen) {
+            HashMap()
+        }[pos] = torqueData
+        data[pos] = torqueData
+        Timber.i("Setting query: $query for pos $pos on screen $screen")
+        return torqueData
     }
 
     fun makeExecutors(service: TorqueService) {
@@ -58,10 +69,10 @@ class TorqueRefresher {
 
     fun doRefresh(service: TorqueService, torqueData: TorqueData) {
         service.runIfConnected { ts ->
-            var value = try {
-                 ts.getPIDValuesAsDouble(arrayOf(torqueData.pid!!))[0]
+            val value = try {
+                ts.getPIDValuesAsDouble(arrayOf(torqueData.pid!!))[0]
             } catch (e: ArrayIndexOutOfBoundsException) {
-                Timber.e("Torque returned invalid data")
+                Timber.e("Torque returned invalid data for ${torqueData.pid}")
                 return@runIfConnected
             }
             torqueData.lastData = value

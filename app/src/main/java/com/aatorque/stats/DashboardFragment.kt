@@ -105,7 +105,8 @@ open class DashboardFragment : AlbumArt() {
         }
         registerWithView {
             requireContext().dataStore.data.collect {
-                val screens = it.screensList[abs(it.currentScreen) % it.screensCount]
+                val screenIndex = abs(it.currentScreen) % it.screensCount
+                val screens = it.screensList[screenIndex]
                 binding.title = screens.title
                 settingsViewModel.chartVisible.value = it.showChart
                 settingsViewModel.minMaxBelow.value = it.minMaxBelow
@@ -117,20 +118,24 @@ open class DashboardFragment : AlbumArt() {
                 if (it.showChart) {
                     torqueChart.setupItems(
                         screens.gaugesList.mapIndexed { index, display ->
-                            torqueRefresher.populateQuery(index, display)
+                            torqueRefresher.populateQuery(index, screenIndex, display)
                         }.toTypedArray()
                     )
                 } else {
                     screens.gaugesList.forEachIndexed { index, display ->
                         if (showChartChanged || torqueRefresher.hasChanged(index, display)) {
-                            val clock = torqueRefresher.populateQuery(index, display)
+                            val clock = torqueRefresher.populateQuery(index, screenIndex, display)
                             guages[index]?.setupClock(clock)
                         }
                     }
                 }
                 screens.displaysList.forEachIndexed { index, display ->
                     if (torqueRefresher.hasChanged(index + DISPLAY_OFFSET, display)) {
-                        val td = torqueRefresher.populateQuery(index + DISPLAY_OFFSET, display)
+                        val td = torqueRefresher.populateQuery(
+                            index + DISPLAY_OFFSET,
+                            screenIndex,
+                            display
+                        )
                         displays[index]?.setupElement(td)
                     }
                 }
