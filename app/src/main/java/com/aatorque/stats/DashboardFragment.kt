@@ -140,14 +140,14 @@ open class DashboardFragment : AlbumArt() {
         registerWithView {
             requireContext().dataStore.data.map {
                 it.opacity
-            }.distinctUntilChanged().map {
+            }.distinctUntilChanged().collect {
                 binding.gaugeAlpha = 0.01f * it
             }
         }
         registerWithView {
             requireContext().dataStore.data.map {
                 it.darkenArt
-            }.distinctUntilChanged().map {
+            }.distinctUntilChanged().collect {
                 albumColorFilter = if (it != 0) {
                     PorterDuffColorFilter(
                         Color.valueOf(0f, 0f, 0f, it * 0.01f).toArgb(),
@@ -160,7 +160,7 @@ open class DashboardFragment : AlbumArt() {
             registerWithView {
                 requireContext().dataStore.data.map {
                     it.blurArt
-                }.distinctUntilChanged().map {
+                }.distinctUntilChanged().collect {
                     albumBlurEffect = if (it != 0) {
                         val blurFloat = it.toFloat()
                         RenderEffect.createBlurEffect(
