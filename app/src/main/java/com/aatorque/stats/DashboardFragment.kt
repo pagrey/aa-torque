@@ -107,36 +107,12 @@ open class DashboardFragment : AlbumArt() {
             requireContext().dataStore.data.collect {
                 val screens = it.screensList[abs(it.currentScreen) % it.screensCount]
                 binding.title = screens.title
-
-                val showChartChanged = binding.showChart != it.showChart
                 settingsViewModel.chartVisible.value = it.showChart
                 settingsViewModel.minMaxBelow.value = it.minMaxBelow
-                if (it.opacity != 0) {
-                    binding.gaugeAlpha = 0.01f * it.opacity
-                }
                 shouldDisplayArtwork = it.albumArt
-                albumArtReady.countDown()
 
-                albumBlurEffect = if (
-                    it.blurArt != 0 && Build.VERSION.SDK_INT >= 31
-                ) {
-                    val blurFloat = it.blurArt.toFloat()
-                    try {
-                        RenderEffect.createBlurEffect(
-                            blurFloat, blurFloat,
-                            Shader.TileMode.MIRROR
-                        )
-                    } catch (e: NoClassDefFoundError) {
-                        Timber.i("Version check failed to prevent error ${Build.VERSION.SDK_INT} >= ${Build.VERSION_CODES.S}")
-                        null
-                    }
-                } else null
-                albumColorFilter = if (it.darkenArt != 0) {
-                    PorterDuffColorFilter(
-                        Color.valueOf(0f, 0f, 0f, it.darkenArt * 0.01f).toArgb(),
-                        PorterDuff.Mode.DARKEN,
-                    )
-                } else null
+                val showChartChanged = binding.showChart != it.showChart
+                albumArtReady.countDown()
 
                 if (it.showChart) {
                     torqueChart.setupItems(
@@ -159,6 +135,40 @@ open class DashboardFragment : AlbumArt() {
                     }
                 }
                 torqueRefresher.makeExecutors(torqueService)
+            }
+        }
+        registerWithView {
+            requireContext().dataStore.data.map {
+                it.opacity
+            }.distinctUntilChanged().map {
+                binding.gaugeAlpha = 0.01f * it
+            }
+        }
+        registerWithView {
+            requireContext().dataStore.data.map {
+                it.darkenArt
+            }.distinctUntilChanged().map {
+                albumColorFilter = if (it != 0) {
+                    PorterDuffColorFilter(
+                        Color.valueOf(0f, 0f, 0f, it * 0.01f).toArgb(),
+                        PorterDuff.Mode.DARKEN,
+                    )
+                } else null
+            }
+        }
+        if (Build.VERSION.SDK_INT >= 31) {
+            registerWithView {
+                requireContext().dataStore.data.map {
+                    it.blurArt
+                }.distinctUntilChanged().map {
+                    albumBlurEffect = if (it != 0) {
+                        val blurFloat = it.toFloat()
+                        RenderEffect.createBlurEffect(
+                            blurFloat, blurFloat,
+                            Shader.TileMode.MIRROR
+                        )
+                    } else null
+                }
             }
         }
         registerWithView {
