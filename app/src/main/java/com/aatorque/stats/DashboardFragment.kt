@@ -115,12 +115,12 @@ open class DashboardFragment : AlbumArt() {
             requireContext().dataStore.data.collect {
                 val screenIndex = abs(it.currentScreen) % it.screensCount
                 val screens = it.screensList[screenIndex]
+                val showChartChanged = binding.showChart != it.showChart
                 binding.title = screens.title
                 settingsViewModel.chartVisible.value = it.showChart
                 settingsViewModel.minMaxBelow.value = it.minMaxBelow
                 shouldDisplayArtwork = it.albumArt
 
-                val showChartChanged = binding.showChart != it.showChart
                 albumArtReady.countDown()
 
                 if (it.showChart) {
