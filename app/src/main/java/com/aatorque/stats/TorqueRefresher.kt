@@ -28,10 +28,8 @@ class TorqueRefresher {
     fun populateQuery(pos: Int, screen: Int, query: Display): TorqueData {
         data[pos]?.stopRefreshing(true)
         val cacheItem = cache[screen]?.get(pos)
-        val torqueData = if (cacheItem != null && cacheItem.display.pid == query.pid) {
-            cache[screen]!![pos]!!.also {
-                it.display = query
-            }
+        val torqueData = if (cacheItem?.display?.equals(query) == true) {
+            cacheItem
         } else {
             TorqueData(query)
         }
@@ -100,6 +98,14 @@ class TorqueRefresher {
     fun hasChanged(idx: Int, otherScreen: Display?): Boolean {
         if (!data.containsKey(idx)) return true
         return data[idx]?.display?.equals(otherScreen) != true
+    }
+
+    fun updateIfNeeded(pos: Int, screen: Int, query: Display): TorqueData {
+        return if (hasChanged(pos, query)) {
+            populateQuery(pos, screen, query)
+        } else {
+            data[pos]!!
+        }
     }
 
     fun watchConnection(service: TorqueService, notifyConState: ConStatusFn) {

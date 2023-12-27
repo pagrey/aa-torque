@@ -118,7 +118,7 @@ open class DashboardFragment : AlbumArt() {
                 if (it.showChart) {
                     torqueChart.setupItems(
                         screens.gaugesList.mapIndexed { index, display ->
-                            torqueRefresher.populateQuery(index, screenIndex, display)
+                            torqueRefresher.updateIfNeeded(index, screenIndex, display)
                         }.toTypedArray()
                     )
                 } else {

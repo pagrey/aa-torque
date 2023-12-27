@@ -5,6 +5,7 @@ import android.icu.text.NumberFormat
 import com.aatorque.datastore.Display
 import com.ezylang.evalex.BaseException
 import com.ezylang.evalex.Expression
+import com.ezylang.evalex.data.EvaluationValue
 import timber.log.Timber
 import java.util.concurrent.ScheduledFuture
 
@@ -77,14 +78,12 @@ class TorqueData(var display: Display) {
         }
         return try {
             val result = expression!!.with("a", value).evaluate()
-            val asNumber = result.numberValue
-            val asString = try {
-                result.stringValue.toDouble()
-                numberFormatter.format(result.numberValue)
-            } catch (e: NumberFormatException) {
+            val asString = if (result.dataType == EvaluationValue.DataType.STRING) {
                 result.stringValue
+            } else {
+                numberFormatter.format(result.numberValue)
             }
-            Pair(asNumber.toDouble(), asString)
+            Pair(result.numberValue.toDouble(), asString)
         } catch (ex: Exception) {
             when(ex) {
                 is BaseException, is NoSuchElementException, is NumberFormatException -> {
