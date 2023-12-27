@@ -40,8 +40,11 @@ all data from Torque in a way that is as customizable as possible.
 ## Install
 - Install the APK that you downloaded in the _Prepare_ section using your normal package installer
 - Open _AA Torque Settings_
-- Select the options menu and select force update. Follow the process so your phone will reinstall it thinking it came from the Play Store.
-- If this fails, you can try using [Kingstaller](https://github.com/fcaronte/KingInstaller/releases) so your phone thinks it came from the Play Store. Reference the Kingstaller README if you have issues installing. 
+- Select the options menu and select force update. Follow the process so your phone will reinstall
+  it thinking it came from the Play Store.
+- If this fails, you can try using [Kingstaller](https://github.com/fcaronte/KingInstaller/releases)
+  so your phone thinks it came from the Play Store. Reference the Kingstaller README if you have
+  issues installing.
 
 Note: Do not open a bug for an installation issue. You need to bypass restrictions put in place by Google to get this app working on Android Auto. These instructions will work for most phones. I can not troubleshoot every phone. Pixel phones have special instructions on the [Kingstaller README](https://github.com/fcaronte/KingInstaller). 
 
@@ -49,7 +52,10 @@ The Kingstaller README has this to say about Pixel Phones:
 
 > For this phone you need to reinstall\update the current Google PackageInstaller, you can download the same version from ApkMirror or similar site, or you can get the apk directly from your phone using a file manager with that feature (I'm use mixplorer) then install the apk as normal and now you can use kinginstaller to install the app and will work!
 
-There seems to be issues with Android 14 as well. If you upgrade to Android 14 you may need to uninstall and reinstall. Check the [discussions](https://github.com/agronick/aa-torque/discussions) page for help installing.
+There seems to be issues with Android 14 as well. If you upgrade to Android 14 you may need to
+uninstall and reinstall. Check the [discussions](https://github.com/agronick/aa-torque/discussions)
+page for help installing.
+If you have an AAWireless dongle, enabling developer mode in AAWireless can work around it.
 
 ## Using
 - Open the AA Torque settings, grant all the rights it's requesting. If you don't do this, the app will NOT work.
