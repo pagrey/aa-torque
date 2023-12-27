@@ -118,13 +118,18 @@ open class DashboardFragment : AlbumArt() {
                 albumArtReady.countDown()
 
                 albumBlurEffect = if (
-                    it.blurArt != 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                    it.blurArt != 0 && Build.VERSION.SDK_INT >= 31
                 ) {
                     val blurFloat = it.blurArt.toFloat()
-                    RenderEffect.createBlurEffect(
-                        blurFloat, blurFloat,
-                        Shader.TileMode.MIRROR
-                    )
+                    try {
+                        RenderEffect.createBlurEffect(
+                            blurFloat, blurFloat,
+                            Shader.TileMode.MIRROR
+                        )
+                    } catch (e: NoClassDefFoundError) {
+                        Timber.i("Version check failed to prevent error ${Build.VERSION.SDK_INT} >= ${Build.VERSION_CODES.S}")
+                        null
+                    }
                 } else null
                 albumColorFilter = if (it.darkenArt != 0) {
                     PorterDuffColorFilter(

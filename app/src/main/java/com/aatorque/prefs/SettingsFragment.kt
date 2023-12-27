@@ -1,7 +1,9 @@
 package com.aatorque.prefs
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.text.InputType
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.CheckBoxPreference
@@ -123,8 +125,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
         mediaBgPref.setOnPreferenceChangeListener { preference, newValue ->
             updateDatastorePref {
-                if (newValue as Boolean && !NotiService.isNotificationAccessEnabled) {
-                    startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
+                if (newValue as Boolean && !NotiService.isNotificationAccessEnabled(requireContext())) {
+                    startActivity(
+                        Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS").apply {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                putExtra(
+                                    Settings.EXTRA_NOTIFICATION_LISTENER_COMPONENT_NAME,
+                                    NotiService::class.java.canonicalName
+                                )
+                            }
+                        }
+                    )
                 }
                 it.setAlbumArt(newValue)
             }
@@ -148,6 +159,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
             return@setOnPreferenceChangeListener true
         }
+        blurArtPref.isVisible = Build.VERSION.SDK_INT >= 31
 
         numScreensPref.setOnBindEditTextListener {
             it.inputType = InputType.TYPE_CLASS_NUMBER
@@ -161,7 +173,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 centerGaugeLargePref.isChecked = it.centerGaugeLarge
                 rotaryInputPref.isChecked = it.rotaryInput
                 minMaxBelowPref.isChecked = it.minMaxBelow
-                mediaBgPref.isChecked = it.albumArt
+                mediaBgPref.isChecked =
+                    it.albumArt && NotiService.isNotificationAccessEnabled(requireContext())
                 opacityPref.value = if (it.opacity == 0) 100 else it.opacity
                 blurArtPref.value = it.blurArt
                 darkenArtPref.value = it.darkenArt
