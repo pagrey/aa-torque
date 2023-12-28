@@ -220,8 +220,16 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
 
     @OptIn(DelicateCoroutinesApi::class)
     fun saveState() {
-        val minVal = minValuePref.text?.toInt() ?: 0
-        val maxVal = maxValuePref.text?.toInt() ?: 100
+        fun coerce(value: String?, default: Int): Int {
+            return try {
+                value?.toInt() ?: default
+            } catch (e: NumberFormatException) {
+                default
+            }
+        }
+
+        val minVal = coerce(minValuePref.text, 0)
+        val maxVal = coerce(maxValuePref.text, 100)
         var display = Display.newBuilder().setPid(
             pidPref.value
         ).setShowLabel(
