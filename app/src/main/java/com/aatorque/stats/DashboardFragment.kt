@@ -154,7 +154,7 @@ open class DashboardFragment : AlbumArt() {
             requireContext().dataStore.data.map {
                 it.opacity
             }.distinctUntilChanged().collect {
-                binding.gaugeAlpha = 0.01f * it
+                binding.gaugeAlpha = if (it == 0) 1f else 0.01f * it
             }
         }
         registerWithView {
