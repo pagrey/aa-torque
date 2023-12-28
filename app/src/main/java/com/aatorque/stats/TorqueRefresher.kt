@@ -67,16 +67,23 @@ class TorqueRefresher {
 
     fun doRefresh(service: TorqueService, torqueData: TorqueData) {
         service.runIfConnected { ts ->
+            if (torqueData.repeatCounter.flushIfOver(30)) {
+                Timber.i("Got repeated data, attempting to use old api for hard refresh on ${torqueData.display.label}")
+                torqueData.pidLong?.let {
+                    // Use old API to force refresh if value is stuck
+                    @Suppress("DEPRECATION")
+                    ts.getValueForPid(it, true)
+                }
+            }
             val value = try {
                 ts.getPIDValuesAsDouble(arrayOf(torqueData.pid!!))[0]
             } catch (e: ArrayIndexOutOfBoundsException) {
-                Timber.e("Torque returned invalid data for ${torqueData.pid}")
+                Timber.e("Torque returned invalid data for ${torqueData.display.label}")
                 return@runIfConnected
             }
             torqueData.lastData = value
             Timber.d("Got valid $value from torque for ${torqueData.display.label}")
             if (value != 0.0 || torqueData.hasReceivedNonZero) {
-                torqueData.hasReceivedNonZero = true
                 handler.post {
                     torqueData.sendNotifyUpdate()
                     if (value != 0.0 && lastConnectStatus != ConnectStatus.CONNECTED) {
