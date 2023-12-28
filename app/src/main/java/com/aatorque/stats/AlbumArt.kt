@@ -65,19 +65,10 @@ abstract class AlbumArt : CarFragment() {
             val code = token.hashCode()
             if (!registed.containsKey(code)) {
                 val callback = object : MediaController.Callback() {
-                    override fun onPlaybackStateChanged(state: PlaybackState?) {
-                        super.onPlaybackStateChanged(state)
-                        Timber.i("Playback changed event ${state?.state}")
+                    override fun onMetadataChanged(metadata: MediaMetadata?) {
+                        super.onMetadataChanged(metadata)
                         lifecycleScope.launch {
-                            if (arrayOf(
-                                    PlaybackState.STATE_PAUSED,
-                                    PlaybackState.STATE_STOPPED
-                                ).contains(state?.state)
-                            ) {
-                                updateChannel.emit(null)
-                            } else if (isActive(it.playbackState)) {
-                                updateChannel.emit(it.metadata)
-                            }
+                            updateChannel.emit(metadata)
                         }
                     }
                 }
