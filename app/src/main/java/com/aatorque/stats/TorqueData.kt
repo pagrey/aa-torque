@@ -3,7 +3,6 @@ package com.aatorque.stats
 import android.icu.math.BigDecimal
 import android.icu.text.NumberFormat
 import com.aatorque.datastore.Display
-import com.aatorque.utils.RepeatCounter
 import com.ezylang.evalex.BaseException
 import com.ezylang.evalex.Expression
 import com.ezylang.evalex.data.EvaluationValue
@@ -28,26 +27,21 @@ class TorqueData(var display: Display) {
     }
 
     var pid: String? = null
-    var pidLong: Long? = null
     var minValue: Double = Double.POSITIVE_INFINITY
     var maxValue: Double = Double.NEGATIVE_INFINITY
     private var expression: Expression? = null
     var lastDataStr: String = "-"
     var refreshTimer: ScheduledFuture<*>? = null
     var hasReceivedNonZero = false
-        private set
 
     var notifyUpdate: ((TorqueData) -> Unit)? = null
         set(value) {
             field = value
             value?.let { it(this) }
         }
+
     var lastData: Double = 0.0
         set(value) {
-            if (value != 0.0) {
-                hasReceivedNonZero = true
-            }
-            repeatCounter.append(value)
             val converted = convertValue(value)
             field = converted.first
             lastDataStr = converted.second
@@ -59,13 +53,11 @@ class TorqueData(var display: Display) {
             }
         }
 
-    val repeatCounter = RepeatCounter(lastData)
 
     init {
         val value = display.pid
         if (value.startsWith(PREFIX)) {
             pid = value.substring(PREFIX.length)
-            pidLong = pid!!.split(",")[0].toLong(radix = 16)
         }
     }
 
