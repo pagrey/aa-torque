@@ -29,11 +29,14 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.aatorque.datastore.UserPreference
 import com.aatorque.prefs.SettingsViewModel
 import com.aatorque.prefs.dataStore
 import com.aatorque.stats.databinding.FragmentDashboardBinding
 import com.aatorque.utils.CountDownLatch
 import com.google.android.apps.auto.sdk.StatusBarController
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -96,15 +99,16 @@ open class DashboardFragment : AlbumArt() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
-        torqueService.startTorque(requireContext())
-        val registerWithView = { call: suspend () -> Unit ->
+        val context = requireContext()
+        torqueService.startTorque(context)
+        val registerWithView = { call: suspend (Flow<UserPreference>) -> Unit ->
             lifecycleScope.launch {
                 viewReady.await()
-                call()
+                call(context.dataStore.data)
             }
         }
         registerWithView {
-            requireContext().dataStore.data.map {
+            data -> data.map {
                 it.selectedBackground
             }.distinctUntilChanged().collect {
                 setupBackground(it)
@@ -112,7 +116,7 @@ open class DashboardFragment : AlbumArt() {
             }
         }
         registerWithView {
-            requireContext().dataStore.data.collect {
+            data -> data.collect {
                 val screenIndex = abs(it.currentScreen) % it.screensCount
                 val screens = it.screensList[screenIndex]
                 val showChartChanged = binding.showChart != it.showChart
@@ -151,14 +155,14 @@ open class DashboardFragment : AlbumArt() {
             }
         }
         registerWithView {
-            requireContext().dataStore.data.map {
+            data -> data.map {
                 it.opacity
             }.distinctUntilChanged().collect {
                 binding.gaugeAlpha = if (it == 0) 1f else 0.01f * it
             }
         }
         registerWithView {
-            requireContext().dataStore.data.map {
+            data -> data.map {
                 it.darkenArt
             }.distinctUntilChanged().collect {
                 albumColorFilter = if (it != 0) {
@@ -171,7 +175,7 @@ open class DashboardFragment : AlbumArt() {
         }
         if (Build.VERSION.SDK_INT >= 31) {
             registerWithView {
-                requireContext().dataStore.data.map {
+                data -> data.map {
                     it.blurArt
                 }.distinctUntilChanged().collect {
                     albumBlurEffect = if (it != 0) {
@@ -185,25 +189,35 @@ open class DashboardFragment : AlbumArt() {
             }
         }
         registerWithView {
-            requireContext().dataStore.data.map {
+            data -> data.map {
                 it.selectedFont
             }.distinctUntilChanged().collect(
                 this@DashboardFragment::setupTypeface
             )
         }
         registerWithView {
-            requireContext().dataStore.data.map {
+            data -> data.map {
                 it.rotaryInput
             }.distinctUntilChanged().collect(
                 this@DashboardFragment::configureRotaryInput
             )
         }
         registerWithView {
-            requireContext().dataStore.data.map {
+            data -> data.map {
                 it.centerGaugeLarge
             }.distinctUntilChanged().collect(
                 this@DashboardFragment::updateScale
             )
+        }
+        registerWithView{
+            torqueRefresher.connectStatus.collect {
+                binding.status = when (it) {
+                    ConnectStatus.CONNECTING_TORQUE -> R.string.status_connecting_torque
+                    ConnectStatus.CONNECTING_ECU -> R.string.status_connecting_to_ecu
+                    ConnectStatus.SETUP_GAUGE -> R.string.status_setup_gauges
+                    ConnectStatus.CONNECTED -> null
+                }
+            }
         }
     }
 
@@ -323,14 +337,8 @@ open class DashboardFragment : AlbumArt() {
     override fun onResume() {
         Timber.d("onResume")
         super.onResume()
-        torqueRefresher.makeExecutors(torqueService)
-        torqueRefresher.watchConnection(torqueService) {
-            binding.status = when (it) {
-                ConnectStatus.CONNECTING_TORQUE -> R.string.status_connecting_torque
-                ConnectStatus.CONNECTING_ECU -> R.string.status_connecting_to_ecu
-                ConnectStatus.SETUP_GAUGE -> R.string.status_setup_gauges
-                ConnectStatus.CONNECTED -> null
-            }
+        lifecycleScope.launch {
+            torqueRefresher.makeExecutors(torqueService)
         }
     }
 

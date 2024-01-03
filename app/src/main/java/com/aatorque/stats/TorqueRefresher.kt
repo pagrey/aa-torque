@@ -2,6 +2,12 @@ package com.aatorque.stats
 import android.os.Handler
 import android.os.Looper
 import com.aatorque.datastore.Display
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.runInterruptible
 import timber.log.Timber
 import java.util.concurrent.ScheduledThreadPoolExecutor
 import java.util.concurrent.TimeUnit
@@ -10,20 +16,17 @@ enum class ConnectStatus {
     CONNECTING_TORQUE, CONNECTING_ECU, CONNECTED, SETUP_GAUGE
 }
 
-typealias ConStatusFn = ((ConnectStatus) -> Unit)
-
 class TorqueRefresher {
     val data = HashMap<Int, TorqueData>()
     private val executor = ScheduledThreadPoolExecutor(7)
     val handler = Handler(Looper.getMainLooper())
-    var lastConnectStatus = ConnectStatus.CONNECTING_TORQUE
-    var conWatcher: ConStatusFn? = null
+    private var conWatcher = MutableStateFlow(ConnectStatus.CONNECTING_TORQUE)
+    val connectStatus = conWatcher.asSharedFlow()
     val cache = mutableMapOf<Int, HashMap<Int, TorqueData>>()
 
     companion object {
         const val REFRESH_INTERVAL = 300L
     }
-
 
     fun populateQuery(pos: Int, screen: Int, query: Display): TorqueData {
         data[pos]?.stopRefreshing(true)
@@ -41,7 +44,7 @@ class TorqueRefresher {
         return torqueData
     }
 
-    fun makeExecutors(service: TorqueService) {
+    suspend fun makeExecutors(service: TorqueService) {
         var foundValid = false
         data.values.forEachIndexed { index, torqueData ->
             val refreshOffset = (REFRESH_INTERVAL / data.size) * index
@@ -62,7 +65,14 @@ class TorqueRefresher {
                 Timber.i("No reason to schedule item in position $index")
             }
         }
-        conWatcher?.invoke(if (foundValid) lastConnectStatus else ConnectStatus.SETUP_GAUGE)
+        conWatcher.emit(if (foundValid) conWatcher.value else ConnectStatus.SETUP_GAUGE)
+        service.addConnectCallback {
+            if (conWatcher.value == ConnectStatus.CONNECTING_TORQUE) {
+                runBlocking {
+                    conWatcher.emit(ConnectStatus.CONNECTING_ECU)
+                }
+            }
+        }
     }
 
     fun doRefresh(service: TorqueService, torqueData: TorqueData) {
@@ -79,10 +89,9 @@ class TorqueRefresher {
                 torqueData.hasReceivedNonZero = true
                 handler.post {
                     torqueData.sendNotifyUpdate()
-                    if (value != 0.0 && lastConnectStatus != ConnectStatus.CONNECTED) {
-                        lastConnectStatus = ConnectStatus.CONNECTED
-                        conWatcher?.let { it(ConnectStatus.CONNECTED) }
-                    }
+                }
+                runBlocking {
+                    conWatcher.emit(ConnectStatus.CONNECTED)
                 }
             }
         }
@@ -105,17 +114,6 @@ class TorqueRefresher {
             populateQuery(pos, screen, query)
         } else {
             data[pos]!!
-        }
-    }
-
-    fun watchConnection(service: TorqueService, notifyConState: ConStatusFn) {
-        notifyConState(lastConnectStatus)
-        service.addConnectCallback {
-            if (lastConnectStatus == ConnectStatus.CONNECTING_TORQUE) {
-                lastConnectStatus = ConnectStatus.CONNECTING_ECU
-                notifyConState(lastConnectStatus)
-            }
-            conWatcher = notifyConState
         }
     }
 
