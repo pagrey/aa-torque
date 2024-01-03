@@ -1,18 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="activity_credits_title">Credits</string>
     <string name="activity_main_title">Performance Monitor</string>
     <string name="activity_settings_title">AA Torque Settings</string>
     <string name="activity_stopwatch_title">Stopwatch</string>
-
     <string name="app_car_service_name">AA Torque</string>
     <string name="app_name">AA Torque</string>
-
     <string name="credits_author">Based on the app made by:</string>
     <string name="credits_basedon">Based on the SDK and demo App by:</string>
     <string name="credits_drivesafely">Drive Safely.</string>
     <string name="credits_thanks">Special thanks to:</string>
-
     <string name="element_VIN">VIN</string>
     <string name="element_batteryVoltage">Battery voltage</string>
     <string name="element_brakePressure">Brake Pressure</string>
@@ -22,8 +19,6 @@
     <string name="element_longitudinalAcceleration">Longitudinal G\'s</string>
     <string name="element_navAltitude">Altitude</string>
     <string name="element_navHeading">Heading</string>
-    <string name="element_cylinder">Engine Cylinder</string>
-    <string name="element_horsepower">Horsepower</string>
     <string name="element_none">None</string>
     <string name="element_odometer">Odometer</string>
     <string name="element_oilTemperature">Oil temperature</string>
@@ -47,7 +42,6 @@
     <string name="element_radio">Radio</string>
     <string name="element_wrench">Wrench</string>
     <string name="element_tire">Tire</string>
-
     <string name="font_audi" translatable="false">Audi Virtual Cockpit</string>
     <string name="font_frutiger" translatable="false">Frutiger</string>
     <string name="font_larabie" translatable="false">Larabie</string>
@@ -57,8 +51,6 @@
     <string name="font_vw" translatable="false">Volkswagen CarUI</string>
     <string name="font_vw2" translatable="false">Volkswagen Thesis</string>
     <string name="font_vw3" translatable="false">VW Digit</string>
-    <string name="font_ev" translatable="false">Electro Vehicle</string>
-
     <string name="pref_appearance">Appearance</string>
     <string name="pref_centerclock">Center gauges</string>
     <string name="pref_font">Font</string>
@@ -73,22 +65,17 @@
     <string name="pref_ticks">Tick values</string>
     <string name="pref_ticks_off">Don\'t display value of ticks</string>
     <string name="pref_ticks_on">Display value of ticks</string>
-    <string name="pref_view">View %1$d</string>
-
     <string name="element_torque_fuelpressure">Fuel pressure</string>
     <string name="element_torque_engineload">Engine load</string>
     <string name="element_torque_timing_advance">Timing advance</string>
-    <string name="element_transmission">Transmission</string>
     <string name="element_torque_throttle_position">Throttle position (Manifold)</string>
     <string name="element_torque_turboboost">Turbo boost pressure</string>
-
     <string name="element_torque_phonebatterylevel">Phone battery level</string>
     <string name="element_torque_phonebarometer">Phone barometer</string>
     <string name="element_torque_intakemanifoldpressure">Intake manifold</string>
     <string name="element_torque_catalysttemperature">Catalyst</string>
     <string name="element_torque_fuellevel">Fuel level</string>
     <string name="element_barometer">Barometer</string>
-
     <string name="bg_vw">Discover Pro Sport</string>
     <string name="bg_vw2">Carbon fiber</string>
     <string name="bg_vw3">Spotlight</string>
@@ -112,12 +99,7 @@
     <string name="font_ford" translatable="false">United Sans</string>
     <string name="bg_dots">Dots</string>
     <string name="bg_aa">Android Auto</string>
-    <string name="bg_ev">Electro Vehicle</string>
-
-
     <string name="item_details_go_back">Go Back</string>
-    <string name="pref_data_element_settings">Data element settings %1$d</string>
-    <string name="pref_title_performance">Title %1$d</string>
     <string name="pid">PID</string>
     <string name="pidLabel">Label</string>
     <string name="pidShowLabel">Show Label</string>
@@ -130,12 +112,10 @@
     <string name="dashboards">Dashboards</string>
     <string name="rotary_input">Rotary input</string>
     <string name="rotary_desc">Disable buttons and use rotary dial if equipped</string>
-    <string name="minmax_below">Min/Max below gauge</string>
-    <string name="minmax_below_desc">Place min/max values below gauge instead of overlapping the bottom of the gauge</string>
     <string name="enable_script">Run unit conversion</string>
     <string name="enable_script_desc">Run formula on output</string>
     <string name="custom_script">Unit conversion</string>
-    <string name="custom_script_desc">Run an EvalEx expression. Use "a" to represent the current value</string>
+    <string name="custom_script_desc">Run an EvalEx expression. Use a to represent the current value</string>
     <string name="formulas">Formulas</string>
     <string name="custom_expression">Custom expression</string>
     <string name="status_connecting_torque">Connecting to Torque…</string>
@@ -160,8 +140,6 @@
     <string name="download_instructions">Update downloading</string>
     <string name="expressionDocumentation">View Documentation</string>
     <string name="copy_logs">Copy logs to clipboard</string>
-    <string name="status_setup_gauges">Setup gauges in settings</string>
-
     <string name="convert_f_to_c">Fahrenheit to Celsius</string>
     <string name="convert_c_to_f">Celsius to Fahrenheit</string>
     <string name="convert_bar_psi">Convert BAR to PSI</string>
@@ -172,18 +150,28 @@
     <string name="convert_cc_min_gal_hour">CC per minute to Gallon Hour</string>
     <string name="convert_liter_100_km">Liter 100/km to Miles per Gallon</string>
     <string name="convert_kpa_psi">Kilopascals (kPa) to (PSI)</string>
-    <string name="convert_minutes_seconds">Seconds to Minutes:Seconds</string>
+    <string name="status_setup_gauges">Setup gauges in settings</string>
+    <string name="element_cylinder">Engine Cylinder</string>
+    <string name="element_horsepower">Horsepower</string>
+    <string name="element_transmission">Transmission</string>
     <string name="download_complete">Download Complete</string>
-    <string name="download_dialog">Try to install this app as the Play Store? If this fails you can try using Kingstaller.</string>
-    <string name="force_update">Force update</string>
-
     <string name="icon_credits">Icon Credits</string>
     <string name="action_preview">Preview</string>
+    <string name="pref_view">View %1$d</string>
+    <string name="pref_data_element_settings">Data element settings %1$d</string>
+    <string name="pref_title_performance">Title %1$d</string>
+    <string name="download_dialog">Try to install this app as the Play Store? If this fails you can try using Kingstaller.</string>
+    <string name="force_update">Force update</string>
     <string name="update_failed">Update check failed</string>
+    <string name="convert_minutes_seconds">Seconds to Minutes:Seconds</string>
     <string name="donate">Please donate!</string>
     <string name="translate">Translate</string>
     <string name="pref_chart_title">Chart line color</string>
     <string name="pref_chart_summary">Color to be used to draw lines on the chart</string>
+    <string name="font_ev" translatable="false">Electro Vehicle</string>
+    <string name="bg_ev">Electro Vehicle</string>
+    <string name="minmax_below">Min/Max below gauge</string>
+    <string name="minmax_below_desc">Place min/max values below gauge instead of overlapping the bottom of the gauge</string>
     <string name="media">Media</string>
     <string name="media_background_title">Media Background</string>
     <string name="media_background_summary">Use album art as background (beta)</string>
