@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
@@ -36,7 +35,6 @@ import com.aatorque.stats.databinding.FragmentDashboardBinding
 import com.aatorque.utils.CountDownLatch
 import com.google.android.apps.auto.sdk.StatusBarController
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -371,8 +369,8 @@ open class DashboardFragment : AlbumArt() {
         albumArtReady.await()
         if (!shouldDisplayArtwork) return
         if (medadata != null) {
-            binding.background = metaDataToArt(medadata)
-            if (binding.background != null) {
+            binding.backgroundBitmap = metaDataToArt(medadata)
+            if (binding.backgroundBitmap != null) {
                 binding.blurEffect = albumBlurEffect
                 binding.colorFilter = albumColorFilter
                 displayingArtwork = true
@@ -401,9 +399,7 @@ open class DashboardFragment : AlbumArt() {
         binding.blurEffect = null
         binding.colorFilter = null
         displayingArtwork = false
-        if (resource != 0) {
-            binding.background = BitmapFactory.decodeResource(resources, resource)
-        }
+        binding.backgroundResource = resource
     }
 
     fun configureRotaryInput(enabled: Boolean) {

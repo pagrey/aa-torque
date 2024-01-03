@@ -117,7 +117,7 @@ dependencies {
 
     implementation 'androidx.annotation:annotation:1.7.1'
     implementation "androidx.datastore:datastore:1.0.0"
-    implementation 'com.google.protobuf:protobuf-javalite:3.25.1'
+    implementation 'com.google.protobuf:protobuf-java-util:3.25.1'
     implementation 'rongi.rotate-layout:rotate-layout:3.0.0'
     implementation 'androidx.databinding:databinding-runtime:8.2.0'
     // implementation 'com.google.dagger:hilt-android:2.48'
@@ -141,7 +141,7 @@ protobuf {
                 // Configures the task output type
                 java {
                     // Java Lite has smaller code size and is recommended for Android
-                    option 'lite'
+                    // option 'lite'
                 }
             }
         }

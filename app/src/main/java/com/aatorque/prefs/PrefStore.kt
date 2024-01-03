@@ -9,8 +9,56 @@ import androidx.datastore.preferences.protobuf.InvalidProtocolBufferException
 import com.aatorque.datastore.Display
 import com.aatorque.datastore.Screen
 import com.aatorque.datastore.UserPreference
+import com.google.protobuf.TextFormat
+import timber.log.Timber
 import java.io.InputStream
 import java.io.OutputStream
+
+
+const val DEFAULT_SETTINGS = """
+screens {
+  gauges {
+    pid: "torque_0c,0"
+    showLabel: true
+    label: "RPM"
+    icon: "ic_cylinder"
+    maxValue: 10000
+    unit: "rpm"
+    wholeNumbers: true
+    ticksActive: true
+    chartColor: -12734743
+  }
+  gauges {
+    pid: "torque_0d,0"
+    showLabel: true
+    label: "Speed"
+    icon: "ic_barometer"
+    maxValue: 160
+    unit: "km/h"
+    highVisActive: true
+    ticksActive: true
+    chartColor: -5314243
+  }
+  gauges {
+    pid: "torque_11,0"
+    showLabel: true
+    label: "Throttle"
+    icon: "ic_throttle"
+    maxValue: 100
+    unit: "%"
+    ticksActive: true
+    chartColor: -1476547
+  }
+  displays {}
+  displays {}
+  displays {}
+  displays {}
+}
+selectedTheme: "Electro Vehicle"
+selectedFont: "ev"
+selectedBackground: "background_incar_ev"
+centerGaugeLarge: true
+"""
 
 object UserPreferenceSerializer : Serializer<UserPreference> {
     val defaultGauge = Display.newBuilder()
@@ -25,9 +73,19 @@ object UserPreferenceSerializer : Serializer<UserPreference> {
         .addDisplays(defaultDisplay)
         .addDisplays(defaultDisplay)
 
-    override val defaultValue: UserPreference = UserPreference.newBuilder().addScreens(
-        defaultScreen
-    ).build()
+    override var defaultValue: UserPreference
+
+    init {
+        try {
+            defaultValue = TextFormat.parse(
+                DEFAULT_SETTINGS,
+                UserPreference::class.java
+            )
+        } catch (e: Exception) {
+            Timber.e("Failed to load defaults", e)
+            defaultValue = UserPreference.newBuilder().addScreens(defaultScreen).build()
+        }
+    }
 
     override suspend fun readFrom(input: InputStream): UserPreference {
         try {

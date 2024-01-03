@@ -17,8 +17,12 @@
         <import type="android.graphics.ColorFilter" />
 
         <variable
-            name="background"
+            name="backgroundBitmap"
             type="Bitmap" />
+
+        <variable
+            name="backgroundResource"
+            type="Integer" />
 
         <variable
             name="blurEffect"
@@ -80,7 +84,8 @@
             app:colorFilter="@{colorFilter}"
             android:elevation="0dp"
             android:adjustViewBounds="true"
-            app:imageBitmap="@{background}"
+            app:bitmap="@{backgroundBitmap}"
+            app:resource="@{backgroundResource}"
             app:renderEffect="@{blurEffect}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout

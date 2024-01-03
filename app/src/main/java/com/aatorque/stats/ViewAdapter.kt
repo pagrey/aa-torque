@@ -1,10 +1,12 @@
 package com.aatorque.stats
 
 import android.content.res.Resources
+import android.graphics.Bitmap
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
+import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Guideline
 import androidx.databinding.BindingAdapter
@@ -97,4 +99,15 @@ fun setLayoutMargin(view: View, top: Int?, left: Int?, right: Int?, bottom: Int?
 fun setLayoutMargin(view: Guideline, end: Int?, begin: Int?) {
     convertDp(end)?.let { view.setGuidelineEnd(it) }
     convertDp(begin)?.let { view.setGuidelineBegin(it) }
+}
+
+@BindingAdapter("bitmap", "resource", requireAll = false)
+fun bitmapOrResource(view: ImageView, bitmap: Bitmap?, resource: Int?) {
+    if (bitmap != null) {
+        view.setImageBitmap(bitmap)
+    } else if (resource != null) {
+        view.setImageResource(resource)
+    } else {
+        view.setImageResource(0)
+    }
 }
