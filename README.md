@@ -4,8 +4,10 @@
 
 # Torque Plugin for Android Auto 
 
-
-![new ev theme](https://user-images.githubusercontent.com/62142158/280562239-e03cd94b-fad1-4f93-969d-1d348152425d.jpg)
+## Video Walkthrough
+(Click to open in YouTube)
+[![IMAGE ALT TEXT HERE](https://github.com/agronick/aa-torque/assets/2042303/b735fc1c-8732-4237-8a8d-a540a0d1f778
+)](https://www.youtube.com/watch?v=KiEWVeTMQac)
 
 
 This is a performance monitor based on [Chillout's Performance Monitor](https://github.com/jilleb/mqb-pm) which was based on Martoreto's aa-stats.
