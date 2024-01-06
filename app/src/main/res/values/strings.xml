@@ -181,4 +181,7 @@
     <string name="media_blur_summary">Blur artwork to help improve readability</string>
     <string name="media_darken_title">Darken artwork</string>
     <string name="media_darken_summary">Darken artwork to help improve readability</string>
+    <string name="enabled">Enabled</string>
+    <string name="enabled_desc_on">Show this item</string>
+    <string name="enabled_desc_off">Hide this item</string>
 </resources>

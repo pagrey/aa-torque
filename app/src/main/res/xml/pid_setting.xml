@@ -6,14 +6,20 @@
         android:key="pidCategory"
         android:enabled="false"
         android:summary="@string/torque_waiting">
-    <ListPreference
-        android:key="pidList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:title="@string/pid"
-        app:dialogTitle="@string/pid"
-        android:persistent="false"
-        />
+        <SwitchPreferenceCompat
+            android:dependency="pidList"
+            android:key="enabled"
+            android:persistent="false"
+            android:summaryOff="@string/enabled_desc_off"
+            android:summaryOn="@string/enabled_desc_on"
+            android:title="@string/enabled" />
+        <ListPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:key="pidList"
+            android:persistent="false"
+            android:title="@string/pid"
+            app:dialogTitle="@string/pid" />
     </PreferenceCategory>
     <CheckBoxPreference
         android:key="showLabel"

@@ -9,6 +9,7 @@ enum MaxControl {
 }
 
 message Display {
+  bool disabled = 25;
   string pid = 1;
   bool showLabel = 2;
   string label = 3;

@@ -27,6 +27,9 @@ class TorqueData(var display: Display) {
     }
 
     var pid: String? = null
+        get() {
+            return if (display.disabled) null else field
+        }
     var minValue: Double = Double.POSITIVE_INFINITY
     var maxValue: Double = Double.NEGATIVE_INFINITY
     private var expression: Expression? = null

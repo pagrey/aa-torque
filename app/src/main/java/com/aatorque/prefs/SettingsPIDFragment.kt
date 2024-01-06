@@ -12,6 +12,7 @@ import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreferenceCompat
 import com.aatorque.datastore.Display
 import com.aatorque.datastore.MaxControl
 import com.aatorque.datastore.Screen
@@ -35,6 +36,7 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
     var screen = 0
     var index = 0
 
+    lateinit var enabledPref: SwitchPreferenceCompat
     lateinit var pidPref: ListPreference
     lateinit var showLabelPref: CheckBoxPreference
     lateinit var labelPref: EditTextPreference
@@ -89,6 +91,7 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
         index = parts[2].toInt()
         preferenceManager.sharedPreferencesName = null
 
+        enabledPref = findPreference("enabled")!!
         pidPref = findPreference("pidList")!!
         showLabelPref = findPreference("showLabel")!!
         labelPref = findPreference("label")!!
@@ -172,6 +175,7 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
             val data = requireContext().dataStore.data.first()
             val screen = data.getScreens(screen)
             val display = if (isClock) screen.getGauges(index) else screen.getDisplays(index)
+            enabledPref.isChecked = !display.disabled
             pidPref.value = display.pid
             showLabelPref.isChecked = display.showLabel
             labelPref.text = display.label
@@ -187,7 +191,11 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
             highVisActivePref.isChecked = display.highVisActive
             colorPref.colorValue = display.chartColor.let {
                 if (it == 0) {
-                    resources.obtainTypedArray(R.array.chartColors).getColor(index, Color.WHITE)
+                    resources.obtainTypedArray(R.array.chartColors).run {
+                        val color = getColor(index, Color.WHITE)
+                        recycle()
+                        color
+                    }
                 } else it
             }
             jsPref.setValue(display.customScript)
@@ -230,7 +238,9 @@ class SettingsPIDFragment:  PreferenceFragmentCompat() {
 
         val minVal = coerce(minValuePref.text, 0)
         val maxVal = coerce(maxValuePref.text, 100)
-        var display = Display.newBuilder().setPid(
+        var display = Display.newBuilder().setDisabled(
+            !enabledPref.isChecked
+        ).setPid(
             pidPref.value
         ).setShowLabel(
             showLabelPref.isChecked

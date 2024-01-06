@@ -199,6 +199,8 @@ class TorqueGauge : Fragment() {
     }
 
     fun setupClock(data: TorqueData) {
+        binding.visible = data.pid != null
+
         data.notifyUpdate = this::onUpdate
         val iconDrawableName = data.getDrawableName() ?: "ic_none"
         val iconText = if (data.display.showLabel) data.display.label else ""

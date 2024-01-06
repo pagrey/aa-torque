@@ -27,6 +27,7 @@ screens {
     wholeNumbers: true
     ticksActive: true
     chartColor: -12734743
+    disabled: false
   }
   gauges {
     pid: "torque_0d,0"
@@ -38,6 +39,7 @@ screens {
     highVisActive: true
     ticksActive: true
     chartColor: -5314243
+    disabled: false
   }
   gauges {
     pid: "torque_11,0"
@@ -48,6 +50,7 @@ screens {
     unit: "%"
     ticksActive: true
     chartColor: -1476547
+    disabled: false
   }
   displays {}
   displays {}
@@ -76,14 +79,14 @@ object UserPreferenceSerializer : Serializer<UserPreference> {
     override var defaultValue: UserPreference
 
     init {
-        try {
-            defaultValue = TextFormat.parse(
+        defaultValue = try {
+            TextFormat.parse(
                 DEFAULT_SETTINGS,
                 UserPreference::class.java
             )
         } catch (e: Exception) {
             Timber.e("Failed to load defaults", e)
-            defaultValue = UserPreference.newBuilder().addScreens(defaultScreen).build()
+            UserPreference.newBuilder().addScreens(defaultScreen).build()
         }
     }
 
