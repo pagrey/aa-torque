@@ -23,8 +23,8 @@
         <item>Mustang GT</item>
         <item>BMW</item>
         <item>Skoda Monte Carlo</item>
-	<item>Aston Martin</item>
-	<item>Electro Vehicle</item>
+        <item>Aston Martin</item>
+        <item>Electro Vehicle</item>
         <item>Test</item>
     </string-array>
 
@@ -50,8 +50,8 @@
         <item>@drawable/ic_theme_ford</item>
         <item>@drawable/ic_theme_bmw</item>
         <item>@drawable/ic_theme_mk</item>
-	<item>@drawable/ic_theme_am</item>
-	<item>@drawable/ic_theme_ev</item>
+        <item>@drawable/ic_theme_am</item>
+        <item>@drawable/ic_theme_ev</item>
         <item>@drawable/ic_theme_test</item>
     </array>
 
@@ -77,8 +77,8 @@
         <item>@style/AppTheme.Ford</item>
         <item>@style/AppTheme.BMW</item>
         <item>@style/AppTheme.MK</item>
-	<item>@style/AppTheme.AM</item>
-	<item>@style/AppTheme.EV</item>
+        <item>@style/AppTheme.AM</item>
+        <item>@style/AppTheme.EV</item>
         <item>@style/AppTheme.Testing</item>
     </array>
 
@@ -107,7 +107,7 @@
         <item>skoda</item>
         <item>larabie</item>
         <item>ford</item>
-	<item>ev</item>
+        <item>ev</item>
     </string-array>
 
     <string-array name="FontThumbs">
@@ -121,7 +121,7 @@
         <item>@drawable/ic_font_skoda</item>
         <item>@drawable/ic_font_larabie</item>
         <item>@drawable/ic_font_ford</item>
-	<item>@drawable/ic_font_ev</item>
+        <item>@drawable/ic_font_ev</item>
     </string-array>
 
     <integer-array name="icons">
@@ -295,8 +295,7 @@
         <item>@drawable/thumb_background_incar_beetle</item>
         <item>@drawable/thumb_background_incar_dots</item>
         <item>@drawable/thumb_background_incar_aa</item>
-	<item>@drawable/thumb_background_incar_ev</item>
-        <item>@drawable/thumb_background_incar_test</item>
+        <item>@drawable/thumb_background_incar_ev</item>
         <item>@drawable/thumb_background_incar_test</item>
     </array>
 
@@ -321,8 +320,7 @@
         <item>@string/bg_beetle</item>
         <item>@string/bg_dots</item>
         <item>@string/bg_aa</item>
-	<item>@string/bg_ev</item>
-        <item>@string/bg_test</item>
+        <item>@string/bg_ev</item>
         <item>@string/bg_test</item>
     </string-array>
 
@@ -347,9 +345,8 @@
         <item>background_incar_beetle</item>
         <item>background_incar_dots</item>
         <item>background_incar_aa</item>
-	<item>background_incar_ev</item>
+        <item>background_incar_ev</item>
         <item>background_incar_test</item>
-        <item>background_incar_test_small</item>
     </array>
     <string-array name="minmax_enum_value">
         <item>0</item>
