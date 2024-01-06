@@ -105,8 +105,8 @@
     <string name="pidShowLabel">Show Label</string>
     <string name="icon">Icon</string>
     <string name="torque_waiting">Waiting for Torque to become available</string>
-    <string name="min_value">Minimum Value</string>
-    <string name="max_value">Maximum Value</string>
+    <string name="min_value">Minimum value</string>
+    <string name="max_value">Maximum value</string>
     <string name="num_screens">Number of dashboards to display</string>
     <string name="unit">Unit</string>
     <string name="dashboards">Dashboards</string>
@@ -173,9 +173,9 @@
     <string name="minmax_below">Min/Max below gauge</string>
     <string name="minmax_below_desc">Place min/max values below gauge instead of overlapping the bottom of the gauge</string>
     <string name="media">Media</string>
-    <string name="media_background_title">Media Background</string>
+    <string name="media_background_title">Media background</string>
     <string name="media_background_summary">Use album art as background (beta)</string>
-    <string name="opacity_title">Gauge Opacity</string>
+    <string name="opacity_title">Gauge opacity</string>
     <string name="opacity_summary">Dim gauges to show more of background</string>
     <string name="media_blur_title">Blur artwork</string>
     <string name="media_blur_summary">Blur artwork to help improve readability</string>
