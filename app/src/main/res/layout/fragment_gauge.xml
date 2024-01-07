@@ -209,7 +209,8 @@
                 app:sv_unitTextColor="@android:color/transparent"
                 app:sv_withEffects="false"
                 app:sv_withTremble="false"
-                app:minMax="@{minMax}"  />
+                app:minMax="@{minMax}"
+                app:sv_rayStartSpeed="0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
