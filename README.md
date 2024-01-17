@@ -6,7 +6,7 @@
 
 ## Video Walkthrough
 (Click to open in YouTube)
-[![IMAGE ALT TEXT HERE](https://github.com/agronick/aa-torque/assets/2042303/b735fc1c-8732-4237-8a8d-a540a0d1f778
+[![Click to open in YouTube](https://github.com/agronick/aa-torque/assets/2042303/b735fc1c-8732-4237-8a8d-a540a0d1f778
 )](https://www.youtube.com/watch?v=gYJJ9M9a0m8)
 
 
@@ -67,21 +67,20 @@ If you have an AAWireless dongle, enabling developer mode in AAWireless can work
 # Screenshots:
 Some screenshots of the app:
 
-![278239030-0d8ded34-9528-48db-a285-e81e4b849717](https://github.com/agronick/aa-torque/assets/2042303/e31b0598-25ec-4003-bcee-11e5e108d3a4)
+<img src="https://github.com/agronick/aa-torque/assets/2042303/e31b0598-25ec-4003-bcee-11e5e108d3a4" width="100%" alt="" />
 
-![chat_view](https://github.com/agronick/aa-torque/assets/2042303/a99571f9-0bb3-43ec-89ce-938e41506e97)
+<img src="https://github.com/agronick/aa-torque/assets/2042303/bf40ed97-adf3-4923-bbc5-63a618899173" width="100%" alt="" />
 
-![Screenshot_20231002_130401](https://github.com/agronick/aa-torque/assets/2042303/229315c8-ad3b-42e6-86e6-e7fe7abb16a8)
+*Album art background with ray instead of needle*
 
-![Screenshot_20231002_130452](https://github.com/agronick/aa-torque/assets/2042303/698c666b-5e3c-4611-80a5-8e767b04186a)
+<img src="https://github.com/agronick/aa-torque/assets/2042303/a99571f9-0bb3-43ec-89ce-938e41506e97" width="100%" alt="" />
 
-![20231001-162619](https://github.com/agronick/aa-torque/assets/2042303/1b07b67b-d4bc-41e8-8235-a1418ee37bfe)
+*Chart view*
 
-![c3c3yrxj11sb1](https://github.com/agronick/aa-torque/assets/2042303/171359f3-1abe-4808-85fb-588dfe1194b6)
+<img src="https://github.com/agronick/aa-torque/assets/2042303/229315c8-ad3b-42e6-86e6-e7fe7abb16a8" width="100%" alt="" />
 
-![rx2ohmzjsirb1](https://github.com/agronick/aa-torque/assets/2042303/52c83a91-c3b6-430e-967a-4473fc51e51e)
+<img src="https://github.com/agronick/aa-torque/assets/2042303/698c666b-5e3c-4611-80a5-8e767b04186a" width="100%" alt="" />
 
-![a](https://user-images.githubusercontent.com/147246549/273383355-63414b98-c333-4760-8e71-772ba823d65b.png)
 
 
 ## Custom Expressions
