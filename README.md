@@ -33,13 +33,14 @@ all data from Torque in a way that is as customizable as possible.
 
 # Instructions:
 
-
 ## Prepare
-- Download the latest [release](https://github.com/agronick/aa-torque/releases).
 - Install [Torque Pro](https://play.google.com/store/apps/details?id=org.prowl.torque&hl=en_US&gl=US) You will need this app and a cheap OBD2 Bluetooth module.
-- Make sure Android Auto is in developer mode: Open Android Auto (while not connected to the car), go to About. Tap the "About Android Auto" header 10 times until you see a toast message saying you're a developer. From the right top corner select developer options, scroll down and make sure you check "Unknown sources". This will allow programs from non-Playstore apps to be run on Android Auto. [See a picture guide how to enable Developer mode here](https://www.howtogeek.com/271132/how-to-enable-developer-settings-on-android-auto/).
 
 ## Install
+[Video guide for how to install](https://www.youtube.com/watch?v=DDxPrPzxZ3k)
+
+- Download the latest [release](https://github.com/agronick/aa-torque/releases). Pre-releases can only be installed through Kingstaller.
+- Make sure Android Auto is in developer mode: Open Android Auto (while not connected to the car), go to About. Tap the "About Android Auto" header 10 times until you see a toast message saying you're a developer. From the right top corner select developer options, scroll down and make sure you check "Unknown sources". This will allow programs from non-Playstore apps to be run on Android Auto. [See a picture guide how to enable Developer mode here](https://www.howtogeek.com/271132/how-to-enable-developer-settings-on-android-auto/).
 - Install the APK that you downloaded in the _Prepare_ section using your normal package installer
 - Open _AA Torque Settings_
 - Select the options menu and select force update. Follow the process so your phone will reinstall
