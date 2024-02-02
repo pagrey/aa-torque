@@ -2,7 +2,10 @@ package com.aatorque.stats
 
 import android.icu.math.BigDecimal
 import android.icu.text.NumberFormat
+import androidx.lifecycle.MutableLiveData
+import com.aatorque.datastore.Coloring
 import com.aatorque.datastore.Display
+import com.aatorque.datastore.Operation
 import com.ezylang.evalex.BaseException
 import com.ezylang.evalex.Expression
 import com.ezylang.evalex.data.EvaluationValue
@@ -36,6 +39,7 @@ class TorqueData(var display: Display) {
     var lastDataStr: String = "-"
     var refreshTimer: ScheduledFuture<*>? = null
     var hasReceivedNonZero = false
+    var currentAlarm = MutableLiveData<Coloring?>()
 
     var notifyUpdate: ((TorqueData) -> Unit)? = null
         set(value) {
@@ -54,7 +58,27 @@ class TorqueData(var display: Display) {
             if (field < minValue) {
                 minValue = field
             }
+            updateAlarm(field)
         }
+
+    private fun updateAlarm(field: Double) {
+        if (!hasReceivedNonZero) {
+            return
+        }
+        val newValue = display.alarmsList.firstOrNull {
+            when (it.operation) {
+                Operation.GT -> field > it.value
+                Operation.GTE -> field >= it.value
+                Operation.EQ -> field == it.value
+                Operation.LT -> field < it.value
+                Operation.LTE -> field <= it.value
+                else -> false
+            }
+        }
+        if (currentAlarm.value?.color != newValue?.color) {
+            currentAlarm.postValue(newValue)
+        }
+    }
 
 
     init {
