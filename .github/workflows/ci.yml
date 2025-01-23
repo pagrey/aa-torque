@@ -29,7 +29,7 @@ jobs:
     permissions:
       contents: write
       discussions: write
-    if: github.ref == 'refs/heads/aa-obd2'
+    if: github.ref == 'refs/heads/aa-gauges'
     steps:
       - uses: actions/checkout@v2
         with:
